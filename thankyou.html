@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Ideas SHOP - ধন্যবাদ</title>
+    <title>TashUrA - ধন্যবাদ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #E31E24;
+            --navy: #0D1B2A;
+            --accent-blue: #1976D2;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            background: linear-gradient(135deg, var(--navy), #16263b 55%, var(--accent-blue));
             color: #333;
             height: 100vh;
             display: flex;
@@ -26,8 +32,20 @@
             width: 85%;
             max-width: 340px;
             text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.30);
             animation: popUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ty-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-blue), var(--navy));
         }
 
         @keyframes popUp {
@@ -36,8 +54,8 @@
         }
 
         .ty-icon {
-            font-size: 70px;
-            color: #ffca28;
+            font-size: 64px;
+            color: var(--primary);
             margin-bottom: 15px;
             animation: light-glow 1.3s infinite alternate ease-in-out;
         }
@@ -45,17 +63,27 @@
         @keyframes light-glow {
             0% { text-shadow: none; transform: scale(1); }
             100% {
-                text-shadow: 0 0 15px rgba(255, 202, 40, 0.6), 0 0 30px rgba(255, 193, 7, 0.8);
+                text-shadow: 0 0 15px rgba(227, 30, 36, 0.5), 0 0 30px rgba(25, 118, 210, 0.5);
                 transform: scale(1.08);
             }
         }
 
         .ty-card h2 {
             margin: 5px 0 8px;
-            color: #3f51b5;
-            font-size: 20px;
+            color: var(--navy);
+            font-size: 22px;
             font-weight: 800;
         }
+
+        .brand {
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            margin: 2px 0 10px;
+        }
+        .brand .tash { color: var(--primary); }
+        .brand .ur { color: var(--accent-blue); }
+        .brand .a { color: var(--navy); }
 
         .ty-card p {
             color: #777;
@@ -67,7 +95,7 @@
         .ty-divider {
             width: 50px;
             height: 3px;
-            background: #ffca28;
+            background: linear-gradient(90deg, var(--primary), var(--accent-blue));
             border-radius: 5px;
             margin: 16px auto;
         }
@@ -87,7 +115,7 @@
         .progress-fill {
             height: 100%;
             width: 100%;
-            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            background: linear-gradient(135deg, var(--primary), var(--accent-blue), var(--navy));
             border-radius: 10px;
             animation: shrinkBar 3s linear forwards;
         }
@@ -107,9 +135,9 @@
 <body>
 
     <div class="ty-card">
-        <i class="fas fa-lightbulb ty-icon"></i>
+        <i class="fas fa-circle-check ty-icon"></i>
         <h2>ধন্যবাদ!</h2>
-        <p>Ideas SHOP এর সাথে থাকার জন্য আমরা কৃতজ্ঞ</p>
+        <p class="brand"><span class="tash">Tash</span><span class="ur">Ur</span><span class="a">A</span> এর সাথে থাকার জন্য আমরা কৃতজ্ঞ</p>
         <div class="ty-divider"></div>
         <p>আপনার অর্ডার আইডি সফলভাবে কপি হয়ে গেছে</p>
 

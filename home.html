@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>TashUra App</title>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5; /* মডার্ন ব্যাকগ্রাউন্ড */
+            padding-bottom: 85px; /* বটম ন্যাভের জন্য জায়গা */
+        }
+
+        /* --- Color Theme (TashUrA Red / Navy / Blue) --- */
+        :root {
+            --primary: #E31E24;
+            --primary-dark: #B3151A;
+            --primary-light: #FF5A5F;
+            --navy: #0D1B2A;
+            --navy-light: #15324d;
+            --accent-blue: #1976D2;
+            --accent-blue-dark: #115293;
+            --gradient-orange: linear-gradient(120deg, #E31E24 0%, #B3151A 60%, #8a0f12 100%);
+            --gradient-navy: linear-gradient(120deg, #15324d 0%, #0D1B2A 70%, #060e16 100%);
+        }
+
+        /* --- Header --- */
+        .header {
+            background: var(--gradient-orange);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 16px;
+            box-shadow: 0 4px 12px rgba(13,27,42, 0.25);
+        }
+
+        .header-left { display: flex; align-items: center; }
+        .icon-btn { background: none; border: none; color: white; font-size: 19px; cursor: pointer; padding: 5px; }
+        
+        .header-title { margin-left: 12px; font-size: 17px; font-weight: 700; line-height: 1.1; }
+        .header-title .slogan { font-size: 9px; display: block; font-weight: 400; opacity: 0.95; letter-spacing: 0.8px; color: #eef3f8; }
+
+        /* --- Banner Slider (Full Bleed, sits right under header) --- */
+        .banner-container { padding: 0; margin: 0; background: var(--gradient-orange); }
+        .banner-slider { width: 100%; position: relative; overflow: hidden; }
+        .mySlides { display: none; width: 100%; height: 190px; object-fit: cover; object-position: top center; animation: fadeEffect 1.5s; }
+        @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
+
+        /* --- Search Bar (floats slightly over the banner's bottom edge) --- */
+        .search-container { padding: 0 16px; margin-top: -10px; position: relative; z-index: 20; }
+        .search-bar {
+            background-color: white; border: 1px solid #bcd4ea;
+            border-radius: 50px; padding: 9px 8px 9px 20px;
+            display: flex; align-items: center;
+            box-shadow: 0 6px 18px rgba(13, 27, 42, 0.22);
+            transition: 0.3s;
+        }
+        .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 6px 18px rgba(13, 27, 42, 0.3); }
+        .search-bar input { border: none; outline: none; flex-grow: 1; font-size: 14px; background: transparent; padding: 0 8px; }
+        .search-icon-btn { background: var(--gradient-orange); color: white; border: none; width: 36px; height: 36px; flex-shrink:0; border-radius: 50%; cursor: pointer; display:flex; align-items:center; justify-content:center; }
+        .search-container { position: relative; }
+        .search-suggestions {
+            position: absolute; top: calc(100% + 6px); left: 16px; right: 16px; background: white; border: 1px solid #bcd4ea; border-radius: 16px; box-shadow: 0 10px 24px rgba(13,27,42,0.16); max-height: 220px; overflow-y: auto; z-index: 30; display: none;
+        }
+        .search-suggestions.show { display: block; }
+        .search-suggestion-item {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #eaf2fb; font-size: 13px; color: #374151;
+        }
+        .search-suggestion-item:last-child { border-bottom: none; }
+        .search-suggestion-item:hover { background: #f3f7fb; }
+        .suggestion-label { display: flex; flex-direction: column; gap: 2px; }
+        .suggestion-label strong { font-size: 13px; color: #111827; }
+        .suggestion-label span { font-size: 11px; color: #6b7280; }
+        .suggestion-badge { font-size: 10px; padding: 4px 8px; border-radius: 999px; background: #f3f7fb; color: var(--primary); font-weight: 700; }
+
+        /* --- Quick Event / Offer Chips --- */
+        .event-chip-section { padding: 14px 16px 4px; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+        .event-chip-section::-webkit-scrollbar { display: none; }
+        .event-chip {
+            flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; border-radius: 50px; font-size: 12.5px; font-weight: 700;
+            white-space: nowrap; cursor: pointer; transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms, background-color 160ms;
+            text-decoration: none; -webkit-tap-highlight-color: transparent; will-change: transform, box-shadow;
+        }
+        .event-chip.pressed { transform: translateY(1px) scale(0.995); box-shadow: 0 6px 12px rgba(15,23,42,0.06); }
+        .event-chip.tap-pop { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 48px rgba(15,23,42,0.10); transition: transform 300ms cubic-bezier(.2,.9,.3,1), box-shadow 300ms; }
+        .event-chip i { font-size: 13px; }
+        .chip-flash { background: linear-gradient(135deg, #E31E24, #ff5f6d); color: white; box-shadow: 0 3px 8px rgba(227,30,36,0.3); }
+        .chip-free { background: #eaf2fb; color: var(--accent-blue-dark); border: 1px solid #bcd4ea; }
+        .chip-new { background: #eaf2fb; color: var(--accent-blue-dark); border: 1px solid #bcd4ea; }
+        .chip-offer { background: #eaf2fb; color: var(--accent-blue-dark); border: 1px solid #bcd4ea; }
+
+        /* --- Shortcut Menu (Replaced Category) --- */
+        .shortcut-section { padding: 10px 15px; }
+        .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #333; }
+        
+        .shortcut-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .shortcut-item {
+            text-align: center; background-color: white; padding: 12px 6px;
+            border-radius: 12px; box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+            border: 1px solid rgba(16,24,40,0.04); cursor: pointer;
+            text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease, background-color 160ms;
+            -webkit-tap-highlight-color: transparent;
+            will-change: transform, box-shadow;
+        }
+        .shortcut-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(15,23,42,0.08);
+            background-color: #fffdf8;
+        }
+        .shortcut-item:active {
+            transform: translateY(1px) scale(0.995);
+            box-shadow: 0 6px 16px rgba(15,23,42,0.06);
+        }
+        /* pressed: when pointerdown; tap-pop: short upward pop after release */
+        .shortcut-item.pressed {
+            transform: translateY(1px) scale(0.994) !important;
+            box-shadow: 0 6px 12px rgba(15,23,42,0.05) !important;
+            transition: transform 120ms ease-out, box-shadow 120ms ease-out;
+        }
+        .shortcut-item.tap-pop {
+            transform: translateY(-10px) scale(1.02) !important;
+            box-shadow: 0 26px 60px rgba(15,23,42,0.12) !important;
+            transition: transform 320ms cubic-bezier(.2,.9,.3,1), box-shadow 320ms ease;
+        }
+        .shortcut-item:focus-visible { outline: 3px solid rgba(63,81,181,0.12); outline-offset: 4px; }
+        .shortcut-icon {
+            width: 56px; height: 56px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; margin-bottom: 8px;
+            font-size: 22px; color: white;
+            box-shadow: 0 8px 18px rgba(15,23,42,0.06);
+            transition: transform 220ms, box-shadow 220ms, background 220ms;
+        }
+        .shortcut-item:hover .shortcut-icon { transform: translateY(-3px) scale(1.03); box-shadow: 0 18px 40px rgba(15,23,42,0.09); }
+        .shortcut-item p { margin: 0; font-size: 11.5px; color: #333; font-weight: 700; line-height: 1.3; }
+        .all-products-section { padding: 10px 15px 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+        .section-subtitle { margin: 4px 0 0; font-size: 12px; color: #6b7280; }
+        .view-all-link { text-decoration: none; color: var(--primary); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        
+        /* আইকনের সুন্দর কালার (স্ক্রিনশটের মত আকর্ষণীয় করার জন্য) */
+        .icon-order { color: #E31E24; }
+        .icon-track { color: #0D1B2A; }
+        .icon-chat { color: #1976D2; }
+        .icon-account { color: #4527a0; }
+
+      
+        /* --- Product Grid --- */
+        .trending-section { padding: 10px 15px; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .product-card {
+    background-color: white; 
+    border-radius: 8px; 
+    padding: 12px;
+    position: relative; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #edf0f5;
+    text-align: left; 
+    transition: 0.2s; 
+    cursor: pointer;
+    min-width: 0; /* prevents grid layout from breaking */
+    overflow: hidden; /* keeps the card shape clean */
+}
+
+          /* Neutralize default active style to avoid conflicting opacity/press visuals
+              Use the JS-driven .pressed and .tap-pop classes for consistent feedback */
+          .product-card:active { transform: none !important; box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important; opacity: 1 !important; }
+        .product-card .badge {
+            position: absolute; top: 10px; left: 10px;
+            background: #1976D2; color: white; padding: 4px 10px;
+            border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 10; letter-spacing: 0.3px;
+        }
+        .product-img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; }
+        .product-rating { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: #f59e0b; font-weight: 700; margin-bottom: 4px; }
+        .product-rating span { color: #9aa3af; font-weight: 600; }
+        .product-name { font-size: 14px; color: #333; font-weight: 600; margin: 0 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price { color: var(--primary); font-weight: 700; margin: 0 0 12px; font-size: 16px; }
+        .buy-btn {
+            background: #e8f0fb; color: var(--primary-dark); border: none; padding: 10px;
+            border-radius: 6px; width: 100%; font-weight: 700; font-size: 13px;
+            cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 5px;
+        }
+        .buy-btn:active { background: var(--gradient-orange); color: white; }
+
+        /* --- Marketing Banner --- */
+        .marketing-banner {
+            margin: 8px 15px 0; padding: 16px; border-radius: 16px;
+            background: linear-gradient(135deg, #f3f7fb 0%, #dbe9fb 100%);
+            border: 1px solid #bcd4ea; box-shadow: 0 6px 16px rgba(13,27,42,0.10);
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .marketing-tag {
+            display: inline-flex; align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+            background: #fff; color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 0.3px;
+        }
+        .marketing-title { margin: 0; font-size: 17px; font-weight: 800; color: #0D1B2A; }
+        .marketing-text { margin: 0; font-size: 13px; color: #6b7280; line-height: 1.5; }
+        .marketing-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            width: fit-content; padding: 9px 14px; border-radius: 999px; background: var(--gradient-orange);
+            color: white; text-decoration: none; font-size: 13px; font-weight: 700;
+        }
+        .marketing-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        }
+        .marketing-badge {
+            flex-shrink: 0; width: 54px; height: 54px; border-radius: 16px;
+            background: white; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; box-shadow: 0 4px 10px rgba(13,27,42,0.12);
+        }
+
+        /* --- Hot & Trending Products --- */
+        .trending-section { padding: 8px 15px 18px; }
+        .trending-section .product-grid { padding: 0; gap: 12px; }
+        .trending-section .product-card {
+            box-shadow: 0 6px 14px rgba(13,27,42,0.10);
+            border: 1px solid #bcd4ea;
+            background: linear-gradient(180deg, #fff 0%, #f7faff 100%);
+        }
+        .trending-section .product-card .badge {
+            background: linear-gradient(135deg, #1976D2, #0D1B2A);
+            border-radius: 999px; padding: 5px 10px; font-size: 10px;
+        }
+        .trending-section .product-card .product-name {
+            font-size: 13px; font-weight: 700; color: #111827; white-space: normal; height: auto;
+        }
+        .trending-section .product-card .product-price {
+            font-size: 15px; margin-bottom: 10px;
+        }
+
+        /* --- Drawer Menu --- */
+        .drawer {
+            height: 100%; width: 260px; position: fixed; z-index: 200; top: 0; left: 0;
+            background-color: white; overflow-x: hidden;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+        .drawer.open { transform: translateX(0); }
+        .drawer-header { background: var(--gradient-orange); color: white; padding: 40px 20px 30px; text-align: center; position: relative; }
+        .drawer-logo img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid white; margin-bottom: 10px; object-fit: cover; background: white; }
+        .drawer-title { font-size: 22px; font-weight: bold; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer; }
+        
+        .drawer-links a {
+            padding: 16px 20px; text-decoration: none; font-size: 16px; color: #444;
+            display: flex; align-items: center; border-bottom: 1px solid #f5f5f5; font-weight: 500;
+            transition: background-color 0.2s, padding-left 0.2s;
+        }
+        .drawer-links a i { width: 30px; color: var(--primary); font-size: 18px; }
+        .drawer-links a:hover, .drawer-links a:active { background-color: #eaf2fb; padding-left: 26px; }
+
+        .overlay {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+            background-color: rgba(0,0,0,0.5); z-index: 150; backdrop-filter: blur(2px);
+            opacity: 0; visibility: hidden; transition: opacity 0.35s ease;
+        }
+        .overlay.show { opacity: 1; visibility: visible; }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: white; display: flex; justify-content: space-around;
+            padding: 8px 0 10px; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 100;
+        }
+        .nav-item { text-align: center; color: #b0b0b0; text-decoration: none; flex-grow: 1; transition: 0.25s; position: relative; }
+        .nav-item.active { color: var(--primary); transform: translateY(-1px); }
+        .nav-item i { font-size: 19px; margin-bottom: 3px; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); display: block; }
+        .nav-item p { margin: 0; font-size: 11px; font-weight: 500; }
+        .nav-item.active p { font-weight: 700; }
+        .nav-item:active i { transform: scale(0.8); }
+        .nav-item.active i { animation: navPop 0.35s ease; }
+        @keyframes navPop {
+            0% { transform: scale(0.8); }
+            60% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Cart Notification Red Dot --- */
+        .nav-icon-wrap { position: relative; display: inline-block; }
+        .nav-badge-dot {
+            position: absolute;
+            top: -3px;
+            right: -6px;
+            width: 9px;
+            height: 9px;
+            background-color: #ff3b30;
+            border: 1.5px solid #ffffff;
+            border-radius: 50%;
+            display: none;
+            animation: badgePulse 1.4s infinite;
+        }
+        .nav-badge-dot.show { display: block; }
+        @keyframes badgePulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.6); }
+            70% { box-shadow: 0 0 0 5px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+  
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; width: 100%; }
+
+        /* --- Full-Screen Product Details Modal --- */
+        .pdetail-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 300;
+            display: none; opacity: 0; transition: opacity 0.3s;
+        }
+        .pdetail-overlay.active { display: block; opacity: 1; }
+
+        .pdetail-modal {
+            position: fixed; top: 100%; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 301; transition: top 0.35s ease-in-out;
+            display: flex; flex-direction: column;
+        }
+        .pdetail-modal.active { top: 0; }
+
+        .pdetail-header {
+            padding: 14px 15px; display: flex; justify-content: space-between; align-items: center;
+            background: white; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #f1f5f9;
+        }
+        .pdetail-header h3 { margin: 0; font-size: 16px; color: #1e293b; }
+        .pdetail-close { font-size: 24px; color: #64748b; cursor: pointer; line-height: 1; }
+
+        .pdetail-body { flex-grow: 1; overflow-y: auto; padding: 0 15px 15px 15px; }
+
+       .pdetail-slider {
+    position: relative;
+    width: calc(100% + 30px); /* ডানে-বামে ১৫px করে মার্জিন মেলাতে এটি ব্যবহার করতে হবে */
+    height: 280px;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    margin: 0 -15px 16px -15px;
+    background-color: #f1f5f9;
+}
+
+.pdetail-slider-wrapper img {
+    width: 100%;
+    min-width: 100%; /* ছবি যেন পুরো স্লাইডারের জায়গা ঠিকমতো নেয় */
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+        .pdetail-slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-in-out; }
+              .pdetail-slide-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(15,23,42,0.4); color: white; border: none;
+            width: 34px; height: 34px; cursor: pointer; border-radius: 50%;
+            font-size: 14px; z-index: 5; display: flex; align-items: center; justify-content: center;
+        }
+        .pdetail-prev-btn { left: 10px; }
+        .pdetail-next-btn { right: 10px; }
+        .pdetail-dots {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 6px; z-index: 5;
+        }
+        .pdetail-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.55); border-radius: 50%; cursor: pointer; }
+        .pdetail-dot.active { background: white; width: 14px; border-radius: 4px; }
+
+        .pdetail-title { font-size: 21px; color: #1e293b; margin: 4px 0 6px 0; font-weight: 700; }
+        .pdetail-price { font-size: 18px; color: #ef4444; font-weight: 700; margin-bottom: 10px; }
+        .pdetail-desc { font-size: 14px; color: #475569; line-height: 1.6; margin-bottom: 18px; }
+
+        /* --- Specifications Box (Modified) --- */
+        .pdetail-specs-box {
+            padding: 15px; background: #f8fafc; border-radius: 12px;
+            border: 1px solid #e2e8f0; margin-bottom: 20px;
+        }
+        .pdetail-specs-box h4 {
+            margin: 0 0 10px 0; font-size: 14.5px; color: var(--primary); font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .pdetail-specs-list { display: flex; flex-direction: column; gap: 8px; }
+        .pdetail-spec-row {
+            display: flex; justify-content: space-between; align-items: center; gap: 10px;
+            background: white; border-radius: 8px; padding: 8px 12px;
+            border: 1px solid #eef1f5; font-size: 12.5px;
+        }
+        .pdetail-spec-row .spec-key { color: #64748b; font-weight: 600; }
+        .pdetail-spec-row .spec-val { color: #1e293b; font-weight: 700; text-align: right; }
+
+        .pdetail-footer {
+            padding: 12px 15px; background: white; border-top: 1px solid #e2e8f0;
+            display: flex; justify-content: space-between; align-items: center; gap: 10px;
+        }
+        .pdetail-footer-info { display: flex; flex-direction: column; gap: 2px; }
+        .pdetail-footer-info .price-line { font-size: 14px; font-weight: 700; color: #334155; }
+        .pdetail-footer-info .code-line { font-size: 11.5px; color: #1e3a8a; font-weight: 600; }
+
+        .pdetail-cart-btn {
+            background: linear-gradient(135deg, #1976D2, #0D1B2A); color: white; border: none;
+            padding: 13px 18px; border-radius: 10px; font-size: 14px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 10px rgba(13,27,42,0.25); flex-shrink: 0;
+        }
+
+        /* --- New Features: Toast Notification --- */
+        .toast-box {
+            position: fixed; 
+            top: -150px; /* -70px এর বদলে -150px করা হয়েছে যাতে পুরোপুরি লুকিয়ে থাকে */
+            left: 50%; 
+            transform: translateX(-50%);
+            background: #10b981; 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 30px;
+            font-weight: 600; 
+            font-size: 13px; 
+            box-shadow: 0 5px 15px rgba(16,185,129,0.3);
+            z-index: 400; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: max-content; /* লেখা যেন ভেঙে নিচে না যায় তার জন্য */
+            max-width: 90%;
+        }
+        .toast-box.active-toast { top: 20px; }
+   /* মেইন কন্টেইনার যা টাইটেলকে বামে এবং বাটনকে ডানে পাঠাবে */
+.header-section {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    margin-bottom: 12px;
+}
+
+.title-and-price {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* টাইটেল ও দামের মাঝে একটু ফাঁকা জায়গা */
+}
+
+/* স্টোর বাটনের প্রিমিয়াম ডিজাইন */
+.store-button {
+    display: flex;
+    align-items: center;
+    gap: 4px; 
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 4px 10px;
+    border-radius: 20px; 
+    text-decoration: none;
+    color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+
+/* ভেরিফাইড ব্যাজের ডিজাইন */
+.verified-icon {
+    width: 16px;
+    height: 16px;
+    fill: #1da1f2; /* টুইটারের মত ভেরিফাইড ব্লু কালার */
+}
+
+               /* --- Premium Custom Preloader CSS --- */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        /* লাইট জ্বলছে এবং নিভছে (Glowing Animation) */
+        .idea-bulb {
+            font-size: 70px;
+            color: #dcdde1; /* নিভানো অবস্থার কালার (হালকা ধূসর) */
+            animation: light-glow 1.5s infinite alternate ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes light-glow {
+            0% {
+                color: #dcdde1;
+                text-shadow: none;
+                transform: scale(1);
+            }
+            100% {
+                color: #ffca28; /* জ্বলন্ত অবস্থার কালার (হলুদ) */
+                text-shadow: 0 0 15px rgba(255, 202, 40, 0.6), 
+                             0 0 30px rgba(255, 193, 7, 0.8), 
+                             0 0 50px rgba(255, 179, 0, 1);
+                transform: scale(1.05); /* জ্বললে একটু বড় হবে */
+            }
+        }
+
+        /* নৌকার ঢেউয়ের মতো টেক্সট অ্যানিমেশন */
+        .wavy-text {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wavy-text span {
+            position: relative;
+            display: inline-block;
+            font-size: 22px;
+            font-weight: 800;
+            color: #0b1e36; /* আপনার থিমের নেভি ব্লু কালার */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: wave-anim 1.5s infinite ease-in-out;
+            /* প্রতিটি অক্ষরে আলাদা আলাদা সময়ে অ্যানিমেশন শুরু হবে, তাই ঢেউয়ের মতো মনে হবে */
+            animation-delay: calc(0.1s * var(--i)); 
+        }
+
+        @keyframes wave-anim {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px); /* পানির ঢেউয়ের মতো উপরে উঠবে */
+                color: #ffca28; /* ঢেউয়ের সাথে সাথে লেখার কালারও একটু চেঞ্জ হবে */
+            }
+        }
+
+.header-profile-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.header-profile-img {
+    width: 35px;          /* আপনার হেডার অনুযায়ী সাইজ ছোট-বড় করতে পারেন */
+    height: 35px;
+    border-radius: 50%;   /* এই লাইনটি ছবিকে গোল করবে */
+    object-fit: cover;    /* ছবি যেন চ্যাপ্টা না হয়ে সুন্দরভাবে ফিট হয় */
+    border: 2px solid #ffffff; /* ছবির চারপাশে একটা সুন্দর সাদা বর্ডার দেবে */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1); /* হালকা শ্যাডো */
+}
+
+/* কার্ট মেনু আইটেমটিকে রিলেটিভ করতে হবে যেন ডটটি এর ভেতরেই থাকে */
+.cart-nav {
+    position: relative;
+}
+
+
+.more-products-btn {
+    background-color: #c62828; /* তোমার থিমের লাল কালার */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.more-products-btn:hover {
+    transform: scale(1.05);
+    background-color: #b71c1c;
+    box-shadow: 0 6px 20px rgba(198, 40, 40, 0.4);
+}
+
+.more-products-btn:active {
+    transform: scale(0.98);
+}
+
+     </style>
+</head>
+
+      <div id="page-loader" class="page-loader">
+        <div class="loader-content">
+            <i class="fas fa-lightbulb idea-bulb"></i>
+            
+            <div class="wavy-text">
+                <span style="--i:1;">L</span>
+                <span style="--i:2;">o</span>
+                <span style="--i:3;">a</span>
+                <span style="--i:4;">d</span>
+                <span style="--i:5;">i</span>
+                <span style="--i:6;">n</span>
+                <span style="--i:7;">g</span>
+                <span style="--i:8;">.</span>
+                <span style="--i:9;">.</span>
+                <span style="--i:10;">.</span>
+            </div>
+        </div>
+    </div>
+
+
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="icon-btn" onclick="openDrawer()"><i class="fas fa-bars"></i></button>
+            <div class="header-title">
+                TashUra
+                <span class="slogan">-GADGET & LIFESTYLE-</span>
+            </div>
+        </div>
+        <a href="profile.html" class="header-profile-link">
+            <img src="profile0.jpg" id="headerProfilePic" alt="Profile" class="header-profile-img">
+        </a>
+
+    </header>
+
+    <main>
+        <!-- Banner Slider (full width, edge-to-edge, right under header) -->
+        <div class="banner-container">
+            <div class="banner-slider">
+                <img class="mySlides" src="https://res.cloudinary.com/dykw2sacb/image/upload/f_auto,q_auto/banner1_gpesej" alt="Banner 1" onerror="this.src='https://placehold.co/600x200?text=Banner+1'">
+                <img class="mySlides" src="https://res.cloudinary.com/dykw2sacb/image/upload/v1782056977/banner2_qhiszb.jpg" alt="Banner 2" onerror="this.src='https://placehold.co/600x200?text=Banner+2'">
+                <img class="mySlides" src="https://res.cloudinary.com/dykw2sacb/image/upload/v1782056977/banner3_q6bbte.jpg" alt="Banner 3" onerror="this.src='https://placehold.co/600x200?text=Banner+3'">
+            </div>
+        </div>
+
+        <!-- Smart Search Bar (floats over banner edge) -->
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="What are you looking for? (e.g. shirt, watch)..." onkeypress="handleSearchKeyPress(event)">
+                <button class="search-icon-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="search-suggestions" id="homeSearchSuggestions"></div>
+        </div>
+
+        <!-- Quick Event / Offer Chips -->
+        <div class="event-chip-section">
+            <a class="event-chip chip-flash" onclick="quickSearch('Flash Sale')"><i class="fas fa-bolt"></i> Flash Sale</a>
+            <a class="event-chip chip-free" onclick="quickSearch('Free Delivery')"><i class="fas fa-truck"></i> Free Delivery</a>
+            <a class="event-chip chip-new" onclick="quickSearch('New Products')"><i class="fas fa-star"></i> New Products</a>
+            <a class="event-chip chip-offer" onclick="quickSearch('Best Offers')"><i class="fas fa-tags"></i> Best Offers</a>
+        </div>
+
+               <section class="shortcut-section">
+            <div class="section-title">Shortcut Menu</div>
+            <div class="shortcut-grid">
+                
+                <a href="historyorder.html" class="shortcut-item">
+                    <div class="shortcut-icon icon-order"><i class="fas fa-file-invoice"></i></div>
+                    <p>Order<br>History</p>
+                </a>
+                
+                <a href="Orderpageinfo (1).html" class="shortcut-item">
+                    <div class="shortcut-icon icon-track"><i class="fas fa-box-open"></i></div>
+                    <p>Track Your<br>Order</p>
+                </a>
+                
+                <a href="IdeasSHOPChat.html" class="shortcut-item">
+                    <div class="shortcut-icon icon-chat"><i class="fas fa-comments"></i></div>
+                    <p>TashUra<br>Chat</p>
+                </a>
+                
+                <a href="profile.html" class="shortcut-item">
+                    <div class="shortcut-icon icon-account"><i class="fas fa-user-cog"></i></div>
+                    <p>Account &<br>Settings</p>
+                </a>
+                
+            </div>
+        </section>
+
+        <section class="marketing-banner">
+            <span class="marketing-tag">🔥 Hot Deal This Week</span>
+            <div class="marketing-row">
+                <div>
+                    <h3 class="marketing-title">Trending picks for your next order</h3>
+                    <p class="marketing-text">Explore the most loved products and grab amazing offers before they are gone.</p>
+                    <a href="category.html" class="marketing-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="marketing-badge"><i class="fas fa-fire"></i></div>
+            </div>
+        </section>
+
+        <section class="trending-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Hot & Trending Products</h2>
+                    <p class="section-subtitle">Best-selling items customers love right now</p>
+                </div>
+                <a href="category.html" class="view-all-link">See all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="product-grid" id="homeTrendingProductsGrid"></div>
+        </section>
+
+        <section class="all-products-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">All Products</h2>
+                    <p class="section-subtitle">Synced with the category page in real time</p>
+                </div>
+                <a href="category.html" class="view-all-link">See all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="product-grid" id="homeAllProductsGrid"></div>
+        </section>
+    </main>
+
+<div style="text-align: center; margin: 20px 0 100px;">
+    <button class="more-products-btn" onclick="navigateToCategory()">
+        <span>আরও প্রোডাক্ট দেখুন</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+
+
+    <!-- Product Details Modal Window (Full-Screen) -->
+    <div id="productModalOverlay" class="pdetail-overlay" onclick="closeProductModal()"></div>
+    <div id="productModal" class="pdetail-modal">
+        <div class="pdetail-header">
+            <h3>Product Details</h3>
+            <span class="pdetail-close" onclick="closeProductModal()">&times;</span>
+        </div>
+
+        <div class="pdetail-body">
+            <!-- Image Slider -->
+            <div class="pdetail-slider" id="modalSliderContainer">
+                <button class="pdetail-slide-btn pdetail-prev-btn" onclick="changeModalSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="pdetail-slider-wrapper" id="modalSliderWrapper"></div>
+                <button class="pdetail-slide-btn pdetail-next-btn" onclick="changeModalSlide(1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="pdetail-dots" id="modalSliderDots"></div>
+            </div>
+
+            <h2 id="modalTitle" class="pdetail-title"></h2>
+            <div id="modalPrice" class="pdetail-price"></div>
+            <p id="modalDesc" class="pdetail-desc"></p>
+
+            <!-- Specifications Box (Modified) -->
+            <div class="pdetail-specs-box" id="modalSpecsBox" style="display:none;">
+                <h4><i class="fas fa-list-ul"></i> Product Specifications</h4>
+                <div class="pdetail-specs-list" id="modalSpecsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer Info + Add to Cart -->
+        <div class="pdetail-footer">
+            <div class="pdetail-footer-info">
+                <span class="price-line" id="modalDashPrice">Price: ৳000</span>
+                <span class="code-line" id="modalDashCode">Code: 000</span>
+            </div>
+            <button class="pdetail-cart-btn" onclick="addToCart()"><span id="cartBtnText">Add to Cart</span> <i class="fas fa-shopping-cart"></i></button>
+        </div>
+    </div>
+
+    <!-- Toast Notification View -->
+    <div id="toastNotification" class="toast-box">
+        <i class="fas fa-check-circle"></i> Product added to cart successfully!
+    </div>
+
+    <!-- Drawer Menu -->
+    <div id="myDrawer" class="drawer">
+        <div class="drawer-header">
+            <span class="close-btn" onclick="closeDrawer()">&times;</span>
+            <div class="drawer-logo">
+                <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/80'">
+            </div>
+            <div class="drawer-title">TashUra</div>
+        </div>
+        <div class="drawer-links">
+            <a href="home.html" style="color:#E31E24; font-weight:bold;"><i class="fas fa-home"></i>Home</a>
+            <a href="category.html"><i class="fas fa-th-large"></i>Category</a>
+            <a href="order.html"><i class="fas fa-shopping-bag"></i>My Order</a>
+            <a href="IdeasSHOPChat.html"><i class="far fa-comments" style="color: #1976D2;"></i> TashUraChat</a>
+            <a href="Orderpageinfo (1).html"><i class="fas fa-map-marker-alt" style="color: #4caf50;"></i>Track My order </a>
+            <a href="https://www.facebook.com/share/18mjVpaJiV/" target="_blank"><i class="fab fa-facebook" style="color: #1877F2;"></i> Facebook Page</a>
+            <a href="help.html"><i class="fas fa-question-circle"></i>Customer care</a>
+        </div>
+        <div style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center;">
+            <p style="margin: 0; font-size: 12px; color: #aaa;">Version 1.1.1</p>
+            <p style="margin: 5px 0 0; font-size: 13px; color: #666; font-weight: 500;">
+                Developed by <span style="color: #E31E24; font-weight: bold;">MD Nabil</span>
+            </p>
+        </div>
+    </div>
+    <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
+   
+     
+
+    <!-- Bottom Navigation -->
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item active"><i class="fas fa-home"></i><p>Home</p></a>
+        <a href="category.html" class="nav-item"><i class="fas fa-th-large"></i><p>Category</p></a>
+        <a href="order.html" class="nav-item"><span class="nav-icon-wrap"><i class="fas fa-shopping-bag"></i><span class="nav-badge-dot" id="orderNavBadge"></span></span><p>Order</p></a>
+        <a href="store.html" class="nav-item"><i class="fas fa-store"></i><p>Store</p></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><p>Profile</p></a>
+        
+    </footer>
+
+       <script>
+        // লোডার হাইড করার মেইন ফাংশন
+        function hideLoader() {
+            const loader = document.getElementById('page-loader');
+            if(loader) {
+                loader.style.opacity = '0'; // আগে আস্তে করে অদৃশ্য হবে
+                setTimeout(() => {
+                    loader.style.display = 'none'; // তারপর জায়গা ছেড়ে দেবে
+                }, 400);
+            }
+        }
+
+        // ১. পেজ পুরোপুরি লোড হয়ে গেলে লোডার সরিয়ে ফেলবে
+        window.addEventListener('load', function() {
+            hideLoader();
+        });
+
+        // ২. ফেইলসেফ: কোনো কারণে পেজ আটকে গেলে ৩ সেকেন্ড পর অটোমেটিক লোডার বন্ধ হয়ে যাবে
+        setTimeout(function() {
+            hideLoader();
+        }, 3000);
+
+        // ৩. নিচের মেনুতে (Home, Store ইত্যাদিতে) ক্লিক করলে আবার লোডার দেখাবে
+        document.querySelectorAll('.bottom-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                const loader = document.getElementById('page-loader');
+                if(loader) {
+                    loader.style.display = 'flex';
+                    loader.style.opacity = '1';
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        // Drawer Logic
+        function openDrawer() {
+            document.getElementById("myDrawer").classList.add("open");
+            document.getElementById("overlay").classList.add("open");
+            document.body.classList.add('drawer-open');
+        }
+        function closeDrawer() {
+            document.getElementById("myDrawer").classList.remove("open");
+            document.getElementById("overlay").classList.remove("open");
+            document.body.classList.remove('drawer-open');
+        }
+
+        // Search Focus Logic
+        function focusSearch() {
+            document.getElementById("searchInput").focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const fallbackProducts = [
+            {
+                code: 'G-SHIRT-01',
+                title: 'Premium Cotton Shirt',
+                price: '৳758',
+                images: ['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400'],
+                desc: 'Comfortable premium cotton shirt suitable for daily wear and office use.',
+                specs: ['Fabric: 100% Premium Cotton', 'Sizes: M, L, XL, XXL'],
+                category: 'gents'
+            },
+            {
+                code: 'E-EARBUD-01',
+                title: 'Wireless Earbuds',
+                price: '৳990',
+                images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400'],
+                desc: 'Rich sound quality with a sleek and lightweight design.',
+                specs: ['Backup: 4-5 hours', 'Waterproof: IPX5'],
+                category: 'electronics'
+            },
+            {
+                code: 'W-WATCH-01',
+                title: 'Stylish Smart Watch',
+                price: '৳1200',
+                images: ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400'],
+                desc: 'Full touch display with health tracking features and premium look.',
+                specs: ['Display: 1.69 inch HD', 'Battery: 7-10 days'],
+                category: 'watch'
+            },
+            {
+                code: 'L-BAG-01',
+                title: 'Vanity Bag',
+                price: '৳1250',
+                images: ['https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'],
+                desc: 'Elegant ladies vanity bag with premium finish and multiple pockets.',
+                specs: ['Material: Premium PU Leather', 'Chamber: 3 large pockets'],
+                category: 'ladies'
+            }
+        ];
+
+        function getSharedProducts() {
+            try {
+                const storedProducts = JSON.parse(localStorage.getItem('megaProductList') || 'null');
+                if (Array.isArray(storedProducts) && storedProducts.length) {
+                    return storedProducts;
+                }
+            } catch (error) {
+                console.log('No shared product list found yet.', error);
+            }
+
+            localStorage.setItem('megaProductList', JSON.stringify(fallbackProducts));
+            localStorage.setItem('megaProductListVersion', 'home-seed-v1');
+            return fallbackProducts;
+        }
+
+        function normalizePriceValue(value) {
+            if (typeof value === 'number') return value;
+            if (!value) return 0;
+            const bengaliToEnglish = { '০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9' };
+            const normalized = String(value).replace(/[০-৯]/g, ch => bengaliToEnglish[ch] || ch);
+            const parsed = parseInt(normalized.replace(/[^0-9]/g, ''), 10);
+            return Number.isNaN(parsed) ? 0 : parsed;
+        }
+
+        function resolveProductImage(product) {
+            const image = Array.isArray(product.images) && product.images.length ? product.images[0] : '';
+            if (!image || /^\d+$/.test(String(image).trim())) {
+                return 'https://placehold.co/300x300?text=Ideas+SHOP';
+            }
+            return image;
+        }
+
+        function getBadgeText(product, index) {
+            if (product && (product.badgeText || product.badgeType)) {
+                return product.badgeText || product.badgeType;
+            }
+
+            const badgeList = ['New', 'Hot', 'Offer'];
+            return badgeList[index] || '';
+        }
+
+        function renderHomeTrendingProducts() {
+            const grid = document.getElementById('homeTrendingProductsGrid');
+            if (!grid) return;
+
+            const products = getSharedProducts().slice(0, 2);
+            grid.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const card = document.createElement('article');
+                card.className = 'product-card';
+                card.tabIndex = 0; // make focusable for keyboard activation
+                card.setAttribute('role', 'button');
+                card.onclick = () => openProductModal(
+                    product.title || 'Ideas SHOP Product',
+                    normalizePriceValue(product.price),
+                    [resolveProductImage(product)],
+                    product.code || 'IDEAS-001',
+                    product.desc || 'Premium product from Ideas SHOP.',
+                    Array.isArray(product.specs) ? product.specs : []
+                );
+
+                const badgeText = index === 0 ? 'New' : 'Hot';
+                card.innerHTML = `
+                    <div class="badge">${badgeText}</div>
+                    <img src="${resolveProductImage(product)}" alt="${product.title || 'Product'}" class="product-img" onerror="this.src='https://placehold.co/150'">
+                    <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(4.5)</span></div>
+                    <h3 class="product-name">${product.title || 'Ideas SHOP Product'}</h3>
+                    <p class="product-price">${product.price || '৳0'}</p>
+                    <button class="buy-btn"><i class="fas fa-shopping-bag"></i> Buy Now</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderHomeAllProducts() {
+            const grid = document.getElementById('homeAllProductsGrid');
+            if (!grid) return;
+
+            const allProducts = getSharedProducts();
+            grid.innerHTML = '';
+
+            if (!allProducts.length) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#6b7280;">No products available yet. Add one from the category page to see it here.</div>';
+                return;
+            }
+
+            // ট্রেন্ডিং সেকশনে প্রথম ২-৩টা প্রোডাক্ট দেখানো হয়, তাই All Products এ
+            // ডুপ্লিকেট এড়াতে শুরুর ৩টা বাদ দেওয়া হচ্ছে।
+            let products = allProducts.slice(3);
+
+            // ক্যাটাগরি পেজ থেকে সর্বশেষ (নতুন) যে প্রোডাক্টটা যুক্ত হয়েছে, সেটাকে
+            // সবার সামনে আনা হচ্ছে — যেন বাদ দেওয়া ৩টার জায়গাটা পূরণ হয় এবং নতুন
+            // প্রোডাক্টটা সবচেয়ে আগে দেখা যায়।
+            const latestProduct = allProducts[allProducts.length - 1];
+            if (latestProduct) {
+                products = products.filter(p => p !== latestProduct);
+                products.unshift(latestProduct);
+            }
+
+            if (!products.length) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#6b7280;">No products available yet. Add one from the category page to see it here.</div>';
+                return;
+            }
+
+            products.slice(0, 8).forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.tabIndex = 0; // make focusable for keyboard activation
+                card.setAttribute('role', 'button');
+                card.onclick = () => openProductModal(
+                    product.title || 'Ideas SHOP Product',
+                    normalizePriceValue(product.price),
+                    [resolveProductImage(product)],
+                    product.code || 'IDEAS-001',
+                    product.desc || 'Premium product from Ideas SHOP.',
+                    Array.isArray(product.specs) ? product.specs : []
+                );
+
+                const badgeText = getBadgeText(product, index);
+                const badgeHtml = badgeText ? `<div class="badge">${badgeText}</div>` : '';
+
+                card.innerHTML = `
+                    ${badgeHtml}
+                    <img src="${resolveProductImage(product)}" alt="${product.title || 'Product'}" class="product-img" onerror="this.src='https://placehold.co/150'">
+                    <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(4.5)</span></div>
+                    <h3 class="product-name">${product.title || 'Ideas SHOP Product'}</h3>
+                    <p class="product-price">${product.price || '৳0'}</p>
+                    <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addProductFromForm(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('productNameInput').value.trim();
+            const price = document.getElementById('productPriceInput').value.trim();
+            const image = document.getElementById('productImageInput').value.trim();
+            const category = document.getElementById('productCategoryInput').value.trim() || 'general';
+            const desc = document.getElementById('productDescInput').value.trim() || 'Newly added product from Ideas SHOP.';
+            const msgBox = document.getElementById('quickAddMessage');
+
+            if (!name || !price) {
+                if (msgBox) {
+                    msgBox.textContent = 'অনুগ্রহ করে নাম ও দাম লিখুন.';
+                }
+                return;
+            }
+
+            const products = getSharedProducts();
+            const newProduct = {
+                code: `ADD-${Date.now()}`,
+                title: name,
+                price: price,
+                images: image ? [image] : ['https://placehold.co/300x300?text=Ideas+SHOP'],
+                desc: desc,
+                specs: ['Added from quick form', 'Ready to view on home page'],
+                category: category
+            };
+
+            products.unshift(newProduct);
+            localStorage.setItem('megaProductList', JSON.stringify(products));
+            renderHomeAllProducts();
+
+            document.getElementById('quickAddProductForm').reset();
+            if (msgBox) {
+                msgBox.textContent = 'Product added successfully.';
+            }
+        }
+
+        function renderHomeSearchSuggestions(query) {
+            const suggestionsBox = document.getElementById('homeSearchSuggestions');
+            if (!suggestionsBox) return;
+            const value = (query || '').trim().toLowerCase();
+            if (!value) {
+                suggestionsBox.innerHTML = '';
+                suggestionsBox.classList.remove('show');
+                return;
+            }
+
+            const products = getSharedProducts().filter((product) => {
+                const haystack = `${product.title || ''} ${product.code || ''} ${product.desc || ''} ${product.category || ''}`.toLowerCase();
+                return haystack.includes(value);
+            }).slice(0, 5);
+
+            if (!products.length) {
+                suggestionsBox.innerHTML = '<div class="search-suggestion-item"><span>No matching products found</span></div>';
+                suggestionsBox.classList.add('show');
+                return;
+            }
+
+            suggestionsBox.innerHTML = products.map((product) => `
+                <div class="search-suggestion-item" onclick="selectHomeSuggestion('${(product.title || '').replace(/'/g, "\\'")}')">
+                    <div class="suggestion-label">
+                        <strong>${product.title || 'Product'}</strong>
+                        <span>${product.code || ''}</span>
+                    </div>
+                    <span class="suggestion-badge">${product.category || 'product'}</span>
+                </div>
+            `).join('');
+            suggestionsBox.classList.add('show');
+        }
+
+        function selectHomeSuggestion(title) {
+            const input = document.getElementById('searchInput');
+            if (input) input.value = title;
+            localStorage.setItem('userSearchQuery', title);
+            window.location.href = 'category.html';
+        }
+
+        // --- Smart Search Logic ---
+        function executeSearch() {
+            let query = document.getElementById("searchInput").value.trim();
+            if(query !== "") {
+                localStorage.setItem('userSearchQuery', query);
+                window.location.href = "category.html";
+            }
+        }
+
+        function handleSearchKeyPress(event) {
+            if (event.key === "Enter") { executeSearch(); }
+        }
+
+        function quickSearch(keyword) {
+            localStorage.setItem('userSearchQuery', keyword);
+            window.location.href = "category.html";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            getSharedProducts();
+            renderHomeTrendingProducts();
+            renderHomeAllProducts();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => renderHomeSearchSuggestions(searchInput.value));
+                searchInput.addEventListener('focus', () => renderHomeSearchSuggestions(searchInput.value));
+            }
+        });
+
+        if (window.BroadcastChannel) {
+            const sharedChannel = new BroadcastChannel('ideas-shop-products');
+            sharedChannel.onmessage = (event) => {
+                if (event.data && event.data.type === 'product-list-updated') {
+                    renderHomeTrendingProducts();
+                    renderHomeAllProducts();
+                }
+            };
+        }
+
+        window.addEventListener('storage', function (event) {
+            if (event.key === 'megaProductList') {
+                renderHomeTrendingProducts();
+                renderHomeAllProducts();
+            }
+        });
+
+        // Banner Slider Logic
+        let slideIndex = 0;
+        showSlides();
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            if(slides[slideIndex-1]){
+                slides[slideIndex-1].style.display = "block";
+            }
+            setTimeout(showSlides, 3000); 
+        }
+
+                   // --- Dynamic Product Modal & Notification System ---
+        let modalImages = [];
+        let currentImageIndex = 0;
+        let currentProductData = null;
+
+        function openProductModal(name, price, images, code, description, specsArray) {
+            document.getElementById("modalTitle").innerText = name;
+            document.getElementById("modalPrice").innerText = "Price: ৳" + price;
+            document.getElementById("modalDashPrice").innerText = "Price: ৳" + price;
+            document.getElementById("modalDashCode").innerText = "Code: " + (code || "Special-Products");
+            document.getElementById("modalDesc").innerText = description;
+
+            // স্পেসিফিকেশন বক্স রেন্ডার করা (Modified)
+            const specsBox = document.getElementById("modalSpecsBox");
+            const specsContainer = document.getElementById("modalSpecsContainer");
+            specsContainer.innerHTML = "";
+            if (specsArray && specsArray.length > 0) {
+                specsBox.style.display = "block";
+                specsArray.forEach(spec => {
+                    let key = spec, val = "";
+                    if (typeof spec === 'string' && spec.includes(':')) {
+                        let parts = spec.split(':');
+                        key = parts[0].trim();
+                        val = parts.slice(1).join(':').trim();
+                    }
+                    const row = document.createElement('div');
+                    row.className = 'pdetail-spec-row';
+                    if (val) {
+                        row.innerHTML = `<span class="spec-key">${key}</span><span class="spec-val">${val}</span>`;
+                    } else {
+                        row.innerHTML = `<span class="spec-val" style="text-align:left;">${key}</span>`;
+                    }
+                    specsContainer.appendChild(row);
+                });
+            } else {
+                specsBox.style.display = "none";
+            }
+
+            // কার্টের জন্য ডেটা প্রস্তুত (ছবি ও কোডসহ, যাতে order.html-এর কার্ট থাম্বনেইল কাজ করে)
+            currentProductData = {
+                name: name,
+                price: parseInt(price),
+                qty: 1,
+                image: (images && images.length > 0) ? images[0] : '',
+                code: code || ''
+            };
+
+            // স্লাইডার সেটআপ
+            modalImages = images && images.length > 0 ? images : ['https://placehold.co/500'];
+            currentImageIndex = 0;
+            const wrapper = document.getElementById('modalSliderWrapper');
+            const dotsContainer = document.getElementById('modalSliderDots');
+            wrapper.innerHTML = ''; dotsContainer.innerHTML = '';
+
+            modalImages.forEach((imgSrc, index) => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.onerror = function() { this.src = 'https://placehold.co/500'; };
+                wrapper.appendChild(img);
+                const dot = document.createElement('div');
+                dot.className = 'pdetail-dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToModalSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            document.querySelector('.pdetail-prev-btn').style.display = modalImages.length > 1 ? 'flex' : 'none';
+            document.querySelector('.pdetail-next-btn').style.display = modalImages.length > 1 ? 'flex' : 'none';
+            updateModalSliderPosition();
+
+            // ফুল-স্ক্রিন মডাল খোলা (নিচ থেকে স্লাইড করে উপরে আসবে)
+            document.getElementById('productModalOverlay').classList.add('active');
+            document.getElementById('productModal').classList.add('active');
+            document.body.classList.add('no-scroll');
+        }
+
+        function changeModalSlide(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex >= modalImages.length) currentImageIndex = 0;
+            if (currentImageIndex < 0) currentImageIndex = modalImages.length - 1;
+            updateModalSliderPosition();
+        }
+
+        function goToModalSlide(index) {
+            currentImageIndex = index;
+            updateModalSliderPosition();
+        }
+
+        function updateModalSliderPosition() {
+            document.getElementById('modalSliderWrapper').style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            document.querySelectorAll('.pdetail-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentImageIndex);
+            });
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModalOverlay').classList.remove('active');
+            document.getElementById('productModal').classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+
+        // কার্ট ডেটা লোকাল স্টোরেজে সেভ করার ফাংশন
+        function addToCart() {
+            if (!currentProductData) return;
+
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            let existingItem = cart.find(item => item.name === currentProductData.name);
+            
+            if (existingItem) {
+                existingItem.qty += 1; 
+            } else {
+                cart.push(currentProductData); 
+            }
+
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            updateCartBadge();
+            triggerCartNotification();
+        }
+
+        function updateCartBadge() {
+            let badge = document.getElementById('orderNavBadge');
+            if (!badge) return;
+            let savedCart = JSON.parse(localStorage.getItem('myCart')) || [];
+            if (savedCart.length > 0) {
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+        updateCartBadge();
+
+        function triggerCartNotification() {
+    const modal = document.getElementById('productModal');
+    
+    // একটি সুন্দর জুম-আউট ও ফেড এনিমেশন অ্যাপ্লাই করা হচ্ছে
+    modal.style.transition = "transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease";
+    modal.style.transform = "scale(0.85) translateY(30px)";
+    modal.style.opacity = "0";
+
+    // এনিমেশন শেষ হওয়ার জন্য ৩৫০ মিলি-সেকেন্ড অপেক্ষা করে তারপর উইন্ডো ক্লোজ করা
+    setTimeout(() => {
+        closeProductModal(); // উইন্ডো হাইড করা
+        
+        // পরেরবার ওপেন করার জন্য উইন্ডোর স্টাইল আগের অবস্থায় রিসেট করা
+        setTimeout(() => {
+            modal.style.transition = "top 0.35s ease-in-out";
+            modal.style.transform = "none";
+            modal.style.opacity = "1";
+        }, 100);
+    }, 350); 
+
+    // টোস্ট নোটিফিকেশন দেখানো (রেড ডট ও অন্যান্য লজিক আগের মতোই কাজ করবে)
+    let toast = document.getElementById("toastNotification");
+    toast.className = "toast-box active-toast";
+    
+    setTimeout(() => {
+        toast.className = "toast-box";
+    }, 3500);
+}
+
+
+     // হোমপেজের window.onload বা স্ক্রিপ্টের শুরুতে এটা যোগ করুন
+let savedImg = localStorage.getItem('userProfileImage');
+const defaultImage = "profile0.jpg";
+
+if (savedImg) {
+    document.getElementById('headerProfilePic').src = savedImg;
+} else {
+    document.getElementById('headerProfilePic').src = defaultImage;
+}
+
+
+// এই ফাংশনটি নিশ্চিত করো যে স্ক্রিপ্ট ট্যাগের ভেতরে আছে
+function navigateToCategory() {
+    console.log("Button Clicked!"); // বাটন ক্লিক করলে কনসোলে দেখাবে
+    
+    // লোডার চেক করা
+    const loader = document.getElementById('page-loader');
+    if(loader) {
+        loader.style.display = 'flex';
+        loader.style.opacity = '1';
+    }
+    
+    // রিডাইরেক্ট হওয়া
+    setTimeout(() => {
+        window.location.href = 'category.html';
+    }, 500);
+}
+
+
+    </script>
+</body>
+</html>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.shortcut-item, .event-chip');
+    items.forEach(el => {
+        // pointerdown => immediate pressed feedback
+        el.addEventListener('pointerdown', (e) => {
+            el.classList.add('pressed');
+        });
+        // pointerup => remove pressed, trigger pop animation
+        el.addEventListener('pointerup', (e) => {
+            el.classList.remove('pressed');
+            // small delay to allow pointerup visual -> then pop
+            window.requestAnimationFrame(() => {
+                el.classList.add('tap-pop');
+                // remove after animation
+                setTimeout(() => el.classList.remove('tap-pop'), 360);
+            });
+        });
+        // cancel or leave
+        el.addEventListener('pointercancel', () => el.classList.remove('pressed'));
+        el.addEventListener('pointerleave', () => el.classList.remove('pressed'));
+
+        // keyboard activation support: Spacebar triggers animation+prevents scrolling, Enter should still activate links
+        el.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                el.classList.add('tap-pop');
+                setTimeout(() => el.classList.remove('tap-pop'), 360);
+            } else if (e.key === 'Enter') {
+                // allow default (navigation) but show the animation briefly
+                el.classList.add('tap-pop');
+                setTimeout(() => el.classList.remove('tap-pop'), 360);
+            }
+        });
+    });
+    // Product card delegated press/pop handlers (works for dynamically created cards)
+    let activeCard = null;
+    document.addEventListener('pointerdown', (e) => {
+        const card = e.target.closest && e.target.closest('.product-card');
+        if (card) {
+            activeCard = card;
+            card.classList.add('pressed');
+        }
+    });
+    document.addEventListener('pointerup', (e) => {
+        const card = (e.target && e.target.closest && e.target.closest('.product-card')) || activeCard;
+        if (card) {
+            card.classList.remove('pressed');
+            window.requestAnimationFrame(() => {
+                card.classList.add('tap-pop');
+                setTimeout(() => card.classList.remove('tap-pop'), 360);
+            });
+        }
+        activeCard = null;
+    });
+    document.addEventListener('pointercancel', () => { if (activeCard) { activeCard.classList.remove('pressed'); activeCard = null; } });
+    document.addEventListener('pointerleave', (e) => { const c = e.target && e.target.closest && e.target.closest('.product-card'); if (c) c.classList.remove('pressed'); });
+
+    // keyboard support for focused product-card
+    document.addEventListener('keydown', (e) => {
+        const el = document.activeElement;
+        if (el && el.classList && el.classList.contains('product-card')) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                el.classList.add('tap-pop');
+                setTimeout(() => el.classList.remove('tap-pop'), 360);
+            } else if (e.key === 'Enter') {
+                el.classList.add('tap-pop');
+                setTimeout(() => el.classList.remove('tap-pop'), 360);
+                // let the existing click handler execute
+            }
+        }
+    });
+});
+</script>

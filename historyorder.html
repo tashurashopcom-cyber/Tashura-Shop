@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Ideas SHOP - Order History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #E31E24;
+            --primary-dark: #B3151A;
+            --primary-light: #FF5A5F;
+            --navy: #0D1B2A;
+            --navy-light: #15324d;
+            --accent-blue: #1976D2;
+            --accent-blue-dark: #115293;
+            --gradient-orange: linear-gradient(120deg, #E31E24 0%, #B3151A 60%, #8a0f12 100%);
+            --gradient-navy: linear-gradient(120deg, #15324d 0%, #0D1B2A 70%, #060e16 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+            padding-bottom: 90px; /* বটম ন্যাভের জন্য জায়গা */
+        }
+
+        /* --- Header --- */
+        .header {
+            background: var(--gradient-orange);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            box-shadow: 0 4px 15px rgba(13, 27, 42, 0.25);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title { 
+            font-size: 20px; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Main Content Container --- */
+        .main-container {
+            padding: 20px 15px;
+        }
+
+        /* --- Order History Card Styles (Professional Look) --- */
+        .empty-history { 
+            text-align: center; 
+            color: #888; 
+            font-size: 16px; 
+            padding: 50px 20px; 
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-top: 20px;
+        }
+        .empty-history i {
+            color: var(--accent-blue);
+        }
+
+        .order-history-card {
+            background: #ffffff; 
+            border: 1px solid #eef0f5; 
+            border-radius: 16px;
+            padding: 18px; 
+            margin-bottom: 16px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .order-history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .oh-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 12px; 
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .oh-id { font-weight: 800; color: var(--accent-blue-dark); font-size: 15px; }
+        .oh-date { font-size: 12px; color: #777; font-weight: 500;}
+        
+        .oh-status {
+            display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 12px;
+            border-radius: 20px; background: #e8f5e9; color: #2e7d32; margin-bottom: 12px;
+        }
+
+        .oh-item-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px dashed #f0f0f0;
+        }
+        .oh-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .oh-item-info p { margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #333; }
+        .oh-item-info span { font-size: 12px; color: #666; background: #f4f6f9; padding: 2px 6px; border-radius: 6px;}
+        
+        .oh-copy-btn {
+            background: #edf6ff; color: var(--accent-blue-dark); border: none; border-radius: 8px;
+            padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; 
+            white-space: nowrap; transition: 0.3s;
+        }
+        .oh-copy-btn:hover { background: var(--primary); color: white; }
+        .oh-copy-btn.copied { background: #10b981; color: white; }
+
+        .oh-total-row {
+            display: flex; justify-content: space-between; margin-top: 10px;
+            padding-top: 12px; border-top: 1px solid #eef0f5; font-size: 15px; 
+            font-weight: 800; color: #1e293b;
+        }
+
+        /* --- Premium Custom Preloader CSS --- */
+        .page-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #ffffff; display: flex; justify-content: center;
+            align-items: center; z-index: 99999; transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .loader-content { text-align: center; }
+        .idea-bulb {
+            font-size: 70px; color: #dcdde1; 
+            animation: light-glow 1.5s infinite alternate ease-in-out; margin-bottom: 20px;
+        }
+        @keyframes light-glow {
+            0% { color: #dcdde1; text-shadow: none; transform: scale(1); }
+            100% {
+                color: #ffca28; 
+                text-shadow: 0 0 15px rgba(255, 202, 40, 0.6), 0 0 30px rgba(255, 193, 7, 0.8), 0 0 50px rgba(255, 179, 0, 1);
+                transform: scale(1.05); 
+            }
+        }
+        .wavy-text { position: relative; display: flex; justify-content: center; }
+        .wavy-text span {
+            position: relative; display: inline-block; font-size: 22px; font-weight: 800;
+            color: #0b1e36; text-transform: uppercase; letter-spacing: 2px;
+            animation: wave-anim 1.5s infinite ease-in-out; animation-delay: calc(0.1s * var(--i)); 
+        }
+        @keyframes wave-anim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); color: #ffca28; }
+        }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: white; display: flex; justify-content: space-around;
+            padding: 12px 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 100;
+            border-top-left-radius: 20px; border-top-right-radius: 20px;
+        }
+        .nav-item { text-align: center; color: #9e9e9e; text-decoration: none; flex-grow: 1; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); transform: translateY(-2px); }
+        .nav-item i { font-size: 22px; margin-bottom: 4px; }
+        .nav-item p { margin: 0; font-size: 12px; font-weight: 600; }
+    
+/* ব্যাক বাটনের ডিজাইন */
+.back-btn {
+    position: absolute;
+    left: 15px;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 5px;
+}
+
+/* হেডারের পজিশন ঠিক করা যাতে ব্যাক বাটনটি লেফটে থাকে */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    /* বর্তমান কোডের সাথে পজিশন রিলেটিভ করে দিন */
+    position: relative; 
+}
+
+
+   </style>
+</head>
+
+<body>
+
+    <div id="page-loader" class="page-loader">
+        <div class="loader-content">
+            <i class="fas fa-lightbulb idea-bulb"></i>
+            <div class="wavy-text">
+                <span style="--i:1;">L</span><span style="--i:2;">o</span><span style="--i:3;">a</span><span style="--i:4;">d</span><span style="--i:5;">i</span><span style="--i:6;">n</span><span style="--i:7;">g</span><span style="--i:8;">.</span><span style="--i:9;">.</span><span style="--i:10;">.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+<header class="header">
+    <!-- এই অংশটি নতুন যোগ করলাম -->
+    <a href="home.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    
+    <div class="header-title">
+        <i class="fas fa-history"></i> My Order History
+    </div>
+</header>
+
+
+    <main class="main-container">
+        <div id="orderHistoryList">
+            </div>
+    </main>
+
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item"><i class="fas fa-home"></i> <p>Home</p></a>
+        <a href="category.html" class="nav-item"><i class="fas fa-th-large"></i> <p>Category</p></a>
+        <a href="order.html" class="nav-item"><i class="fas fa-shopping-bag"></i> <p>Cart</p></a>
+        <a href="store.html" class="nav-item"><i class="fas fa-store"></i><p>Store</p></a>
+        <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i> <p>Profile</p></a>
+    </footer>
+
+    <script>
+        // --- 30 Days Auto Delete & Load History Logic ---
+        function loadAndCleanOrderHistory() {
+            let history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            let container = document.getElementById('orderHistoryList');
+            
+            // বর্তমান সময় (মিলি সেকেন্ডে)
+            const now = new Date().getTime();
+            // ৩০ দিন = ৩০ * ২৪ ঘন্টা * ৬০ মিনিট * ৬০ সেকেন্ড * ১০০০ মিলিসেকেন্ড
+            const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+            let updatedHistory = [];
+            let isDataChanged = false;
+
+            history.forEach(order => {
+                // তারিখ পার্স করার চেষ্টা (যদি আপনার সেভ করা ফরমেট পার্স করা যায়)
+                let orderDate = new Date(order.date).getTime();
+                
+                // যদি ৩০ দিন পার হয়ে যায়, তবে স্কিপ করবে (ফলে নতুন অ্যারেতে যোগ হবে না)
+                if (!isNaN(orderDate) && (now - orderDate) > THIRTY_DAYS_MS) {
+                    isDataChanged = true; 
+                } else {
+                    updatedHistory.push(order);
+                }
+            });
+
+            // যদি কোনো পুরনো ডেটা বাদ পড়ে থাকে, তবে স্টোরেজ আপডেট করে দেব
+            if (isDataChanged) {
+                localStorage.setItem('orderHistory', JSON.stringify(updatedHistory));
+            }
+
+            // HTML এ রেন্ডার করা
+            container.innerHTML = "";
+            if (updatedHistory.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-history">
+                        <i class="fas fa-box-open" style="font-size:45px; display:block; margin-bottom:15px;"></i>
+                        <h3 style="margin:0 0 5px; color:#555;">কোনো অর্ডার নেই</h3>
+                        <p style="margin:0; font-size:13px;">আপনার কারেন্ট অর্ডার হিস্ট্রি একদম ফাঁকা!</p>
+                    </div>`;
+            } else {
+                updatedHistory.forEach(function(order) {
+                    let itemsHtml = "";
+                    order.items.forEach(function(item) {
+                        // হাইফেন ওয়ান (-1) রিমুভ করার জাদুকরী লজিক
+                        let cleanCode = item.code;
+                        if (cleanCode && cleanCode.endsWith("-1")) {
+                            cleanCode = cleanCode.slice(0, -2);
+                        }
+
+                        itemsHtml += `
+                            <div class="oh-item-row">
+                                <div class="oh-item-info">
+                                    <p>${item.name}</p>
+                                    <span>Qty: ${item.qty} &bull; কোড: ${cleanCode}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    let statusUI = order.status ? `<span class="oh-status"><i class="fas fa-check-circle"></i> ${order.status}</span>` : `<span class="oh-status" style="background:#fff3cd; color:#b8860b;"><i class="fas fa-clock"></i> Pending</span>`;
+
+                    let cardHtml = `
+                        <div class="order-history-card">
+                            <div class="oh-top">
+                                <span class="oh-id"><i class="fas fa-receipt"></i> ${order.orderId}</span>
+                                <span class="oh-date">${order.date}</span>
+                            </div>
+                            <button class="oh-copy-btn" style="margin-bottom:12px;" onclick="copyOrderId(this, '${order.orderId}')">
+                                <i class="fas fa-copy"></i> অর্ডার আইডি কপি
+                            </button>
+                            ${statusUI}
+                            <div>${itemsHtml}</div>
+                            <div class="oh-total-row">
+                                <span>সর্বমোট:</span>
+                                <span style="color:#ef4444;">${order.grandTotal}</span>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                });
+            }
+        }
+
+        // --- অর্ডার আইডি কপি করার ফাংশন ---
+        function copyOrderId(btn, orderId) {
+            function showCopied() {
+                let original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> হয়েছে';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.classList.remove('copied');
+                }, 1200);
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(orderId).then(showCopied).catch(() => {
+                    fallbackCopyText(orderId, showCopied);
+                });
+            } else {
+                fallbackCopyText(orderId, showCopied);
+            }
+        }
+
+        function fallbackCopyText(text, callback) {
+            let tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                callback();
+            } catch (err) {
+                alert("কপি করতে সমস্যা হয়েছে, ম্যানুয়ালি কপি করুন: " + text);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // --- Preloader Logic ---
+        function hideLoader() {
+            const loader = document.getElementById('page-loader');
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 400);
+            }
+        }
+
+        window.addEventListener('load', function() {
+            hideLoader();
+            // পেজ লোড হওয়ার সাথেই হিস্ট্রি কল হবে
+            loadAndCleanOrderHistory(); 
+        });
+
+        setTimeout(function() { hideLoader(); }, 3000);
+
+        document.querySelectorAll('.bottom-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                const loader = document.getElementById('page-loader');
+                if(loader) {
+                    loader.style.display = 'flex';
+                    loader.style.opacity = '1';
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

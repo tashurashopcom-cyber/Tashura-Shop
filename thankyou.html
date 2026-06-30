@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Ideas SHOP - ধন্যবাদ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ty-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 85%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            animation: popUp 0.5s ease;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .ty-icon {
+            font-size: 70px;
+            color: #ffca28;
+            margin-bottom: 15px;
+            animation: light-glow 1.3s infinite alternate ease-in-out;
+        }
+
+        @keyframes light-glow {
+            0% { text-shadow: none; transform: scale(1); }
+            100% {
+                text-shadow: 0 0 15px rgba(255, 202, 40, 0.6), 0 0 30px rgba(255, 193, 7, 0.8);
+                transform: scale(1.08);
+            }
+        }
+
+        .ty-card h2 {
+            margin: 5px 0 8px;
+            color: #3f51b5;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .ty-card p {
+            color: #777;
+            font-size: 14px;
+            margin: 4px 0;
+            line-height: 1.5;
+        }
+
+        .ty-divider {
+            width: 50px;
+            height: 3px;
+            background: #ffca28;
+            border-radius: 5px;
+            margin: 16px auto;
+        }
+
+        .progress-wrap {
+            margin-top: 22px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f2f5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            border-radius: 10px;
+            animation: shrinkBar 3s linear forwards;
+        }
+
+        @keyframes shrinkBar {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        .redirect-label {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ty-card">
+        <i class="fas fa-lightbulb ty-icon"></i>
+        <h2>ধন্যবাদ!</h2>
+        <p>Ideas SHOP এর সাথে থাকার জন্য আমরা কৃতজ্ঞ</p>
+        <div class="ty-divider"></div>
+        <p>আপনার অর্ডার আইডি সফলভাবে কপি হয়ে গেছে</p>
+
+        <div class="progress-wrap">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="redirect-label">হোম পেজে নিয়ে যাওয়া হচ্ছে...</div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            window.location.href = "home.html";
+        }, 5000);
+    </script>
+
+</body>
+</html>

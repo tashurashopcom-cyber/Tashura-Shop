@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas Shop Support</title>
+    <style>
+        /* বেসিক স্টাইলিং */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* চ্যাটবক্সের মূল কন্টেইনার */
+        #chat-container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            height: 95vh;
+            overflow: hidden;
+        }
+
+        /* হেডার ও প্রোফাইল ছবি */
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        /* চ্যাটের মেসেজ দেখানোর জায়গা */
+        #chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #ece5dd;
+        }
+
+        /* মেসেজ বাবল ডিজাইন */
+        .msg-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 15px;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .bot-msg {
+            background-color: #fff;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .user-msg {
+            background-color: #dcf8c6;
+            color: #333;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* সাজেস্টেড প্রশ্নের বাটন */
+        #question-area {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            white-space: nowrap;
+            border-top: 1px solid #ddd;
+        }
+
+        /* স্ক্রলবার হাইড করার জন্য */
+        #question-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        .faq-btn {
+            background-color: #fff;
+            border: 1px solid #007bff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #007bff;
+            transition: 0.2s;
+        }
+
+        .faq-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* কাস্টম টাইপিং এরিয়া (কিবোর্ড সাপোর্ট) */
+        #input-area {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 15px;
+            outline: none;
+            background-color: #f4f4f4;
+        }
+
+        #send-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        #send-btn:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chat-container">
+        <div class="chat-header">
+            <img src="logo.png" alt="Logo" class="profile-pic" id="shop-logo">
+            <span>Ideas Shop সাপোর্ট</span>
+        </div>
+        
+        <div id="chat-box">
+            <div class="msg-bubble bot-msg">
+                হ্যালো! Ideas Shop-এ আপনাকে স্বাগতম। নিচে থেকে আপনার প্রশ্নটি বেছে নিন অথবা মেসেজ টাইপ করুন।
+            </div>
+        </div>
+
+        <div id="question-area">
+            <button class="faq-btn" onclick="askQuestion('freedelivery', 'আপনারা কি ফ্রি ডেলিভারি দিয়ে থাকেন?')">আপনারা কি ফ্রী ডেলিভারি দিয়ে থাকেন?</button>
+            <button class="faq-btn" onclick="askQuestion('delivery', 'ডেলিভারি চার্জ কত?')">ডেলিভারি চার্জ কত?</button>
+            <button class="faq-btn" onclick="askQuestion('wholesale', 'পাইকারি বিক্রি করেন?')">পাইকারি বিক্রি করেন?</button>
+            <button class="faq-btn" onclick="askQuestion('return', 'রিটার্ন পলিসি কী?')">রিটার্ন পলিসি কী?</button>
+            <button class="faq-btn" onclick="askQuestion('location', 'আপনাদের দোকানের লোকেশন কোথায়?')">আপনাদের দোকানের লোকেশন কোথায়?</button>
+            <button class="faq-btn" onclick="askQuestion('order', 'অর্ডার করবো কিভাবে বুঝিনা?')">অর্ডার করবো কিভাবে বুঝিনা?</button>
+            <button class="faq-btn" onclick="askQuestion('contact', 'সরাসরি যোগাযোগ করব কিভাবে?')">সরাসরি যোগাযোগ করব কিভাবে?</button>
+       
+ </div>
+
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="আপনার মেসেজ লিখুন..." onkeypress="handleKeyPress(event)">
+            <button id="send-btn" onclick="sendCustomMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const answers = {
+            'freedelivery':'জি,✨ কুষ্টিয়া সদরে কিছু বিশেষ জায়গায়📦 আমরা ফ্রী ডেলিভারি🚚👈 দিয়ে থাকি। এছাড়াও বিভিন্ন ইভেন্ট এবং অফারেও অথবা বান্ডিল অফারও আমরা ফ্রি ডেলিভারি দিয়ে থাকি🤗।',
+            'delivery': 'কুষ্টিয়া জেলার ভেতর ৬০ টাকা এবং কুষ্টিয়ার বাহিরে ১২০ টাকা ডেলিভারি চার্জ ।১-৩দিনে ডেলিভারি সম্ভব 🚚া💵👈।',
+            'wholesale': 'জি, আমরা যেকোনো পরিমাণের পাইকারি বা হোলসেল অর্ডারের সুবিধা দিয়ে থাকি। বিস্তারিত রেট জানতে আমাদের ইনবক্স করুন📥।',
+            'return': 'পণ্য হাতে পাওয়ার পর কোনো সমস্যা থাকলে ২৪ ঘণ্টার মধ্যে জানালে আমরা রিপ্লেস করে দেব📦🚚👈।',
+            'location':'প্রিয় গ্রাহক, Ideas SHOP 💡🙂 হলো আমাদের ঠিকানা',
+            'order': 'ক্যাটাগরির পয়েন্টে যান গিয়ে আপনার পছন্দমত প্রোডাক্ট সিলেক্ট করুন। যে কোন প্রোডাক্ট এর উপর ট্যাপ করলে কার্ডে এড করা দেখাবে কার্ডে এড করে অর্ডার পয়েন্টে যান গিয়ে নাম নাম্বার ঠিকানা দিয়ে অর্ডার কনফার্ম করুন। ধন্যবাদ 💝',
+            'contact':'আইডিয়া শপের হোম এ গিয়ে উপরে বামে থাকা থ্রি ডট আইকনে ঢুকে হেল্প মেনুতে যান। গিয়ে যোগাযোগ করার দুটি মাধ্যম রয়েছে একটি whatsapp আরেকটি সরাসরি কল। যেকোনো একটিতে চেপে যোগাযোগ করুন💝।',
+};
+
+        const chatBox = document.getElementById('chat-box');
+        const userInputBox = document.getElementById('user-input');
+
+        // বাটনে ক্লিক করে প্রশ্ন করার ফাংশন
+        function askQuestion(questionKey, questionText) {
+            appendUserMessage(questionText);
+            
+            setTimeout(() => {
+                appendBotMessage(answers[questionKey]);
+            }, 500);
+        }
+
+        // নিজে টাইপ করে মেসেজ পাঠানোর ফাংশন
+        function sendCustomMessage() {
+            const text = userInputBox.value.trim();
+            if (text !== "") {
+                appendUserMessage(text);
+                userInputBox.value = ''; // ইনপুট বক্স ফাঁকা করা
+
+                // কাস্টম মেসেজের জন্য বটের অটো-রিপ্লাই
+                setTimeout(() => {
+                    appendBotMessage("দুঃখিত! 😓আমাদের অনলাইন সেবা বড় পরিসরে না হওয়ায় আপনাদের আকাঙ্ক্ষিত প্রশ্নের উত্তর দিতে পারছি না। তাই দয়া করে মেসেজের উপরে নির্দিষ্ট মেনু থেকে প্রশ্ন করুন।");
+                }, 1000);
+            }
+        }
+
+        // কিবোর্ডের Enter চাপলে মেসেজ সেন্ড হবে
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendCustomMessage();
+            }
+        }
+
+        // ইউজারের মেসেজ স্ক্রিনে দেখানোর ফাংশন
+        function appendUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg-bubble user-msg';
+            msgDiv.innerText = text;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // বটের মেসেজ স্ক্রিনে দেখানোর ফাংশন
+        function appendBotMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg-bubble bot-msg';
+            msgDiv.innerText = text;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+ 
+
+
+
+
+   </script>
+
+</body>
+</html>

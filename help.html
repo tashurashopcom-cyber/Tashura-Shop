@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas SHOP - হেল্প ও সাপোর্ট</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background-color: #f7f7fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: #3f51b5;
+            color: white; display: flex; align-items: center;
+            padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .back-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-right: 15px; }
+        .header-title { font-size: 18px; font-weight: bold; }
+
+        .container { padding: 15px; }
+
+        /* --- Contact Options --- */
+        .section-title { font-size: 16px; font-weight: bold; color: #3f51b5; margin-bottom: 10px; margin-top: 10px; }
+        
+        .contact-card {
+            background-color: white; border-radius: 12px;
+            padding: 15px; display: flex; align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 10px;
+            text-decoration: none; color: #333;
+        }
+        .contact-card i { font-size: 24px; margin-right: 15px; width: 30px; text-align: center; }
+        .contact-card .text h4 { margin: 0 0 5px 0; font-size: 15px; }
+        .contact-card .text p { margin: 0; font-size: 13px; color: #666; }
+        
+        .whatsapp-icon { color: #25D366; }
+        .phone-icon { color: #3f51b5; }
+        .email-icon { color: #EA4335; }
+
+        /* --- FAQ Section --- */
+        .faq-item {
+            background-color: white; border-radius: 10px;
+            margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 15px; display: flex; justify-content: space-between;
+            align-items: center; font-weight: 500; font-size: 14px;
+            cursor: pointer; background-color: white;
+        }
+        .faq-answer {
+            padding: 0 15px; max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            font-size: 13px; color: #555; line-height: 1.5;
+            background-color: #fafafa;
+        }
+        .faq-item.active .faq-answer { padding: 15px; max-height: 200px; border-top: 1px solid #eee; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); transition: 0.3s; }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: white; display: flex; justify-content: space-around;
+            padding: 10px 0; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); z-index: 100;
+        }
+        .nav-item { text-align: center; color: #888; text-decoration: none; flex-grow: 1; }
+        .nav-item.active { color: #3f51b5; }
+        .nav-item i { font-size: 20px; }
+        .nav-item p { margin: 3px 0 0; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <button class="back-btn" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+        <div class="header-title">হেল্প ও সাপোর্ট</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="section-title">আমাদের সাথে যোগাযোগ করুন</div>
+        
+        <!-- WhatsApp Contact -->
+        <a href="https://wa.me/8801936617023" class="contact-card">
+            <i class="fab fa-whatsapp whatsapp-icon"></i>
+            <div class="text">
+                <h4>WhatsApp-এ মেসেজ দিন</h4>
+                <p>যেকোনো প্রয়োজনে আমাদের জানান</p>
+            </div>
+        </a>
+
+        <!-- Phone Contact -->
+        <a href="tel:+8809638659456" class="contact-card">
+            <i class="fas fa-phone-alt phone-icon"></i>
+            <div class="text">
+                <h4>সরাসরি কল করুন</h4>
+                <p>+8809638659456</p>
+            </div>
+        </a>
+
+        <div class="section-title" style="margin-top: 20px;">সাধারণ জিজ্ঞাসা (FAQ)</div>
+
+        <!-- FAQ 1 -->
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                কীভাবে অর্ডার করব? <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                অ্যাপের নিচে 'অর্ডার' বাটনে ক্লিক করে আপনার ঠিকানা এবং পণ্যের নাম লিখে 'অর্ডার কনফার্ম করুন' বাটনে চাপ দিন। আপনার অর্ডার সরাসরি আমাদের কাছে চলে আসবে।
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                ডেলিভারি চার্জ কত? <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                "কুষ্টিয়ার ভেতরে ডেলিভারি চার্জ ৬০ টাকা এবং কুষ্টিয়ার বাইরে ১২০ টাকা। পণ্যের পরিমাণের ওপর ভিত্তি করে এটি পরিবর্তন হতে পারে।"
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                পণ্য কি ফেরত দেওয়া যাবে? <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                হ্যাঁ, পণ্য হাতে পাওয়ার পর যদি কোনো সমস্যা থাকে, তবে ডেলিভারি ম্যান থাকা অবস্থায় আমাদের কল করে জানালে আপনি পণ্যটি রিটার্ন করতে পারবেন।
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item"><i class="fas fa-home"></i> <p>হোম</p></a>
+        <a href="category.html" class="nav-item"><i class="fas fa-th-large"></i> <p>ক্যাটেগরি</p></a>
+        <a href="order.html" class="nav-item"><i class="fas fa-shopping-bag"></i> <p>অর্ডার</p></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i> <p>প্রোফাইল</p></a>
+    </footer>
+
+    <!-- JS for FAQ Accordion -->
+    <script>
+        function toggleFAQ(element) {
+            element.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

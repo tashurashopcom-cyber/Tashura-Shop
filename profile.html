@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Ideas SHOP - প্রোফাইল</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f5f8; 
+            color: #333;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: #c62828; /* স্ক্রিনশটের মতো গাঢ় লাল */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 20px 15px;
+            box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2);
+        }
+
+        .header-title { font-size: 20px; font-weight: 600; margin-left: 10px; }
+
+        /* --- Profile Card --- */
+        .profile-card {
+            background: linear-gradient(135deg, #c62828, #e53935); /* লাল গ্রেডিয়েন্ট */
+            color: white; text-align: center;
+            padding: 40px 20px 30px; 
+            border-bottom-left-radius: 40px; 
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 8px 20px rgba(198, 40, 40, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .profile-img-container { position: relative; display: inline-block; margin-bottom: 15px; }
+        .profile-card img {
+            width: 110px; height: 110px; border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.8); object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .profile-card img:hover { transform: scale(1.05); }
+        
+        #imageInput { display: none; }
+        
+        .edit-pic-btn {
+            position: absolute; bottom: 5px; right: 5px;
+            background-color: #333; 
+            color: white; border: none;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s;
+        }
+        .edit-pic-btn:hover { background-color: #000; }
+
+        .user-name { font-size: 24px; font-weight: 700; margin: 0 0 5px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        .user-phone { font-size: 15px; opacity: 0.9; margin: 0; font-weight: 500; }
+
+        /* --- Modals --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px); 
+            z-index: 200; justify-content: center; align-items: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white; padding: 25px; border-radius: 20px;
+            width: 85%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content h3 { margin-top: 0; color: #333; text-align: center; margin-bottom: 20px; font-weight: 600; }
+        
+        .modal-content input {
+            width: 100%; padding: 12px 15px; margin-bottom: 15px;
+            border: 1px solid #e0e0e0; border-radius: 10px; font-size: 15px;
+            box-sizing: border-box; background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+        .modal-content input:focus { outline: none; border-color: #c62828; background-color: white; }
+        
+        .modal-buttons { display: flex; justify-content: space-between; margin-top: 10px; gap: 10px; }
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; flex: 1; font-size: 15px; transition: 0.2s; }
+        .btn-save { background-color: #c62828; color: white; box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3); }
+        .btn-save:hover { background-color: #b71c1c; }
+        .btn-cancel { background-color: #f1f3f4; color: #555; }
+        .btn-cancel:hover { background-color: #e0e0e0; }
+
+        /* --- Digital ID Card Style --- */
+        .id-card {
+            background: #fff;
+            border: 2px dashed #c62828; border-radius: 15px;
+            padding: 25px 20px; text-align: center; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative; overflow: hidden;
+        }
+        .id-card::before {
+            content: ''; position: absolute; top: -50px; left: -50px;
+            width: 100px; height: 100px; background: rgba(198, 40, 40, 0.1);
+            border-radius: 50%;
+        }
+        .id-card img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #c62828; object-fit: cover; margin-bottom: 15px; padding: 3px; }
+        .id-card h4 { margin: 5px 0; color: #333; font-size: 20px; font-weight: 700; }
+        .id-card p { margin: 5px 0 15px; color: #666; font-size: 15px; }
+        .id-card .badge {
+            display: inline-block; background-color: #10b981; color: white;
+            padding: 6px 15px; border-radius: 25px; font-size: 13px; font-weight: 600;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        /* --- Menu List --- */
+        .menu-container { padding: 0 15px 90px; }
+        .menu-group {
+            background-color: white; border-radius: 16px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; overflow: hidden;
+        }
+        .menu-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 20px; cursor: pointer; border-bottom: 1px solid #f0f0f0; color: #444;
+            transition: background 0.2s;
+        }
+        .menu-item:hover { background-color: #f8f9fa; }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-left { display: flex; align-items: center; }
+        .menu-item-left i { font-size: 18px; width: 35px; color: #c62828; text-align: center; }
+        .menu-item-left span { font-size: 16px; font-weight: 500; }
+        .menu-item-right { color: #bbb; font-size: 14px; }
+
+        /* Logout Style */
+        .menu-item.logout { color: #d32f2f; background-color: #fffafb; }
+        .menu-item.logout:hover { background-color: #ffebee; }
+        .menu-item.logout .menu-item-left i { color: #d32f2f; }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: white; display: flex; justify-content: space-around;
+            padding: 12px 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 100;
+            border-top-left-radius: 20px; border-top-right-radius: 20px;
+        }
+
+        /* --- Premium Custom Preloader CSS --- */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        /* লাইট জ্বলছে এবং নিভছে (Glowing Animation) */
+        .idea-bulb {
+            font-size: 70px;
+            color: #dcdde1; 
+            animation: light-glow 1.5s infinite alternate ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes light-glow {
+            0% {
+                color: #dcdde1;
+                text-shadow: none;
+                transform: scale(1);
+            }
+            100% {
+                color: #ffca28; 
+                text-shadow: 0 0 15px rgba(255, 202, 40, 0.6), 
+                             0 0 30px rgba(255, 193, 7, 0.8), 
+                             0 0 50px rgba(255, 179, 0, 1);
+                transform: scale(1.05); 
+            }
+        }
+
+        .wavy-text {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wavy-text span {
+            position: relative;
+            display: inline-block;
+            font-size: 22px;
+            font-weight: 800;
+            color: #212121; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: wave-anim 1.5s infinite ease-in-out;
+            animation-delay: calc(0.1s * var(--i)); 
+        }
+
+        @keyframes wave-anim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); color: #c62828; }
+        }
+
+        .nav-item { text-align: center; color: #9e9e9e; text-decoration: none; flex-grow: 1; transition: 0.3s; }
+        .nav-item.active { color: #c62828; transform: translateY(-2px); }
+        .nav-item i { font-size: 22px; margin-bottom: 4px; }
+        .nav-item p { margin: 0; font-size: 12px; font-weight: 500; }
+
+        /* --- Order History Styles --- */
+        .empty-history { text-align: center; color: #999; font-size: 14px; padding: 20px 0; }
+        .order-history-card {
+            background: #f9f9fb; border: 1px solid #ececec; border-radius: 14px;
+            padding: 14px 16px; margin-bottom: 12px;
+        }
+        .oh-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .oh-id { font-weight: 700; color: #c62828; font-size: 14px; }
+        .oh-date { font-size: 11px; color: #999; }
+        .oh-status {
+            display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px;
+            border-radius: 20px; background: #fff3cd; color: #b8860b; margin-bottom: 8px;
+        }
+        .oh-item-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 6px 0; border-top: 1px dashed #e3e3e3;
+        }
+        .oh-item-info p { margin: 0; font-size: 13px; font-weight: 600; color: #444; }
+        .oh-item-info span { font-size: 11px; color: #888; }
+        .oh-copy-btn {
+            background: #c62828; color: white; border: none; border-radius: 8px;
+            padding: 5px 9px; font-size: 11px; cursor: pointer; white-space: nowrap;
+        }
+        .oh-copy-btn.copied { background: #4CAF50; }
+        .oh-total-row {
+            display: flex; justify-content: space-between; margin-top: 10px;
+            padding-top: 8px; border-top: 1px solid #e3e3e3; font-size: 13px; font-weight: 700; color: #333;
+        }
+
+        /* --- Delete/Logout Confirmation Modal --- */
+        .delete-modal-content { text-align: center; padding: 30px 25px 25px; }
+        .delete-icon-wrap {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: linear-gradient(135deg, #ffebee, #ffd6da);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            animation: pulseWarn 1.6s infinite ease-in-out;
+        }
+        .delete-icon-wrap i { font-size: 30px; color: #d32f2f; }
+        @keyframes pulseWarn {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.25); }
+            50% { box-shadow: 0 0 0 12px rgba(211, 47, 47, 0); }
+        }
+        .delete-modal-content h3 { color: #c62828; font-size: 19px; margin-bottom: 10px; }
+        .delete-modal-content p { color: #666; font-size: 14px; line-height: 1.6; margin: 0 0 8px; }
+        .delete-warning-box {
+            background-color: #fff8e1; border: 1px solid #ffe0a3;
+            border-radius: 10px; padding: 10px 14px; margin: 15px 0 20px;
+            display: flex; align-items: center; gap: 10px; text-align: left;
+        }
+        .delete-warning-box i { color: #f9a825; font-size: 16px; flex-shrink: 0; }
+        .delete-warning-box span { font-size: 12.5px; color: #7a5b00; font-weight: 600; line-height: 1.4; }
+        .btn-danger { background-color: #d32f2f; color: white; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3); }
+        .btn-danger:hover { background-color: #b71c1c; }
+
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: #323232; color: white;
+            padding: 14px 22px; border-radius: 12px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 14px; font-weight: 500; z-index: 500;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            max-width: 90%; text-align: left;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+        .toast.success { background-color: #2e7d32; }
+        .toast.error { background-color: #c62828; }
+        .toast i { font-size: 18px; flex-shrink: 0; }
+    </style>
+</head>
+
+<body>
+
+    <div id="page-loader" class="page-loader">
+        <div class="loader-content">
+            <i class="fas fa-lightbulb idea-bulb"></i>
+            
+            <div class="wavy-text">
+                <span style="--i:1;">L</span>
+                <span style="--i:2;">o</span>
+                <span style="--i:3;">a</span>
+                <span style="--i:4;">d</span>
+                <span style="--i:5;">i</span>
+                <span style="--i:6;">n</span>
+                <span style="--i:7;">g</span>
+                <span style="--i:8;">.</span>
+                <span style="--i:9;">.</span>
+                <span style="--i:10;">.</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-title">My Account</div>
+    </header>
+
+    <div class="profile-card">
+        <div class="profile-img-container">
+            <img id="profilePic" src="profile0.jpg" alt="User Avatar">
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+            <button class="edit-pic-btn" onclick="triggerImageUpload()"><i class="fas fa-camera"></i></button>
+        </div>
+        <div class="user-name" id="displayTitle">Name</div>
+        <div class="user-phone" id="displayPhone"><i class="fas fa-phone-alt"></i>Phone Number </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>Update Your Profile</h3>
+            <input type="text" id="inputName" placeholder="আপনার পুরো নাম দিন">
+            <input type="tel" id="inputPhone" placeholder="আপনার মোবাইল নম্বর দিন">
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" onclick="closeModal('editModal')">Cancel</button>
+                <button class="btn btn-save" onclick="saveProfile()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="biodataModal" class="modal">
+        <div class="modal-content">
+            <h3>Digital Card</h3>
+            
+            <div class="id-card">
+                <img id="cardImage" src="" alt="Profile Image">
+                <h4 id="cardName">Name</h4>
+                <p id="cardPhone">Phone</p>
+                <div class="badge"><i class="fas fa-check-circle"></i>Verified Customer</div>
+            </div>
+
+            <div class="modal-buttons" style="margin-top: 25px;">
+                <button class="btn btn-save" style="width: 100%;" onclick="closeModal('biodataModal')">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderHistoryModal" class="modal">
+        <div class="modal-content" style="max-width: 420px; max-height: 80vh; overflow-y: auto;">
+            <h3><i class="fas fa-history"></i>Order History</h3>
+
+            <div id="orderHistoryList"></div>
+
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button class="btn btn-save" style="width: 100%;" onclick="closeModal('orderHistoryModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content delete-modal-content">
+            <div class="delete-icon-wrap">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>একাউন্ট ডিলিট করবেন?</h3>
+            <p>আপনি লগআউট করার সাথে সাথে এই ডিভাইসে সেভ থাকা আপনার প্রোফাইল তথ্য (নাম, নম্বর, ছবি) এবং <strong>সম্পূর্ণ অর্ডার হিস্ট্রি</strong> স্থায়ীভাবে মুছে যাবে।</p>
+            <div class="delete-warning-box">
+                <i class="fas fa-info-circle"></i>
+                <span>এই অ্যাকশনটি সম্পূর্ণরূপে অপরিবর্তনীয় — একবার মুছে গেলে এই তথ্য আর কোনোভাবেই ফিরিয়ে আনা সম্ভব হবে ঘন।</span>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" onclick="closeModal('deleteConfirmModal')">Cancel </button>
+                <button class="btn btn-danger" onclick="confirmClearProfileData()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastNotification" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <div class="menu-container">
+        <div class="menu-group">
+            <div class="menu-item" onclick="openEditModal()">
+                <div class="menu-item-left">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Update Your Profile</span>
+                </div>
+                <div class="menu-item-right"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            
+            <div class="menu-item" onclick="showCustomerBiodata()">
+                <div class="menu-item-left">
+                    <i class="fas fa-id-card"></i>
+                    <span>Customer Card</span>
+                </div>
+                <div class="menu-item-right"><i class="fas fa-chevron-right"></i></div>
+            </div>
+
+            <div class="menu-item" onclick="showOrderHistory()">
+                <div class="menu-item-left">
+                    <i class="fas fa-history"></i>
+                    <span>Order History </span>
+                </div>
+                <div class="menu-item-right"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-item logout" onclick="clearProfileData()">
+                <div class="menu-item-left">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+                <div class="menu-item-right"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item"><i class="fas fa-home"></i> <p>Home</p></a>
+        <a href="category.html" class="nav-item"><i class="fas fa-th-large"></i> <p>Category</p></a>
+        <a href="order.html" class="nav-item"><i class="fas fa-shopping-bag"></i> <p>Cart</p></a>
+        <a href="store.html" class="nav-item"><i class="fas fa-store"></i><p>Store</p></a>
+        <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i> <p>Profile</p></a>
+    </footer>
+
+
+    <script>
+        const defaultImage = "profile0.jpg";
+        
+        window.onload = function() {
+            let savedName = localStorage.getItem('userProfileName');
+            let savedPhone = localStorage.getItem('userProfilePhone');
+            let savedImg = localStorage.getItem('userProfileImage');
+
+            if (savedName) document.getElementById('displayTitle').innerText = savedName;
+            if (savedPhone) document.getElementById('displayPhone').innerHTML = '<i class="fas fa-phone-alt"></i> ' + savedPhone;
+            
+            if (savedImg) {
+                document.getElementById('profilePic').src = savedImg;
+            } else {
+                document.getElementById('profilePic').src = defaultImage;
+            }
+        };
+
+        function openEditModal() {
+            document.getElementById('editModal').style.display = 'flex';
+            
+            let currentName = localStorage.getItem('userProfileName');
+            let currentPhone = localStorage.getItem('userProfilePhone');
+            
+            if(currentName) document.getElementById('inputName').value = currentName;
+            if(currentPhone) document.getElementById('inputPhone').value = currentPhone;
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function saveProfile() {
+            let newName = document.getElementById('inputName').value.trim();
+            let newPhone = document.getElementById('inputPhone').value.trim();
+
+            if(newName === "" || newPhone === "") {
+                showToast("দয়া করে নাম ও নম্বর সঠিকভাবে দিন!", "error");
+                return;
+            }
+
+            document.getElementById('displayTitle').innerText = newName;
+            document.getElementById('displayPhone').innerHTML = '<i class="fas fa-phone-alt"></i> ' + newPhone;
+            
+            localStorage.setItem('userProfileName', newName);
+            localStorage.setItem('userProfilePhone', newPhone);
+            
+            closeModal('editModal');
+            
+            showToast('আপনার তথ্য সফলভাবে সেভ হয়েছে!', 'success');
+        }
+
+        function showCustomerBiodata() {
+            let name = localStorage.getItem('userProfileName') || "নাম দেওয়া হয়নি";
+            let phone = localStorage.getItem('userProfilePhone') || "নম্বর দেওয়া হয়নি";
+            let image = localStorage.getItem('userProfileImage') || defaultImage;
+
+            document.getElementById('cardName').innerText = name;
+            document.getElementById('cardPhone').innerText = phone;
+            document.getElementById('cardImage').src = image;
+
+            document.getElementById('biodataModal').style.display = 'flex';
+        }
+
+        function showOrderHistory() {
+            let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            let container = document.getElementById('orderHistoryList');
+            container.innerHTML = "";
+
+            if (orderHistory.length === 0) {
+                container.innerHTML = '<div class="empty-history"><i class="fas fa-box-open" style="font-size:30px; display:block; margin-bottom:8px;"></i>এখনো কোনো অর্ডার করা হয়নি!</div>';
+            } else {
+                orderHistory.forEach(function(order, orderIndex) {
+                    let itemsHtml = "";
+                    order.items.forEach(function(item, itemIndex) {
+                        
+                        let cleanCode = item.code;
+                        if (cleanCode && cleanCode.endsWith("-1")) {
+                            cleanCode = cleanCode.slice(0, -2);
+                        }
+
+                        itemsHtml += `
+                            <div class="oh-item-row">
+                                <div class="oh-item-info">
+                                    <p>${item.name}</p>
+                                    <span>Qty: ${item.qty} | কোড: ${cleanCode}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    let cardHtml = `
+                        <div class="order-history-card">
+                            <div class="oh-top">
+                                <span class="oh-id">${order.orderId}</span>
+                                <span class="oh-date">${order.date}</span>
+                            </div>
+                            <button class="oh-copy-btn" style="margin-bottom:12px;" onclick="copyOrderId(this, '${order.orderId}')">
+                                <i class="fas fa-copy"></i> অর্ডার আইডি কপি
+                            </button>
+                            <span class="oh-status">${order.status || 'Pending'}</span>
+                            ${itemsHtml}
+                            <div class="oh-total-row">
+                                <span>সর্বমোট</span>
+                                <span>${order.grandTotal}</span>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                });
+            }
+
+            document.getElementById('orderHistoryModal').style.display = 'flex';
+        }
+
+        function copyOrderId(btn, orderId) {
+            function showCopied() {
+                let original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> হয়েছে';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.classList.remove('copied');
+                }, 1200);
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(orderId).then(showCopied).catch(() => {
+                    fallbackCopyText(orderId, showCopied);
+                });
+            } else {
+                fallbackCopyText(orderId, showCopied);
+            }
+        }
+
+        function fallbackCopyText(text, callback) {
+            let tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                callback();
+            } catch (err) {
+                alert("কপি করতে সমস্যা হয়েছে, ম্যানুয়ালি কপি করুন: " + text);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function triggerImageUpload() {
+            document.getElementById('imageInput').click();
+        }
+
+        function previewImage(event) {
+            let file = event.target.files[0];
+            if(file) {
+                let reader = new FileReader();
+                reader.onload = function(){
+                    let output = document.getElementById('profilePic');
+                    output.src = reader.result;
+                    localStorage.setItem('userProfileImage', reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearProfileData() {
+            document.getElementById('deleteConfirmModal').style.display = 'flex';
+        }
+
+        function confirmClearProfileData() {
+            localStorage.removeItem('userProfileName');
+            localStorage.removeItem('userProfilePhone');
+            localStorage.removeItem('userProfileImage');
+            localStorage.removeItem('orderHistory');
+
+            closeModal('deleteConfirmModal');
+            showToast('আপনার সকল তথ্য ও অর্ডার হিস্ট্রি স্থায়ীভাবে মুছে ফেলা হয়েছে।', 'success');
+
+            setTimeout(() => {
+                location.reload();
+            }, 1400);
+        }
+
+        function showToast(message, type) {
+            let toast = document.getElementById('toastNotification');
+            let icon = toast.querySelector('i');
+            let msg = document.getElementById('toastMessage');
+
+            msg.innerText = message;
+            toast.className = 'toast show ' + (type || '');
+            icon.className = type === 'error' ? 'fas fa-times-circle' : 'fas fa-check-circle';
+
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        window.onclick = function(event) {
+            let editModal = document.getElementById('editModal');
+            let biodataModal = document.getElementById('biodataModal');
+            let orderHistoryModal = document.getElementById('orderHistoryModal');
+            if (event.target == editModal) { closeModal('editModal'); }
+            if (event.target == biodataModal) { closeModal('biodataModal'); }
+            if (event.target == orderHistoryModal) { closeModal('orderHistoryModal'); }
+        }
+ 
+        function hideLoader() {
+            const loader = document.getElementById('page-loader');
+            if(loader) {
+                loader.style.opacity = '0'; 
+                setTimeout(() => {
+                    loader.style.display = 'none'; 
+                }, 400);
+            }
+        }
+
+        window.addEventListener('load', function() {
+            hideLoader();
+        });
+
+        setTimeout(function() {
+            hideLoader();
+        }, 3000);
+
+        document.querySelectorAll('.bottom-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                const loader = document.getElementById('page-loader');
+                if(loader) {
+                    loader.style.display = 'flex';
+                    loader.style.opacity = '1';
+                }
+            });
+        });
+
+   </script>
+</body>
+</html>

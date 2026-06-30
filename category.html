@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas SHOP - ক্যাটাগরি</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * { box-sizing: border-box; font-family: 'Poppins', 'Hind Siliguri', sans-serif; }
+
+        :root {
+            --primary: #E31E24;
+            --primary-dark: #B3151A;
+            --primary-light: #FF5A5F;
+            --navy: #0D1B2A;
+            --navy-light: #15324d;
+            --accent-blue: #1976D2;
+            --accent-blue-dark: #115293;
+            --gradient-orange: linear-gradient(120deg, #E31E24 0%, #B3151A 60%, #8a0f12 100%);
+            --gradient-navy: linear-gradient(120deg, #15324d 0%, #0D1B2A 70%, #060e16 100%);
+        }
+
+        body {
+            margin: 0; padding: 0; background-color: #f8fafc; color: #1e293b;
+            display: flex; flex-direction: column; height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: var(--gradient-orange); 
+            color: white; display: flex; align-items: center;
+            padding: 16px; box-shadow: 0 4px 12px rgba(13, 27, 42, 0.25); z-index: 10;
+            width: 100%;
+        }
+        .header-title { font-size: 18px; font-weight: 700; margin-left: 15px; }
+
+        /* --- Search Bar (Collapsible) --- */
+        .search-container {
+            background-color: white; padding: 0 15px; border-bottom: none;
+            width: 100%; max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .search-container.open {
+            padding: 10px 15px; max-height: 70px; border-bottom: 1px solid #e2e8f0;
+        }
+        .header-search-icon {
+            margin-left: auto; font-size: 19px; cursor: pointer; padding: 6px;
+        }
+        .search-bar {
+            display: flex; align-items: center; background-color: #f1f5f9;
+            border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;
+            width: 100%;
+        }
+        .search-bar input {
+            flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+            padding: 12px 15px; font-size: 14px; color: #1e293b;
+        }
+        .search-icon-btn {
+            border: none; background: var(--gradient-orange); color: white;
+            padding: 12px 16px; cursor: pointer; font-size: 14px; flex-shrink: 0;
+        }
+        .search-container { position: relative; }
+        .search-suggestions {
+            position: absolute; top: calc(100% + 6px); left: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); max-height: 220px; overflow-y: auto; z-index: 20; display: none;
+        }
+        .search-suggestions.show { display: block; }
+        .search-suggestion-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+        .search-suggestion-item:last-child { border-bottom: none; }
+        .search-suggestion-item:hover { background: #fff7ed; }
+        .suggestion-label { display: flex; flex-direction: column; gap: 2px; }
+        .suggestion-label strong { font-size: 13px; color: #0f172a; }
+        .suggestion-label span { font-size: 11px; color: #64748b; }
+        .suggestion-badge { font-size: 10px; padding: 4px 8px; border-radius: 999px; background: #edf6ff; color: var(--accent-blue-dark); font-weight: 700; text-transform: capitalize; }
+
+        /* --- Top Filter Bar --- */
+        .filter-container {
+            display: flex; overflow-x: auto; padding: 12px 15px;
+            background-color: white; gap: 10px; border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap; scrollbar-width: none; width: 100%;
+        }
+        .filter-container::-webkit-scrollbar { display: none; }
+        
+        .filter-btn {
+            padding: 8px 20px; border: 1px solid #cbd5e1; border-radius: 20px;
+            background-color: white; color: #475569; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; outline: none;
+        }
+        .filter-btn.active {
+            background-color: var(--primary); color: white; border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(227, 30, 36, 0.25);
+        }
+
+        /* --- Content Area & Grid --- */
+        .content-area { 
+            flex: 1; padding: 15px; overflow-y: auto; padding-bottom: 80px; width: 100%;
+        }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        
+        .product-card {
+            background-color: white; border-radius: 14px; padding: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); text-align: center;
+            border: 1px solid #f1f5f9; transition: all 0.2s ease; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .product-card:active { transform: scale(0.97); }
+        .product-img-wrapper {
+            width: 100%; height: 130px; border-radius: 10px; overflow: hidden;
+            background-color: #f1f5f9; margin-bottom: 8px;
+        }
+        .product-card img { width: 100%; height: 100%; object-fit: cover; }
+        .product-card h4 { 
+    margin: 4px 0 6px 0; 
+    font-size: 13px; 
+    color: #334155; 
+    height: 36px; 
+    overflow: hidden; 
+    display: -webkit-box; 
+    display: box;
+    -webkit-line-clamp: 2; 
+    line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    line-height: 1.4; 
+    font-weight: 600;
+}
+        .product-price { 
+            margin: 0; font-size: 14px; font-weight: 700; color: var(--primary); 
+            background: #fff2f2; padding: 4px; border-radius: 6px;
+        }
+
+        .type-tooltip {
+            display: none; position: relative; margin-top: 10px; background: #fef2f2; color: #b91c1c;
+            border: 1px solid #fecaca; font-size: 12.5px; font-weight: 600; padding: 9px 12px; border-radius: 9px;
+            align-items: center; gap: 7px;
+        }
+        .type-tooltip i { color: #ef4444; }
+        .type-tooltip.show { display: flex; }
+
+        .hide { display: none !important; }
+
+        /* --- Fullscreen Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: none; opacity: 0; transition: opacity 0.3s;
+        }
+        .modal-overlay.active { display: block; opacity: 1; }
+
+        .modal-box {
+            position: fixed; top: 100%; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 1001; transition: top 0.3s ease-in-out;
+            display: flex; flex-direction: column;
+        }
+        .modal-box.active { top: 0; }
+
+        .modal-header {
+            padding: 15px; display: flex; justify-content: space-between; align-items: center;
+            background: white; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #f1f5f9;
+        }
+        .modal-header h3 { margin: 0; font-size: 16px; color: #1e293b; }
+        .close-btn { font-size: 24px; color: #64748b; cursor: pointer; }
+
+        .modal-body { flex-grow: 1; overflow-y: auto; padding: 0 15px 15px 15px; }
+
+        .slider-container {
+            position: relative; width: 100%; height: 300px;
+            border-radius: 0 0 12px 12px; overflow: hidden; margin-bottom: 16px; margin-top: -1px;
+            background-color: #f1f5f9;
+        }
+        .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-in-out; }
+        .slider-wrapper img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+        .slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.4); color: white; border: none;
+            width: 36px; height: 36px; cursor: pointer; border-radius: 50%;
+            font-size: 16px; z-index: 5; display: flex; align-items: center; justify-content: center;
+        }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+        .slider-dots {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 6px; z-index: 5;
+        }
+        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
+        .dot.active { background: white; width: 14px; border-radius: 4px; }
+
+        .modal-title { font-size: 22px; color: #1e293b; margin: 10px 0 5px 0; font-weight: 700; }
+        .modal-price { font-size: 20px; color: #ef4444; font-weight: 700; margin-bottom: 10px; }
+        .modal-desc { font-size: 14px; color: #475569; line-height: 1.6; margin-bottom: 20px; }
+        
+        .extra-details {
+            padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px;
+        }
+        .extra-details h4 { margin-top: 0; font-size: 15px; color: var(--primary); margin-bottom: 10px; }
+        .extra-details p { font-size: 13px; color: #64748b; margin: 5px 0; font-weight: 500; }
+
+        /* --- Product Type Custom Dropdown (Professional) --- */
+        .type-select-section { margin-bottom: 20px; }
+        .type-select-title {
+            font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 9px;
+            text-transform: uppercase; letter-spacing: 0.4px; display: flex; align-items: center; gap: 6px;
+        }
+        .type-select-title i { font-size: 12px; color: var(--accent-blue); }
+
+        .type-select-wrapper { position: relative; }
+
+        .type-trigger {
+            width: 100%; display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 16px; border-radius: 12px; border: 1.5px solid #e2e8f0;
+            background: linear-gradient(180deg, #ffffff, #fbfbfc); cursor: pointer;
+            transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .type-trigger .type-trigger-left { display: flex; align-items: center; gap: 10px; }
+        .type-trigger .type-trigger-left i.tag-icon {
+            color: var(--accent-blue); font-size: 14px; background: #edf6ff; padding: 7px;
+            border-radius: 8px; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
+        }
+        .type-trigger span.type-trigger-text { font-size: 14.5px; font-weight: 600; color: #1e293b; }
+        .type-trigger span.type-trigger-text.placeholder { color: #94a3b8; font-weight: 500; }
+        .type-trigger i.chevron { color: #94a3b8; font-size: 13px; transition: transform 0.25s ease; }
+
+        .type-trigger:hover { border-color: #fbbf24; }
+        .type-select-wrapper.open .type-trigger {
+            border-color: var(--primary); box-shadow: 0 0 0 3px rgba(227,30,36,0.14);
+        }
+        .type-select-wrapper.open .type-trigger i.chevron { transform: rotate(180deg); color: var(--primary); }
+
+        .type-options-panel {
+            position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 20;
+            background: #ffffff; border-radius: 12px; border: 1px solid #f1e9da;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15,23,42,0.06);
+            padding: 6px; max-height: 240px; overflow-y: auto;
+            opacity: 0; transform: translateY(-6px) scale(0.98); pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .type-select-wrapper.open .type-options-panel {
+            opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
+        }
+
+        .type-option-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 11px 12px; border-radius: 9px; cursor: pointer; font-size: 14px;
+            font-weight: 600; color: #334155; transition: background 0.15s ease;
+        }
+        .type-option-row:hover { background: #fff7ed; }
+        .type-option-row.selected { background: #fff1de; color: #c2410c; }
+        .type-option-row .check-circle {
+            width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #e2e8f0;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .type-option-row.selected .check-circle {
+            background: var(--primary); border-color: var(--primary);
+        }
+        .type-option-row.selected .check-circle i { color: #fff; font-size: 9px; }
+
+        .type-select-wrapper.attention .type-trigger {
+            border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+            animation: shakeType 0.4s;
+        }
+        @keyframes shakeType {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .modal-footer {
+            padding: 15px; background: white; border-top: 1px solid #e2e8f0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .code-info { font-size: 12px; color: #64748b; font-weight: 600; display: flex; flex-direction: column; }
+        .code-info span { color: #1e293b; font-size: 14px; margin-top: 2px; }
+        
+        .add-cart-btn {
+            background: var(--gradient-orange); width: 60%; justify-content: center;
+            color: white; border: none; padding: 14px 15px; border-radius: 10px; cursor: pointer;
+            font-size: 15px; font-weight: 600; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 10px rgba(227, 30, 36, 0.2);
+        }
+
+        .toast-notification {
+            position: fixed; top: 20px; right: -350px; background: #10b981; color: white;
+            padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;
+            transition: right 0.4s ease; z-index: 2000;
+        }
+        .toast-notification.show { right: 20px; }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: white;
+            display: flex; justify-content: space-around; padding: 10px 0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05); z-index: 100; border-top: 1px solid #f1f5f9;
+        }
+        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; flex-grow: 1; }
+        .nav-item.active { color: var(--primary); font-weight: 600; }
+        .nav-item i { font-size: 19px; }
+        .nav-item p { margin: 3px 0 0; font-size: 11px; }
+
+        .search-highlight { border: 2px solid var(--accent-blue) !important; box-shadow: 0 0 12px rgba(25, 118, 210, 0.25) !important; }
+           /* --- Cart Notification Red Dot --- */
+        .nav-icon-wrap { position: relative; display: inline-block; }
+        .nav-badge-dot {
+            position: absolute;
+            top: -3px;
+            right: -6px;
+            width: 9px;
+            height: 9px;
+            background-color: #ff3b30;
+            border: 1.5px solid #ffffff;
+            border-radius: 50%;
+            display: none;
+            animation: badgePulse 1.4s infinite;
+        }
+        .nav-badge-dot.show { display: block; }
+        @keyframes badgePulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.6); }
+            70% { box-shadow: 0 0 0 5px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <i class="fas fa-arrow-left" onclick="history.back()" style="cursor:pointer; font-size:18px;"></i>
+        <div class="header-title">ক্যাটেগরি সমূহ</div>
+        <i class="fas fa-search header-search-icon" onclick="toggleSearchBar()"></i>
+    </header>
+
+    <div class="search-container" id="searchContainer">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="প্রোডাক্ট কোড বা নাম দিয়ে খুঁজুন..." onkeypress="handleSearchKeyPress(event)">
+            <button class="search-icon-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-suggestions" id="categorySearchSuggestions"></div>
+    </div>
+
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterSelection('all')">All</button>
+        <button class="filter-btn" onclick="filterSelection('gents')">জেন্টস</button>
+        <button class="filter-btn" onclick="filterSelection('ladies')">লেডিস</button>
+        <button class="filter-btn" onclick="filterSelection('electronics')">ইলেকট্রনিক্স</button>
+        <button class="filter-btn" onclick="filterSelection('watch')">ঘড়ি ও চশমা</button>
+        <button class="filter-btn" onclick="filterSelection('decor')">ডেকোরেশন</button>
+    </div>
+
+    <div class="content-area">
+        <!-- প্রোডাক্টগুলো এখন আর হার্ডকোড করা নেই, জাভাস্ক্রিপ্ট দিয়ে আসবে -->
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)"></div>
+    <div class="modal-box" id="productModal">
+        
+        <div class="modal-header">
+            <h3>প্রোডাক্ট ডিটেইলস</h3>
+            <span class="close-btn" onclick="forceCloseModal()">&times;</span>
+        </div>
+
+        <div class="modal-body">
+            <div class="slider-container">
+                <div class="slider-wrapper" id="modalSliderWrapper"></div>
+                <button class="slider-btn prev-btn" onclick="moveSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn" onclick="moveSlider(1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots" id="modalSliderDots"></div>
+            </div>
+            
+            <h1 id="modalTitle" class="modal-title"></h1>
+            <div id="modalPrice" class="modal-price"></div>
+
+            <div class="type-select-section" id="typeSelectSection" style="display:none;">
+                <div class="type-select-title"><i class="fas fa-tags"></i> Product Type</div>
+                <div class="type-select-wrapper" id="typeSelectWrapper">
+                    <div class="type-trigger" id="typeTrigger" onclick="toggleTypePanel(event)">
+                        <div class="type-trigger-left">
+                            <i class="fas fa-tag tag-icon"></i>
+                            <span class="type-trigger-text placeholder" id="typeTriggerText">Select Type</span>
+                        </div>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="type-options-panel" id="typeOptionsPanel"></div>
+                </div>
+                <div class="type-tooltip" id="typeTooltip">
+                    <i class="fas fa-circle-exclamation"></i> <span>Please select a Type above before adding to cart</span>
+                </div>
+            </div>
+
+            <div class="extra-details" id="extraDetailsBox">
+                <h4>প্রোডাক্ট স্পেসিফিকেশন:</h4>
+                <div id="dynamicSpecsContainer"></div>
+            </div>
+
+            <p id="modalDesc" class="modal-desc"></p>
+        </div>
+
+        <div class="modal-footer">
+            <div class="code-info">
+                প্রোডাক্ট কোড: <span id="productCode"></span>
+            </div>
+            <button class="add-cart-btn" id="addToCartBtn" onclick="addToCart()">
+                কার্টে যোগ করুন <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="toastNotification" class="toast-notification">
+        <i class="fas fa-check-circle"></i> <span id="toastMsg"></span>
+    </div>
+
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item"><i class="fas fa-home"></i> <p>হোম</p></a>
+        <a href="category.html" class="nav-item active"><i class="fas fa-th-large"></i> <p>ক্যাটেগরি</p></a>
+        <a href="order.html" class="nav-item"><span class="nav-icon-wrap"><i class="fas fa-shopping-bag"></i><span class="nav-badge-dot" id="orderNavBadge"></span></span><p>Order</p></a>
+        <a href="store.html" class="nav-item"><i class="fas fa-store"></i><p>Store</p></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i> <p>প্রোফাইল</p></a>
+    </footer>
+
+    <script>
+        // --- লোকাল স্টোরেজ ডাটা সেটআপ ---
+        const initialProducts = [       
+
+    {
+        code: "C-POLO-01",
+        title: "প্রিমিয়াম কটন পোলো টি-শার্ট",
+        price: "৳৬৫০",
+        images: [
+            "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=400",
+            "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400"
+        ],
+        desc: "অফিস বা ক্যাজুয়াল আড্ডার জন্য আরামদায়ক এবং স্মার্ট লুকিং পোলো শার্ট।",
+        specs: ["✔ ফেব্রিক: ১০০% কটন (পিক ফেব্রিক)", "✔ জিএসএম: ২২০+", "✔ সাইজ: M, L, XL, XXL"],
+        types: [
+            { name: "নেভি ব্লু", hex: "#1e3a8a" },
+            { name: "কালো", hex: "#111827" },
+            { name: "সাদা", hex: "#ffffff" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-TSHIRT-02",
+        title: "বেসিক রাউন্ড নেক টি-শার্ট",
+        price: "৳৩৫০",
+        images: [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"
+        ],
+        desc: "প্রতিদিনের ব্যবহারের জন্য অত্যন্ত সফট এবং আরামদায়ক বেসিক টি-শার্ট।",
+        specs: ["✔ ফেব্রিক: সিঙ্গেল জার্সি কটন", "✔ জিএসএম: ১৬০-১৭০", "✔ ফিট: রেগুলার ফিট"],
+        types: [
+            { name: "কালো", hex: "#000000" },
+            { name: "অলিভ গ্রিন", hex: "#4b5320" },
+            { name: "গ্রে", hex: "#9ca3af" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-OVERSIZE-03",
+        title: "ওভারসাইজড ড্রপ শোল্ডার টি-শার্ট",
+        price: "৳৫৫০",
+        images: [
+            "https://images.unsplash.com/photo-1618517351616-389a5567a53c?w=400",
+            "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=400"
+        ],
+        desc: "বর্তমান প্রজন্মের সবচেয়ে ট্রেন্ডি এবং স্টাইলিশ ওভারসাইজড ড্রপ শোল্ডার টি-শার্ট।",
+        specs: ["✔ স্টাইল: ড্রপ শোল্ডার", "✔ জিএসএম: ২০০+ (হেভিওয়েট)", "✔ প্রিন্ট: হাই কোয়ালিটি পাফ প্রিন্ট"],
+        types: [
+            { name: "ল্যাভেন্ডার", hex: "#e6e6fa" },
+            { name: "কালো", hex: "#1f2937" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-VNECK-04",
+        title: "মেনজ ভি-নেক সলিড টি-শার্ট",
+        price: "৳৪০০",
+        images: [
+            "https://images.unsplash.com/photo-1586363104862-3a5e228e1aca?w=400",
+            "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=400"
+        ],
+        desc: "সিম্পল অথচ ক্লাসিক লুকের জন্য নিখুঁত ভি-নেক ডিজাইনের টি-শার্ট।",
+        specs: ["✔ নেক স্টাইল: V-Neck", "✔ ফেব্রিক: কটন ব্লেন্ড", "✔ সাইজ: S, M, L, XL"],
+        types: [
+            { name: "সাদা", hex: "#ffffff" },
+            { name: "নেভি ব্লু", hex: "#172554" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-FULLSLV-05",
+        title: "ফুল স্লিভ ক্যাজুয়াল টি-শার্ট",
+        price: "৳৪৫০",
+        images: [
+            "https://images.unsplash.com/photo-1611312449408-fcece27cdbb1?w=400",
+            "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400"
+        ],
+        desc: "হালকা শীতে বা বাইক রাইডিংয়ের সময় পরার জন্য স্টাইলিশ ফুল হাতা টি-শার্ট।",
+        specs: ["✔ হাতা: ফুল স্লিভ উইথ রিব", "✔ ফেব্রিক: ১০০% কটন", "✔ কালার গ্যারান্টি: ১০০%"],
+        types: [
+            { name: "মেরুন", hex: "#7f1d1d" },
+            { name: "কালো", hex: "#000000" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-SPORTS-06",
+        title: "ড্রাই-ফিট স্পোর্টস গেঞ্জি",
+        price: "৳৩২০",
+        images: [
+            "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=400",
+            "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400"
+        ],
+        desc: "জিম, রানিং বা যেকোনো খেলাধুলার জন্য ঘাম শোষক ড্রাই-ফিট স্পোর্টস গেঞ্জি।",
+        specs: ["✔ ফেব্রিক: পলিয়েস্টার (Dry-Fit)", "✔ বৈশিষ্ট্য: দ্রুত ঘাম শুকায়", "✔ ফিট: অ্যাথলেটিক ফিট"],
+        types: [
+            { name: "নিয়ন গ্রিন", hex: "#39ff14" },
+            { name: "কালো", hex: "#111827" },
+            { name: "রয়েল ব্লু", hex: "#2563eb" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-TANK-07",
+        title: "সামার স্লিভলেস ট্যাংক টপ (গেঞ্জি)",
+        price: "৳২৫০",
+        images: [
+            "https://images.unsplash.com/photo-1509825482470-34863bcaf1d6?w=400",
+            "https://images.unsplash.com/photo-1533682805518-48d1f5b8cb3a?w=400"
+        ],
+        desc: "তীব্র গরমে প্রশান্তি পেতে পাতলা এবং আরামদায়ক স্লিভলেস ট্যাংক টপ।",
+        specs: ["✔ স্টাইল: স্লিভলেস/স্যান্ডো", "✔ ফেব্রিক: রিবড কটন", "✔ ব্যবহার: ক্যাজুয়াল বা লাউঞ্জওয়্যার"],
+        types: [
+            { name: "সাদা", hex: "#ffffff" },
+            { name: "গ্রে মেলাঞ্জ", hex: "#d1d5db" },
+            { name: "কালো", hex: "#000000" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-STRIPE-08",
+        title: "স্টাইলিশ স্ট্রাইপড টি-শার্ট",
+        price: "৳৪৮০",
+        images: [
+            "https://images.unsplash.com/photo-1574015974293-817f0ebebb74?w=400",
+            "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=400"
+        ],
+        desc: "ক্যাজুয়াল লুককে আরও আকর্ষণীয় করতে চিরসবুজ স্ট্রাইপ ডিজাইনের টি-শার্ট।",
+        specs: ["✔ প্যাটার্ন: হরাইজন্টাল স্ট্রাইপ", "✔ জিএসএম: ১৮০", "✔ ফেব্রিক: ইয়ার্ন ডাইড কটন"],
+        types: [
+            { name: "সাদা-কালো স্ট্রাইপ", hex: "#4b5563" },
+            { name: "নেভি-সাদা স্ট্রাইপ", hex: "#1e3a8a" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-PRINT-09",
+        title: "ট্রেন্ডি গ্রাফিক প্রিন্টেড টি-শার্ট",
+        price: "৳৪২০",
+        images: [
+            "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=400",
+            "https://images.unsplash.com/photo-1503341504253-d2d08a4c23d8?w=400"
+        ],
+        desc: "বুকে সুন্দর ও আকর্ষণীয় গ্রাফিক আর্টওয়ার্ক প্রিন্ট করা প্রিমিয়াম টি-শার্ট।",
+        specs: ["✔ প্রিন্ট টাইপ: রাবার/ডিটিএফ প্রিন্ট", "✔ সাইজ: M, L, XL", "✔ স্থায়িত্ব: সহজে প্রিন্ট উঠবে না"],
+        types: [
+            { name: "মাস্টার্ড ইয়েলো", hex: "#fbbf24" },
+            { name: "কালো", hex: "#111827" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "C-HENLEY-10",
+        title: "ক্লাসিক হেনলি নেক টি-শার্ট",
+        price: "৳৫২০",
+        images: [
+            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400",
+            "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400"
+        ],
+        desc: "গলার কাছে বাটন দেওয়া স্টাইলিশ হেনলি টি-শার্ট, যা দিবে একদম আলাদা একটি লুক।",
+        specs: ["✔ নেক স্টাইল: বাটনড হেনলি নেক", "✔ ফেব্রিক: টেক্সচার্ড কটন", "✔ ফিট: স্লিম ফিট"],
+        types: [
+            { name: "অলিভ", hex: "#3f4a3c" },
+            { name: "ডিপ রেড", hex: "#991b1b" }
+        ],
+        category: "gents",
+        storeId: "store1"
+    },
+    {
+        code: "G-DRONE-11",
+        title: "মিনি ফোল্ডেবল এইচডি ড্রোন (ডুয়াল ক্যামেরা)",
+        price: "৳৩,৫০০",
+        images: [
+            "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=400",
+            "https://images.unsplash.com/photo-1527977961144-585802a48873?w=400"
+        ],
+        desc: "সহজেই পকেটে বহনযোগ্য এবং বিগিনারদের জন্য দারুণ একটি ফোল্ডেবল মিনি ড্রোন।",
+        specs: ["✔ ক্যামেরা: এইচডি (4K রেজোলিউশন সাপোর্ট)", "✔ ফ্লাইং টাইম: ১২-১৫ মিনিট", "✔ রেঞ্জ: ১০০ মিটার পর্যন্ত"],
+        types: [
+            { name: "কালো", hex: "#000000" },
+            { name: "সিলভার", hex: "#c0c0c0" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-VR-12",
+        title: "ভার্চুয়াল রিয়েলিটি (VR) 3D গ্লাস",
+        price: "৳৯৯০",
+        images: [
+            "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400",
+            "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=400"
+        ],
+        desc: "স্মার্টফোনে 3D মুভি দেখা এবং ভিআর গেম খেলার জন্য প্রিমিয়াম লেন্স সমৃদ্ধ ভিআর বক্স।",
+        specs: ["✔ লেন্স: অ্যান্টি-ব্লু লাইট লেন্স", "✔ সাপোর্ট: ৪.৭ থেকে ৬.৫ ইঞ্চি স্মার্টফোন", "✔ কন্ট্রোলার: ব্লুটুথ রিমোট কন্ট্রোল"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-HEADPHONE-13",
+        title: "আরজিবি গেমিং হেডফোন উইথ মাইক",
+        price: "৳১,২০০",
+        images: [
+            "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400",
+            "https://images.unsplash.com/photo-1599669500516-b60092abc11a?w=400",
+            "https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=400"
+        ],
+        desc: "সাউন্ড আইসোলেশন এবং ক্লিয়ার অডিওর জন্য প্রফেশনাল গেমিং হেডফোন, সাথে আরজিবি লাইটিং।",
+        specs: ["✔ স্পিকার সাইজ: ৫০ মিমি", "✔ মাইক্রোফোন: নয়েজ ক্যান্সেলেশন", "✔ কানেক্টর: 3.5mm অডিও + ইউএসবি (লাইটের জন্য)"],
+        types: [
+            { name: "কালো-লাল", hex: "#7f1d1d" },
+            { name: "কালো-নীল", hex: "#1e3a8a" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-WEBCAM-14",
+        title: "ফুল এইচডি 1080P ওয়েবক্যাম",
+        price: "৳১,৪৫০",
+        images: [
+            "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400",
+            "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400"
+        ],
+        desc: "অনলাইন ক্লাস, মিটিং বা লাইভ স্ট্রিম করার জন্য চমৎকার ফোকাস এবং ক্লিয়ার ভিডিও কোয়ালিটির ওয়েবক্যাম।",
+        specs: ["✔ রেজোলিউশন: 1920x1080 (Full HD)", "✔ মাইক্রোফোন: ইনবিল্ট মাইক", "✔ ইন্টারফেস: প্লাগ অ্যান্ড প্লে (USB)"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-SMARTPLUG-15",
+        title: "ওয়াইফাই স্মার্ট প্লাগ (অ্যাপ কন্ট্রোল)",
+        price: "৳৮৫০",
+        images: [
+            "https://images.unsplash.com/photo-1558002038-1055907df827?w=400",
+            "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400"
+        ],
+        desc: "যেকোনো স্থান থেকে মোবাইল অ্যাপ দিয়ে ঘরের ইলেকট্রনিক ডিভাইস অন/অফ করার স্মার্ট প্লাগ।",
+        specs: ["✔ কন্ট্রোল: ওয়াইফাই, অ্যালেক্সা এবং গুগল অ্যাসিস্ট্যান্ট", "✔ ফিচার: টাইমার এবং শিডিউলিং", "✔ ভোল্টেজ: ১০০-২৪০V"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-SSD-16",
+        title: "১ টিবি পোর্টেবল এক্সটার্নাল এসএসডি",
+        price: "৳৭,৫০০",
+        images: [
+            "https://images.unsplash.com/photo-1606145455325-1e4e1a062547?w=400",
+            "https://images.unsplash.com/photo-1597571063304-81f08190f3e1?w=400"
+        ],
+        desc: "দ্রুত ডাটা ট্রান্সফার এবং সুরক্ষিত স্টোরেজের জন্য পকেট সাইজ এক্সটার্নাল এসএসডি।",
+        specs: ["✔ স্টোরেজ: ১ টেরাবাইট (1TB)", "✔ স্পিড: 1050MB/s রিড স্পিড", "✔ ক্যাবল: টাইপ-সি টু টাইপ-সি"],
+        types: [
+            { name: "কালো", hex: "#111827" },
+            { name: "নেভি ব্লু", hex: "#1e3a8a" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-MIC-17",
+        title: "প্রফেশনাল কন্ডেন্সার মাইক্রোফোন সেট",
+        price: "৳২,১০০",
+        images: [
+            "https://images.unsplash.com/photo-1520524458514-43c224ab497e?w=400",
+            "https://images.unsplash.com/photo-1583248352195-d3a8e766edf2?w=400"
+        ],
+        desc: "ইউটিউবিং, পডকাস্ট বা ভয়েস ওভার দেওয়ার জন্য নয়েজ ফ্রি প্রফেশনাল মাইক্রোফোন।",
+        specs: ["✔ প্যাটার্ন: কার্ডিওয়েড (Cardioid)", "✔ অ্যাক্সেসরিজ: স্ট্যান্ড, পপ ফিল্টার, ক্যাবল", "✔ ফ্রিকোয়েন্সি: 20Hz-20kHz"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-TABLET-18",
+        title: "গ্রাফিক্স ড্রয়িং ট্যাবলেট উইথ পেন",
+        price: "৳৩,৮০০",
+        images: [
+            "https://images.unsplash.com/photo-1569396116180-210c1f852869?w=400",
+            "https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?w=400"
+        ],
+        desc: "ডিজিটাল আর্ট, ইলাস্ট্রেশন বা অনলাইন টিচিংয়ের জন্য দারুণ একটি বাজেট গ্রাফিক্স ট্যাবলেট।",
+        specs: ["✔ ওয়ার্কিং এরিয়া: ৬ x ৪ ইঞ্চি", "✔ পেন প্রেসার: 8192 লেভেল", "✔ সাপোর্ট: উইন্ডোজ, ম্যাক ও অ্যান্ড্রয়েড"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-STAND-19",
+        title: "অ্যালুমিনিয়াম ফোল্ডেবল ল্যাপটপ স্ট্যান্ড",
+        price: "৳৫৫০",
+        images: [
+            "https://images.unsplash.com/photo-1616422285623-13ff0162193c?w=400",
+            "https://images.unsplash.com/photo-1601004812228-569260bc72dc?w=400"
+        ],
+        desc: "দীর্ঘক্ষণ কাজ করার জন্য ল্যাপটপকে চোখের লেভেলে রাখতে সাহায্যকারী মজবুত স্ট্যান্ড।",
+        specs: ["✔ ম্যাটেরিয়াল: প্রিমিয়াম অ্যালুমিনিয়াম", "✔ অ্যাডজাস্টেবল: ৬টি ভিন্ন উচ্চতা", "✔ কুলিং: তাপ সহজে বের হতে পারে"],
+        types: [
+            { name: "সিলভার", hex: "#e5e7eb" },
+            { name: "স্পেস গ্রে", hex: "#374151" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-TRACKER-20",
+        title: "স্মার্ট ব্লুটুথ ট্র্যাকার (অ্যান্টি-লস্ট ট্যাগ)",
+        price: "৳৩৫০",
+        images: [
+            "https://images.unsplash.com/photo-1592862024564-9842a201c8eb?w=400",
+            "https://images.unsplash.com/photo-1517420879524-86d64ac2f339?w=400"
+        ],
+        desc: "চাবি, মানিব্যাগ বা পোষা প্রাণীর সাথে লাগিয়ে রাখুন, হারালে মোবাইল দিয়ে অ্যালার্ম বাজিয়ে খুঁজে বের করুন।",
+        specs: ["✔ ব্লুটুথ রেঞ্জ: ৭৫ ফিট পর্যন্ত", "✔ ব্যাটারি লাইফ: ৬ মাস+", "✔ ফিচার: টু-ওয়ে ট্র্যাকিং (মোবাইল থেকে ট্যাগ, ট্যাগ থেকে মোবাইল)"],
+        types: [
+            { name: "সাদা", hex: "#ffffff" },
+            { name: "কালো", hex: "#000000" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-WATCH-01",
+        title: "আল্ট্রা স্লিম ফিটনেস স্মার্টওয়াচ",
+        price: "৳১,৮৫০",
+        images: [
+            "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400",
+            "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400",
+            "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=400"
+        ],
+        desc: "হার্ট রেট, স্লিপ মনিটর এবং স্পোর্টস মোড সমৃদ্ধ আধুনিক স্মার্টওয়াচ।",
+        specs: ["✔ ডিসপ্লে: ১.৬৯ ইঞ্চি ফুল টাচ", "✔ ব্যাটারি ব্যাকআপ: ৭-১০ দিন", "✔ ওয়াটারপ্রুফ: IP68 রেটিং"],
+        types: [
+            { name: "কালো", hex: "#000000" },
+            { name: "রোজ গোল্ড", hex: "#b76e79" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-POWER-02",
+        title: "২০,০০০mAh ফাস্ট চার্জিং পাওয়ার ব্যাংক",
+        price: "৳১,৪৫০",
+        images: [
+            "https://images.unsplash.com/photo-1609592424085-f559bc84b553?w=400",
+            "https://images.unsplash.com/photo-1622445211626-4fdf89b910fc?w=400"
+        ],
+        desc: "একসাথে একাধিক ডিভাইস দ্রুত চার্জ করার জন্য ২২.৫W ফাস্ট চার্জিং পাওয়ার ব্যাংক।",
+        specs: ["✔ ক্ষমতা: 20000mAh", "✔ আউটপুট: ২টি ইউএসবি এবং ১টি টাইপ-সি", "✔ ডিসপ্লে: ডিজিটাল পার্সেন্টেজ ইন্ডিকেটর"],
+        types: [
+            { name: "কালো", hex: "#1f2937" },
+            { name: "সাদা", hex: "#ffffff" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-MOUSE-03",
+        title: "আরজিবি ওয়্যারলেস গেমিং মাউস",
+        price: "৳৭৫০",
+        images: [
+            "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400",
+            "https://images.unsplash.com/photo-1625842268584-8f329041413c?w=400"
+        ],
+        desc: "গেমিং এবং অফিসিয়াল কাজের জন্য চমৎকার গ্রিপ ও আকর্ষণীয় আরজিবি লাইটিং মাউস।",
+        specs: ["✔ কানেক্টিভিটি: ২.৪ গিগাহার্টজ ওয়্যারলেস", "✔ ডিপিআই: ৮০০ থেকে ২৪০০ পর্যন্ত অ্যাডজাস্টেবল", "✔ ব্যাটারি: রিচার্জেবল"],
+        types: [
+            { name: "ম্যাট ব্ল্যাক", hex: "#111827" },
+            { name: "সিলভার", hex: "#9ca3af" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-KEYBOARD-04",
+        title: "মেকানিক্যাল আরজিবি কিবোর্ড",
+        price: "৳২,২০০",
+        images: [
+            "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
+            "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400"
+        ],
+        desc: "টাইপিংয়ের দারুণ অনুভূতির জন্য ব্লু-সুইচ সমৃদ্ধ মেকানিক্যাল কিবোর্ড।",
+        specs: ["✔ লাইটিং: ২০+ আরজিবি মোড", "✔ সুইচ টাইপ: ক্লিকি ব্লু সুইচ", "✔ ক্যাবল: ডিটাচেবল টাইপ-সি"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-PROJECTOR-05",
+        title: "মিনি পোর্টেবল এলইডি প্রজেক্টর",
+        price: "৳৪,৯৯৯",
+        images: [
+            "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400",
+            "https://images.unsplash.com/photo-1626379616459-b2ce1d9decbb?w=400"
+        ],
+        desc: "ঘরকেই সিনেমা হল বানিয়ে তোলার জন্য সহজে বহনযোগ্য ফুল এইচডি মিনি প্রজেক্টর।",
+        specs: ["✔ রেজোলিউশন: 1080P সাপোর্ট", "✔ কানেক্টিভিটি: HDMI, USB, AV, Wi-Fi", "✔ স্ক্রিন সাইজ: ৩০ থেকে ১২০ ইঞ্চি"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-NECKBAND-06",
+        title: "স্পোর্টস ওয়্যারলেস নেকব্যান্ড",
+        price: "৳৬৮০",
+        images: [
+            "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?w=400",
+            "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400"
+        ],
+        desc: "ব্যায়াম বা ভ্রমণের সময় ব্যবহারের জন্য ম্যাগনেটিক ইয়ারবাডস সহ নয়েজ ক্যান্সেলেশন নেকব্যান্ড।",
+        specs: ["✔ ব্লুটুথ ভার্সন: ৫.২", "✔ প্লেব্যাক টাইম: ২৫ ঘণ্টা একটানা", "✔ ফিচার: ফাস্ট চার্জিং সাপোর্ট"],
+        types: [
+            { name: "কালো", hex: "#0f172a" },
+            { name: "নীল", hex: "#1e3a8a" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-RINGLIGHT-07",
+        title: "১০ ইঞ্চি এলইডি রিং লাইট উইথ ট্রাইপড",
+        price: "৳৮৫০",
+        images: [
+            "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400",
+            "https://images.unsplash.com/photo-1619946794135-5bc917a27793?w=400"
+        ],
+        desc: "ভিডিও মেকিং, লাইভ স্ট্রিম এবং নিখুঁত সেলফি তোলার জন্য অ্যাডজাস্টেবল রিং লাইট।",
+        specs: ["✔ লাইট মোড: ৩টি (উষ্ণ, প্রাকৃতিক, শীতল)", "✔ ব্রাইটনেস: ১০টি লেভেল", "✔ ট্রাইপড উচ্চতা: সর্বোচ্চ ৭ ফিট"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-GIMBAL-08",
+        title: "৩-অক্ষ বিশিষ্ট স্মার্টফোন গিম্বল স্ট্যাবিলাইজার",
+        price: "৳৫,৫০০",
+        images: [
+            "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?w=400",
+            "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=400"
+        ],
+        desc: "মোবাইল দিয়ে একদম স্মুথ এবং সিনেমাটিক ভিডিও শ্যুট করার জন্য বেস্ট ট্র্যাকিং গিম্বল।",
+        specs: ["✔ স্ট্যাবিলাইজেশন: 3-Axis", "✔ ফিচার: ফেস ট্র্যাকিং, টাইম-ল্যাপস", "✔ ব্যাকআপ: প্রায় ১২ ঘণ্টা"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-SENSORLIGHT-09",
+        title: "স্মার্ট মোশন সেন্সর নাইট লাইট",
+        price: "৳৩২০",
+        images: [
+            "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400",
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400"
+        ],
+        desc: "অন্ধকারে মানুষ সামনে আসলেই স্বয়ংক্রিয়ভাবে জ্বলে উঠবে এই রিচার্জেবল মোশন সেন্সর লাইটটি।",
+        specs: ["✔ সেন্সর রেঞ্জ: ৩-৫ মিটার (১২০ ডিগ্রি)", "✔ ব্যাটারি: ইউএসবি রিচার্জেবল", "✔ ইনস্টলেশন: ম্যাগনেটিক ও আঠালো প্যাড"],
+        category: "gadgets",
+        storeId: "store1"
+    },
+    {
+        code: "G-HUMIDIFIER-10",
+        title: "মিনি ইউএসবি এয়ার হিউমিডিফায়ার",
+        price: "৳৪৫০",
+        images: [
+            "https://images.unsplash.com/photo-1602928321679-560bb453f190?w=400",
+            "https://images.unsplash.com/photo-1519183071298-a2962feb14f4?w=400"
+        ],
+        desc: "ঘরের শুষ্কতা দূর করতে এবং সুগন্ধি ছড়িয়ে দিতে রঙিন এলইডি লাইট সমৃদ্ধ মিনি হিউমিডিফায়ার।",
+        specs: ["✔ পানির ধারণক্ষমতা: ৩০০ মিলি", "✔ লাইটিং: ৭ রঙের অটো চেঞ্জিং LED", "✔ পাওয়ার সোর্স: ইউএসবি ক্যাবল"],
+        types: [
+            { name: "গোলাপি", hex: "#fbcfe8" },
+            { name: "গাঢ় ধূসর", hex: "#4b5563" }
+        ],
+        category: "gadgets",
+        storeId: "store1"
+    }
+];
+
+        // আপনার আগের initialProducts অ্যারেটি এখানে থাকবে...
+
+// ব্রাউজারে ডাটা আপডেট করার লজিক (লক ভাঙার জন্য)
+// 💡 প্রোডাক্ট লিস্টে যেকোনো পরিবর্তন (নতুন প্রোডাক্ট/এডিট) করলে নিচের DATA_VERSION নাম্বারটি পরিবর্তন করুন,
+// তাহলে পুরনো localStorage ক্যাশ অটোমেটিক রিফ্রেশ হয়ে নতুন ডাটা শো করবে।
+const DATA_VERSION = "v4.5.1";
+
+let allProducts = JSON.parse(localStorage.getItem('megaProductList'));
+let savedVersion = localStorage.getItem('megaProductListVersion');
+let currentCategory = 'all';
+let currentSearchQuery = '';
+
+if (!allProducts || savedVersion !== DATA_VERSION) {
+    // ভার্সন না মিললে বা ডাটা না থাকলে, কোডের initialProducts দিয়ে রিফ্রেশ হবে
+    localStorage.setItem('megaProductList', JSON.stringify(initialProducts));
+    localStorage.setItem('megaProductListVersion', DATA_VERSION);
+    allProducts = initialProducts;
+}
+
+// --- ডায়নামিক রেন্ডারিং ---
+function renderProducts() {
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+
+    const normalizedQuery = currentSearchQuery.trim().toLowerCase();
+
+    const filteredProducts = allProducts.filter(product => {
+        const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+        const searchableText = `${product.title || ''} ${product.code || ''} ${product.desc || ''} ${product.category || ''} ${(product.specs || []).join(' ')}`.toLowerCase();
+        const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery);
+        return matchesCategory && matchesQuery;
+    });
+
+    if (!filteredProducts.length) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#64748b;">কোনো প্রোডাক্ট পাওয়া যায়নি।</div>';
+        return;
+    }
+
+    filteredProducts.forEach(product => {
+        const card = document.createElement('div');
+        card.className = `product-card filter-item ${product.category}`;
+        card.tabIndex = 0; // keyboard focus
+        card.setAttribute('role', 'button');
+        card.setAttribute('data-code', product.code);
+        
+        card.onclick = () => {
+            openModal(product.title, product.price, product.code, product.images, product.desc, product.specs, product.types);
+        };
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            }
+        });
+
+        card.innerHTML = `
+            <div class="product-img-wrapper"><img src="${product.images[0]}" alt="Product"></div>
+            <h4>${product.title}</h4>
+            <p class="product-price">${product.price}</p>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// 💡 বোনাস ফাংশন: কোড বা কনসোল থেকে নতুন প্রোডাক্ট লাইভ অ্যাড করার জন্য
+function normalizeSharedProduct(newProd) {
+    const normalized = { ...newProd };
+    normalized.code = normalized.code || `PRD-${Date.now()}`;
+    normalized.title = normalized.title || 'নতুন পণ্য';
+    normalized.price = normalized.price || '৳০';
+    normalized.images = Array.isArray(normalized.images) && normalized.images.length ? normalized.images : ['https://placehold.co/300x300?text=Ideas+SHOP'];
+    normalized.desc = normalized.desc || 'এই পণ্যটি নতুনভাবে যোগ করা হয়েছে।';
+    normalized.specs = Array.isArray(normalized.specs) ? normalized.specs : [];
+    normalized.category = normalized.category || 'general';
+    normalized.storeId = normalized.storeId || 'store1';
+    return normalized;
+}
+
+function broadcastProductSync() {
+    if (window.BroadcastChannel) {
+        const channel = new BroadcastChannel('ideas-shop-products');
+        channel.postMessage({ type: 'product-list-updated' });
+        channel.close();
+    }
+}
+
+function addNewProductLive(newProd) {
+    const normalizedProduct = normalizeSharedProduct(newProd);
+    allProducts.unshift(normalizedProduct);
+    localStorage.setItem('megaProductList', JSON.stringify(allProducts));
+    localStorage.setItem('megaProductListVersion', DATA_VERSION);
+    broadcastProductSync();
+    renderProducts();
+    filterSelection('all');
+}
+
+
+        // --- ক্যাটাগরি ফিল্টার লজিক ---
+        function filterSelection(category) {
+            currentCategory = category;
+            let btns = document.getElementsByClassName("filter-btn");
+
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add("active");
+            }
+
+            renderProducts();
+        }
+
+        // পেজ লোড হলেই প্রোডাক্ট রেন্ডার হবে এবং "all" ফিল্টার অ্যাপ্লাই হবে
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            filterSelection('all');
+            if (window.BroadcastChannel) {
+                const syncChannel = new BroadcastChannel('ideas-shop-products');
+                syncChannel.onmessage = (event) => {
+                    if (event.data && event.data.type === 'product-list-updated') {
+                        const storedProducts = JSON.parse(localStorage.getItem('megaProductList') || 'null');
+                        if (Array.isArray(storedProducts)) {
+                            allProducts = storedProducts;
+                            renderProducts();
+                        }
+                    }
+                };
+            }
+        });
+
+        // --- মডাল ও স্লাইডার লজিক (স্পেসিফিকেশন সহ) ---
+        let currentImageIndex = 0;
+        let modalImages = [];
+        let currentProductData = {}; 
+        let currentProductTypes = null;
+
+        function convertToEnglishNumber(str) {
+            const bengaliToEnglish = {'০':'0', '১':'1', '২':'2', '৩':'3', '৪':'4', '৫':'5', '৬':'6', '৭':'7', '৮':'8', '৯':'9'};
+            let engStr = str.replace(/[০-৯]/g, m => bengaliToEnglish[m]);
+            return parseInt(engStr.replace(/[^0-9]/g, '')) || 0;
+        }
+
+        function openModal(title, price, code, imgArray, desc, specsArray, typesArray) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('productCode').innerText = code;
+            document.getElementById('modalDesc').innerText = desc;
+            
+            const specsContainer = document.getElementById('dynamicSpecsContainer');
+            specsContainer.innerHTML = ''; 
+            
+            if(specsArray && specsArray.length > 0) {
+                document.getElementById('extraDetailsBox').style.display = 'block';
+                specsArray.forEach(spec => {
+                    const p = document.createElement('p');
+                    p.innerText = spec;
+                    specsContainer.appendChild(p);
+                });
+            } else {
+                document.getElementById('extraDetailsBox').style.display = 'none'; 
+            }
+            
+            let cleanPriceNumber = convertToEnglishNumber(price);
+            let mainImage = (imgArray && imgArray.length > 0) ? imgArray[0] : '';
+            currentProductData = { name: title + " (" + code + ")", price: cleanPriceNumber, qty: 1, image: mainImage, code: code };
+
+            // --- প্রোডাক্ট টাইপ কাস্টম ড্রপডাউন রেন্ডার ---
+            const typeSection = document.getElementById('typeSelectSection');
+            const typeOptionsPanel = document.getElementById('typeOptionsPanel');
+            const typeTriggerText = document.getElementById('typeTriggerText');
+            const typeTooltip = document.getElementById('typeTooltip');
+            const typeWrapper = document.getElementById('typeSelectWrapper');
+
+            typeOptionsPanel.innerHTML = '';
+            typeTriggerText.innerText = 'Select Type';
+            typeTriggerText.classList.add('placeholder');
+            typeTooltip.classList.remove('show');
+            typeWrapper.classList.remove('attention', 'open');
+
+            currentProductTypes = (typesArray && typesArray.length > 0) ? typesArray : null;
+
+            if (currentProductTypes) {
+                typeSection.style.display = 'block';
+                currentProductTypes.forEach((t) => {
+                    const row = document.createElement('div');
+                    row.className = 'type-option-row';
+                    row.innerHTML = `<span>${t.name}</span><span class="check-circle"><i class="fas fa-check"></i></span>`;
+                    row.onclick = (e) => { e.stopPropagation(); selectType(t.name); };
+                    typeOptionsPanel.appendChild(row);
+                });
+                delete currentProductData.type;
+            } else {
+                typeSection.style.display = 'none';
+                delete currentProductData.type;
+            }
+
+            modalImages = imgArray;
+            currentImageIndex = 0;
+            const wrapper = document.getElementById('modalSliderWrapper');
+            const dotsContainer = document.getElementById('modalSliderDots');
+            wrapper.innerHTML = ''; dotsContainer.innerHTML = '';
+            
+            modalImages.forEach((imgSrc, index) => {
+                const img = document.createElement('img'); img.src = imgSrc; wrapper.appendChild(img);
+                const dot = document.createElement('div'); dot.className = 'dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(index); dotsContainer.appendChild(dot);
+            });
+
+            document.querySelector('.prev-btn').style.display = modalImages.length > 1 ? 'flex' : 'none';
+            document.querySelector('.next-btn').style.display = modalImages.length > 1 ? 'flex' : 'none';
+            updateSliderPosition();
+
+            const cartBtn = document.getElementById('addToCartBtn');
+            cartBtn.innerHTML = 'কার্টে যোগ করুন <i class="fas fa-shopping-cart"></i>';
+            cartBtn.style.background = "var(--gradient-orange)";
+
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('productModal').classList.add('active');
+            document.body.classList.add('no-scroll');
+        }
+
+        function toggleTypePanel(event) {
+            event.stopPropagation();
+            const wrapper = document.getElementById('typeSelectWrapper');
+            wrapper.classList.toggle('open');
+        }
+
+        // ড্রপডাউনের বাইরে ক্লিক করলে প্যানেল বন্ধ হয়ে যাবে
+        document.addEventListener('click', (e) => {
+            const wrapper = document.getElementById('typeSelectWrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                wrapper.classList.remove('open');
+            }
+        });
+
+        function selectType(typeName) {
+            currentProductData.type = typeName;
+
+            const typeTriggerText = document.getElementById('typeTriggerText');
+            typeTriggerText.innerText = typeName;
+            typeTriggerText.classList.remove('placeholder');
+
+            document.querySelectorAll('.type-option-row').forEach(row => {
+                row.classList.toggle('selected', row.querySelector('span').innerText === typeName);
+            });
+
+            document.getElementById('typeTooltip').classList.remove('show');
+            document.getElementById('typeSelectWrapper').classList.remove('attention', 'open');
+
+            // এই টাইপের নিজস্ব ছবি থাকলে স্লাইডারের প্রথম ছবিটি বদলে দেবে
+            const matchedType = currentProductTypes ? currentProductTypes.find(t => t.name === typeName) : null;
+            if (matchedType && matchedType.image) {
+                modalImages[0] = matchedType.image;
+                currentProductData.image = matchedType.image;
+                const firstImg = document.querySelector('#modalSliderWrapper img');
+                if (firstImg) firstImg.src = matchedType.image;
+                goToSlide(0);
+            }
+        }
+
+        function moveSlider(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex >= modalImages.length) currentImageIndex = 0;
+            if (currentImageIndex < 0) currentImageIndex = modalImages.length - 1;
+            updateSliderPosition();
+        }
+
+        function goToSlide(index) { currentImageIndex = index; updateSliderPosition(); }
+
+        function updateSliderPosition() {
+            document.getElementById('modalSliderWrapper').style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentImageIndex);
+            });
+        }
+
+        function closeModal(event) {
+            if(event.target.id === 'modalOverlay') forceCloseModal();
+        }
+
+        function forceCloseModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('productModal').classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+
+                function addToCart() {
+            // --- Type নির্বাচন ছাড়া কার্টে যোগ করতে দেওয়া হবে না ---
+            if (currentProductTypes && !currentProductData.type) {
+                document.getElementById('typeTooltip').classList.add('show');
+                const wrapper = document.getElementById('typeSelectWrapper');
+                wrapper.classList.remove('attention');
+                void wrapper.offsetWidth; // animation reset
+                wrapper.classList.add('attention');
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            let cartItemName = currentProductData.type
+                ? currentProductData.name + " - " + currentProductData.type
+                : currentProductData.name;
+
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            let existingItem = cart.find(item =>
+                item.name === cartItemName &&
+                (item.type || '') === (currentProductData.type || '')
+            );
+
+            if (existingItem) existingItem.qty += 1;
+            else cart.push({ ...currentProductData, name: cartItemName });
+
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            
+            // কার্টে প্রোডাক্ট অ্যাড হওয়ার সাথে সাথে রেড ডট আপডেট করবে
+            updateCartBadge(); 
+            
+            const cartBtn = document.getElementById('addToCartBtn');
+            cartBtn.innerHTML = 'যুক্ত হয়েছে ✓';
+            cartBtn.style.background = "#10b981";
+
+            showToast("প্রোডাক্টটি সফলভাবে কার্টে যুক্ত হয়েছে!");
+            setTimeout(forceCloseModal, 1000); 
+        }
+
+        // --- অর্ডার আইকনে রেড ডট (Badge) দেখানোর ফাংশন ---
+        function updateCartBadge() {
+            let badge = document.getElementById('orderNavBadge');
+            if (!badge) return;
+            let savedCart = JSON.parse(localStorage.getItem('myCart')) || [];
+            if (savedCart.length > 0) {
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+
+        // পেজ রিলোড বা ওপেন করার সাথে সাথেই কার্ট চেক করে রেড ডট দেখাবে
+        updateCartBadge();
+
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function handleSearchKeyPress(event) {
+            if (event.key === 'Enter') executeSearch();
+        }
+
+        function renderCategorySearchSuggestions(query) {
+            const suggestionsBox = document.getElementById('categorySearchSuggestions');
+            if (!suggestionsBox) return;
+            const value = (query || '').trim().toLowerCase();
+            if (!value) {
+                suggestionsBox.innerHTML = '';
+                suggestionsBox.classList.remove('show');
+                return;
+            }
+
+            const matchedProducts = allProducts.filter(product => {
+                const searchableText = `${product.title || ''} ${product.code || ''} ${product.desc || ''} ${product.category || ''}`.toLowerCase();
+                return searchableText.includes(value);
+            }).slice(0, 5);
+
+            if (!matchedProducts.length) {
+                suggestionsBox.innerHTML = '<div class="search-suggestion-item"><span>কোনো ম্যাচিং প্রোডাক্ট নেই</span></div>';
+                suggestionsBox.classList.add('show');
+                return;
+            }
+
+            suggestionsBox.innerHTML = matchedProducts.map(product => `
+                <div class="search-suggestion-item" onclick="selectCategorySuggestion('${(product.title || '').replace(/'/g, "\\'")}')">
+                    <div class="suggestion-label">
+                        <strong>${product.title || 'Product'}</strong>
+                        <span>${product.code || ''}</span>
+                    </div>
+                    <span class="suggestion-badge">${product.category || 'product'}</span>
+                </div>
+            `).join('');
+            suggestionsBox.classList.add('show');
+        }
+
+        function selectCategorySuggestion(title) {
+            const input = document.getElementById('searchInput');
+            if (input) input.value = title;
+            currentSearchQuery = title;
+            renderCategorySearchSuggestions(title);
+            renderProducts();
+        }
+
+        function toggleSearchBar() {
+            const box = document.getElementById('searchContainer');
+            box.classList.toggle('open');
+            if (box.classList.contains('open')) {
+                setTimeout(() => document.getElementById('searchInput').focus(), 150);
+            }
+        }
+
+        function executeSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            currentSearchQuery = query;
+            renderCategorySearchSuggestions(query);
+            renderProducts();
+            if (query) {
+                document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => renderCategorySearchSuggestions(searchInput.value));
+                searchInput.addEventListener('focus', () => renderCategorySearchSuggestions(searchInput.value));
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            const suggestions = document.getElementById('categorySearchSuggestions');
+            if (suggestions && !suggestions.contains(event.target) && !event.target.closest('.search-bar')) {
+                suggestions.classList.remove('show');
+            }
+        });
+
+
+    </script>
+</body>
+</html>

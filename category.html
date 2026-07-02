@@ -421,28 +421,25 @@
     <script>
         // --- লোকাল স্টোরেজ ডাটা সেটআপ ---
         const initialProducts = [       
-
-    {
-        code: "F-fanT-01",
-        title: " Turbo Fan Portable Mini টার্বো ফ্যান ",
-        price: "৳580",
-        images: [
-            "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979203/663407015_4255202391359747_2618512546202096813_n_b2k02s.jpg",
-            "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979196/730160459_986593790673045_3397122681190972685_n_qqwruf.webp"
-           "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979111/732409010_1349973370051323_2765516149630823865_n_bkijkw.jpg"   
-        ],
-        desc: "৯০ ডিগ্রি পর্যন্ত ফোল্ড বা বাঁকানো সম্ভব, যা টেবিলে রাখার জন্য সুবিধাজনক োর্টেবল মিনি হ্যান্ডহেল্ড টার্বো ফ্যান (এলইডি ডিজিটাল ডিসপ্লে এবং গলার লেইন্যার্ড সহ) 
-         অত্যন্ত হালকা এবং সাথে রয়েছে মজবুত অ্যাডজাস্টেবল নেক স্ট্র্যাপ/লেইন্যার্ড",
-        specs: ["✔ চার্জিং পোর্ট (Charging Port)", "✔টাইপ-সি (Type-C) ফাস্ট চার্জিং সাপোর্ট ", "✔ রং (Available Colors)" ,"✔ডিসপ্লে (Display)ব্যাটারির পার্সেন্টেজ ও স্পীড ইন্ডিকেটর সহ)" ,"✔No warranty" ,"✔ Hand to hand reture policy"],
-        types: [
-            { name: "হালকা সবুজ ", hex: "#1e3a8a" },
-            { name: "কালো", hex: "#111827" },
-            { name: "সাদা", hex: "#ffffff" }
-             { name: "গোলাপি", hex: "#ffffff" }
-        ],
-        category: "gents",
-        storeId: "store1"
-    },
+  {
+    code: "F-fanT-01", 
+    title: "Turbo Fan Portable Mini টার্বো ফ্যান", 
+    price: "৳580",
+    images: [
+        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979203/663407015_4255202391359747_2618512546202096813_n_b2k02s.jpg",
+        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979196/730160459_986593790673045_3397122681190972685_n_qqwruf.webp",
+        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979111/732409010_1349973370051323_2765516149630823865_n_bkijkw.jpg"
+    ],
+    desc: "৯০ ডিগ্রি পর্যন্ত ফোল্ড বা বাঁকানো সম্ভব, যা টেবিলে রাখার জন্য সুবিধাজনক পোর্টেবল মিনি হ্যান্ডহেল্ড টার্বো ফ্যান (এলইডি ডিজিটাল ডিসপ্লে এবং গলার লেইন্যার্ড সহ)",
+    specs: ["✔️ চার্জিং পোর্ট (Charging Port)", "✔️টাইপ-সি (Type-C) ফাস্ট চার্জিং সাপোর্ট", "✔️ রং (Available Colors)", "✔️ডিসপ্লে (Display)ব্যাটারির পার্সেন্টেজ ও স্পীড ইন্ডিকেটর সহ)", "✔️No warranty", "✔️ Hand to hand reture policy"],
+    types: [
+        { name: "সাদা", hex: "#7f1d1d" },
+        { name: "কালো", hex: "#000000" },
+        { name: "গোলাপি", hex: "#3f51b5" }
+    ],
+    category: "electronics", 
+    storeId: "store1"
+},
     {
         code: "C-TSHIRT-02",
         title: "বেসিক রাউন্ড নেক টি-শার্ট",
@@ -908,7 +905,7 @@
 // ব্রাউজারে ডাটা আপডেট করার লজিক (লক ভাঙার জন্য)
 // 💡 প্রোডাক্ট লিস্টে যেকোনো পরিবর্তন (নতুন প্রোডাক্ট/এডিট) করলে নিচের DATA_VERSION নাম্বারটি পরিবর্তন করুন,
 // তাহলে পুরনো localStorage ক্যাশ অটোমেটিক রিফ্রেশ হয়ে নতুন ডাটা শো করবে।
-const DATA_VERSION = "v4.5.2";
+const DATA_VERSION = "v4.5.3";
 
 let allProducts = JSON.parse(localStorage.getItem('megaProductList'));
 let savedVersion = localStorage.getItem('megaProductListVersion');

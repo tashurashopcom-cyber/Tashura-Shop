@@ -65,7 +65,7 @@
         }
         .search-container { position: relative; }
         .search-suggestions {
-            position: absolute; top: calc(100% + 6px); left: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); max-height: 220px; overflow-y: auto; z-index: 20; display: none;
+            position: absolute; top: calc(100% + 6px); left: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); max-height: 200px; overflow-y: auto; display: none;
         }
         .search-suggestions.show { display: block; }
         .search-suggestion-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
@@ -342,7 +342,7 @@
 
     <div class="search-container" id="searchContainer">
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="প্রোডাক্ট কোড বা নাম দিয়ে খুঁজুন..." onkeypress="handleSearchKeyPress(event)">
+            <input type="text" id="searchInput" placeholder="প্রোডাক্ট কোড বা নাম দিয়ে খুঁজুন..." onkeypress="handleSearchKeyPress(event)">
             <button class="search-icon-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
         </div>
         <div class="search-suggestions" id="categorySearchSuggestions"></div>
@@ -353,12 +353,11 @@
         <button class="filter-btn" onclick="filterSelection('gents')">জেন্টস</button>
         <button class="filter-btn" onclick="filterSelection('ladies')">লেডিস</button>
         <button class="filter-btn" onclick="filterSelection('electronics')">ইলেকট্রনিক্স</button>
-        <button class="filter-btn" onclick="filterSelection('watch')">ঘড়ি ও চশমা</button>
+        <button class="filter-btn" onclick="filterSelection('watch')">ঘড়ি ও চশমা</button>
         <button class="filter-btn" onclick="filterSelection('decor')">ডেকোরেশন</button>
     </div>
 
     <div class="content-area">
-        <!-- প্রোডাক্টগুলো এখন আর হার্ডকোড করা নেই, জাভাস্ক্রিপ্ট দিয়ে আসবে -->
         <div class="product-grid" id="productGrid"></div>
     </div>
 
@@ -445,8 +444,8 @@
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783067684/733911629_2083530512196674_2666240690349998062_n_kobpfb.webp",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783067668/733673940_1004837652432525_1543700386985033341_n_ulwka6.webp"
                 ],
-                desc: "Non-In-Ear Comfort Clip Design (কানের বাইরে ক্লিপ করে রাখার ডিজাইন) . 360° Panoramic Sound / Hi-Fi Sound Effect / Directin Tone360° Panoramic Sound / Hi-Fi Sound Effect / Directin Tone Intelligent Fingerprint Touch Control (স্মার্ট টাচ কন্ট্রোল)Sweatproof & Waterproof (স্পোর্টস ও ওয়ার্কআউটের জন্য পারফেক্ট)",
-                specs: ["Bluetooth Version  Bluetooth Version", "Driver Unit  14mm Titanium", "Audio Technology  360° Panoramic Sound", "Noise Cancellation  ENC", "Charging Interface  Type-C Fast Charging", "Battery Display  High-Definition LED", "Control Method  Intelligent Fingerprint Touch Contro", "Sweatproof & Waterproof", "NO WARRANTY", "Hand To Hand Return policy"],
+                desc: "Non-In-Ear Comfort Clip Design. 360° Panoramic Sound / Hi-Fi Sound Effect",
+                specs: ["Bluetooth Version 5.0", "Driver Unit 14mm Titanium", "Audio Technology 360° Panoramic Sound", "Noise Cancellation ENC", "Charging Interface Type-C"],
                 types: [
                     { name: "baby Pink", hex: "#fdf1e5" },
                     { name: "Black", hex: "#000000" }
@@ -463,27 +462,27 @@
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979196/730160459_986593790673045_3397122681190972685_n_qqwruf.webp",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979111/732409010_1349973370051323_2765516149630823865_n_bkijkw.jpg"
                 ],
-                desc: "স্টাইল আর স্বস্তি একসাথে—এই গরমে স্মার্টলি কুল থাকুন! ❄️ বাইরে চড়া রোদ, ভ্যাপসা গরম, আর তার ওপর লোডশেডিং—এই অবস্থায় স্বস্তি পাওয়া যেন আকাশের চাঁদ পাওয়ার মতো! কিন্তু আর চিন্তা নেই। আপনার গরমের কষ্ট দূর করতে আমরা নিয়ে এলাম এক জাদুকরী সমাধান—স্মার্ট রিচার্জেবল মিনি টার্বো ফ্যান! এটি শুধু একটি ফ্যান নয়, এই তীব্র গরমে আপনার সার্বক্ষণিক আরামের সঙ্গী।",
-                specs: ["Brand: No Brand", "Colour: N607 Gray 4000mah", "Electric fan design: Wearable Fan", "Power source: Battery Powered", "Style: Modern", "Product dimensions: 20D x 10W x 3H centimetres", "Special feature: 2000mAh Battery", "High-Speed", "LED Display", "Up to 4 Hours", "Mounting type: Free Standing", "Material : Plastic", "Number of 5 speeds"],
+                desc: "স্টাইল আর স্বস্তি একসাথে—এই গরমে স্মার্টলি কুল থাকুন!",
+                specs: ["Brand: Turbo Fan", "Colour: Gray 4000mah", "Design: Wearable Fan", "Power source: Battery Powered", "Style: Modern"],
                 types: [
                     { name: "white", hex: "#f5f5f5" },
                     { name: "Black", hex: "#000000" },
-                    { name: "lower Green", hex: "#d0e1d1" }
+                    { name: "Green", hex: "#d0e1d1" }
                 ],
                 category: "electronics",
                 storeId: "store1"
             },
             {
                 code: "H-PHN-01",
-                title: "Mobile Holder Flexible Lazy Pod Mobile Holder –",
+                title: "Mobile Holder Flexible Lazy Pod Mobile Holder",
                 price: "৳285",
                 images: [
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085611/702240807_122111915042809533_6736886265913551707_n_b8x4gy.jpg",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085616/703092400_122111915138809533_6987167337063282043_n_porbsl.jpg",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085614/702201607_122111915090809533_5707927258519810940_n_ictbhx.jpg"
                 ],
-                desc: "শুয়ে-বসে বা কাজ করতে করতে হাত দিয়ে ফোন ধরে রাখতে রাখতে ক্লান্ত? আপনার এই সমস্যার শতভাগ সমাধান নিয়ে এলো Upgraded Lazy Person Phone Holder। মুভি দেখা, ভিডিও কল করা বা ইউটিউবিং হবে এখন আরও আরামদায়ক ও পেইন-ফ্রি!",
-                specs: ["প্রোডাক্টের নাম: লেজি ফোন হোল্ডার (Lazy Bracket)", "মডেল: আপগ্রেডেড ভার্সন (360° আল্ট্রা-লাইট / মেটাল মডেল)", "ব্যবহার: ফোন দেখা ভিডিও কল ভিডিও দেখা রিডিং স্ট্যান্ড হিসেবে", "ঘোরানোর ক্ষমতা: 360° পূর্ণ ঘূর্ণনযোগ্য", "নমনীয়তা: গুজনেক (Gooseneck) ডিজাইন", "ইচ্ছামতো বাঁকানো যায়", "বডি ম্যাটেরিয়াল: ফ্লেক্সিবল মেটাল আর্ম + প্লাস্টিক হোল্ডার", "মাউন্টিং সিস্টেম: টেবিল/ডেস্কে ক্ল্যাম্প (clip) দিয়ে আটকানো যায়", "কালার অপশন: ব্লু", "ব্ল্যাক", "রেড", "ইয়েলো", "হোয়াইট (একাধিক কালার পাওয়া যায়)", "ওজন: হালকা ও বহনযোগ্য", "ব্যবহারের স্থান: বেড", "ডেস্ক", "টেবিল", "কিচেন যেকোনো জায়গায় ব্যবহারযোগ্য", "সুবিধা: হাত ফ্রি রেখে ফোন ব্যবহার করা যায়", "চোখ ও ঘাড়ের আরামের জন্য উপযোগী।"],
+                desc: "শুয়ে-বসে বা কাজ করতে করতে হাত দিয়ে ফোন ধরে রাখতে রাখতে ক্লান্ত?",
+                specs: ["নাম: লেজি ফোন হোল্ডার", "মডেল: আপগ্রেডেড ভার্সন", "উপকরণ: প্লাস্টিক", "রঙ: মাল্টি"],
                 types: [
                     { name: "blue", hex: "#225593" },
                     { name: "black", hex: "#000000" },
@@ -501,11 +500,10 @@
                 images: [
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068899/734298297_1498318775506585_1153167715410375572_n_eoe11i.webp",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068903/737998826_5539123899604721_6226999306279050857_n_qizx4r.webp",
-                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068896/736943022_27778183808537417_2537638222869692364_n_vsd6j1.webp",
-                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068901/734488586_1710382313493906_8242672407351690782_n_qgy8cd.webp"
+                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068896/736943022_27778183808537417_2537638222869692364_n_vsd6j1.webp"
                 ],
-                desc: "Bluetooth Speaker, Wireless Charging, RGB Night Light, Digital Clock & Alarm . Bluetooth Speaker, Wireless Charging, RGB Night Light, Digital Clock & Alarm . Multiple RGB Color Modes (Dimmable & Adjustable Colors) . High-definition LED Digital Clock Display . Premium, Minimalist, Modern G-Shape Aesthetic . ",
-                specs: ["G-Lamp 3-in-1 Smart Gadget", "Bluetooth Speaker", "Wireless Charging", "Digital Clock & Alarm", "Bluetooth 5.0 / 5.2", "Wireless Charging Output - 5W / 7.5W / 10W / 15W Smart Fast Charging", "Multiple RGB Color Modes", "Speaker Output Power  3W - 5W (Crystal Clear Sound with Rich Bass)", "Display - High-definition LED", "USB Type-C (Power source input)", "All Qi-enabled smartphones (iPhone, Samsung, Xiaomi, etc.)"],
+                desc: "Bluetooth Speaker, Wireless Charging, RGB Night Light",
+                specs: ["G-Lamp 3-in-1 Smart Gadget", "Bluetooth Speaker", "Wireless Charging", "RGB Night Light", "Bluetooth 5.0"],
                 category: "electronics",
                 storeId: "store1"
             },
@@ -518,32 +516,28 @@
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783069546/733692495_1656473346083258_4392074946541726918_n_m7ruc0.webp",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783069512/734664000_1043801131411906_1167913235158352991_n_ztlyiu.webp"
                 ],
-                desc: "স্মার্ট ওয়ান-টাচ অফ (Smart Shutdown): ল্যাম্পটি অন করার পর যদি ১৫ সেকেন্ডের বেশি সময় পার হয়ে যায়, তবে কালার মোড পরিবর্তন করার ঝামেলা ছাড়াই পাওয়ার বাটনে মাত্র একবার টাচ করলেই ল্যাম্পটি সরাসরি সম্পূর্ণ বন্ধ হয়ে যাবে। ইন্ডিকেটর লাইট: * চার্জ হওয়ার সময় লাল লাইট (Red Light) জ্বলবে। সম্পূর্ণ চার্জ (Full Charge) হয়ে গেলে সবুজ লাইট (Green Light) জ্বলবে।",
-                specs: ["ব্র্যান্ড: DARUI STAR", "মডেল: T5 Ultra", "মেমোরি লাই যা আপনার পছন্দের ব্রাইটনেস বা কালার মনে রাখে।ট: ল্যাম্পটিতে লাইট মেমোরি ফাংশন", "স্মার্ট শাটডাউন: কোনো রকম অপারেশন বা স্পর্শ ছাড়া ১৫ সেকেন্ড পার হলে, মাত্র এক ক্লিকেই এটি সরাসরি বন্ধ (One-click intelligent shutdown) করা যায়।", "ইনপুট ভোল্টেজ ও পোর্ট: USB Type-C, DC 5V", "ব্যাটারি মডেল ও পাওয়ার: 18650 - 3.7V", "Brightness Adjustment", "নাইট লাইট মোড (Night Light Mode)", "NO Warranty & Hand To Hand Return Policy"],
+                desc: "স্মার্ট ডেস্ক ল্যাম্প সহ ওয়ান-টাচ কন্ট্রোল",
+                specs: ["ব্র্যান্ড: DARUI STAR", "মডেল: T5 Ultra", "শক্তি: 15W", "রঙ: সাদা/কালো"],
                 category: "electronics",
                 storeId: "store1"
             },
             {
                 code: "N-lig-02",
-                title: "Night Light স্মল নাইট লাইট (小夜灯",
+                title: "Night Light স্মল নাইট লাইট",
                 price: "৳950",
                 images: [
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070630/736172584_3589269534572025_1828509163802481255_n_qpqnv7.webp",
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070623/737494117_1011520011497734_2985362899172281633_n_qujkzp.webp",
-                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070616/734845890_1033393972381273_1371292013900785826_n_vvw3kq.webp",
-                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070519/733605904_1311515267631235_8644506864394382669_n_dnc4hr.jpg"
+                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070616/734845890_1033393972381273_1371292013900785826_n_vvw3kq.webp"
                 ],
-                desc: "আপনার বেডরুম, বাচ্চাদের রুম কিংবা করিডোরের জন্য নিয়ে আসুন BAOLIANG (宝量) ব্র্যান্ডের প্রিমিয়াম কোয়ালিটি স্মল নাইট লাইট। মাত্র ৩.৮ ওয়াটের এই স্মার্ট লাইটটিতে রয়েছে ১২টি উচ্চ-মানের LED মডিউল, যা দেয় নরম, চোখের জন্য আরামদায়ক আলো। এই নাইট লাইটে আছে ৩টি আলাদা কালার মোড — সলিড হোয়াইট, ওয়ার্ম হোয়াইট এবং ন্যাচারাল হোয়াইট — যা আপনার মুড ও প্রয়োজন অনুযায়ী পরিবর্তন করা যায়। আধুনিক টাচ কন্ট্রোল সুইচের মাধ্যমে সহজেই লাইট অন/অফ করা যায়, রঙ পরিবর্তন করা যায়, এমনকি লং-প্রেস করে ব্রাইটনেসও (Stepless Dimming) নিয়ন্ত্রণ করা যায় — কোনো জটিলতা ছাড়াই। CE, FCC এবং RoHS সার্টিফাইড হওয়ায় এই প্রোডাক্টটি সম্পূর্ণ নিরাপদ ও আন্তর্জাতিক মানসম্পন্ন। কম্প্যাক্ট ডিজাইন এবং স্মার্ট ফাংশনালিটির কারণে এটি হয়ে উঠবে আপনার প্রতিদিনের ব্যবহারের নিত্যসঙ্গী।",
-                specs: ["Brand   BAOLIANG (宝量)", "Product Name Small Night Light (小夜灯", "Model No.1336 / 1336A", "Rated Power   3.8W", "Color Temperature Modes  3 মোড – সলিড হোয়াইট / ওয়ার্ম হোয়াইট / ন্যাচারাল  হোয়াইট", "Switch Type   টাচ কন্ট্রোল (Touch Switch)", "Certification   CE, FCC, RoHS", "No Warranty & Hand to Hand Return Policy"],
+                desc: "আপনার বেডরুম, বাচ্চাদের রুম কিংবা করিডোরের জন্য নাইট লাইট",
+                specs: ["Brand: BAOLIANG", "Model: 1336", "Power: 3.8W", "Color Modes: 3"],
                 category: "gents",
                 storeId: "store1"
             }
         ];
 
-        // ব্রাউজারে ডাটা আপডেট করার লজিক (লক ভাঙার জন্য)
-        // 💡 প্রোডাক্ট লিস্টে যেকোনো পরিবর্তন (নতুন প্রোডাক্ট/এডিট) করলে নিচের DATA_VERSION নাম্বারটি পরিবর্তন করুন,
-        // তাহলে পুরনো localStorage ক্যাশ অটোমেটিক রিফ্রেশ হয়ে নতুন ডাটা শো করবে।
-        const DATA_VERSION = "v4.6.0";
+        const DATA_VERSION = "v5.0.0";
 
         function normalizeProduct(product, index = 0) {
             if (!product || typeof product !== 'object') {
@@ -552,7 +546,7 @@
                     title: 'নতুন পণ্য',
                     price: '৳০',
                     images: ['https://placehold.co/300x300?text=Ideas+SHOP'],
-                    desc: 'এই পণ্যটি নতুনভাবে যোগ করা হয়েছে।',
+                    desc: 'এই পণ্যটি নতুনভাবে যোগ করা হয়েছে।',
                     specs: [],
                     types: [],
                     category: 'general',
@@ -566,7 +560,7 @@
                 title: product.title || 'নতুন পণ্য',
                 price: product.price || '৳০',
                 images: Array.isArray(product.images) && product.images.length ? product.images : ['https://placehold.co/300x300?text=Ideas+SHOP'],
-                desc: product.desc || 'এই পণ্যটি নতুনভাবে যোগ করা হয়েছে।',
+                desc: product.desc || 'এই পণ্যটি নতুনভাবে যোগ করা হয়েছে।',
                 specs: Array.isArray(product.specs) ? product.specs : [],
                 types: Array.isArray(product.types) ? product.types : [],
                 category: product.category || 'general',
@@ -581,7 +575,7 @@
                     return parsed.map((product, index) => normalizeProduct(product, index));
                 }
             } catch (error) {
-                console.warn('Shared product data could not be parsed. Falling back to seed data.', error);
+                console.warn('Product data could not be parsed. Falling back to seed data.', error);
             }
             return fallbackProducts.map((product, index) => normalizeProduct(product, index));
         }
@@ -609,72 +603,50 @@
             allProducts = persistProducts(allProducts, { broadcast: false });
         }
 
-// --- ডায়নামিক রেন্ডারিং ---
-function renderProducts() {
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = '';
+        // --- ডায়নামিক রেন্ডারিং ---
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
 
-    const normalizedQuery = currentSearchQuery.trim().toLowerCase();
+            const normalizedQuery = currentSearchQuery.trim().toLowerCase();
 
-    const filteredProducts = allProducts.filter(product => {
-        const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
-        const searchableText = `${product.title || ''} ${product.code || ''} ${product.desc || ''} ${product.category || ''} ${(product.specs || []).join(' ')}`.toLowerCase();
-        const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery);
-        return matchesCategory && matchesQuery;
-    });
+            const filteredProducts = allProducts.filter(product => {
+                const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+                const searchableText = `${product.title || ''} ${product.code || ''} ${product.desc || ''} ${product.category || ''} ${(product.specs || []).join(' ')}`.toLowerCase();
+                const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery);
+                return matchesCategory && matchesQuery;
+            });
 
-    if (!filteredProducts.length) {
-        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#64748b;">কোনো প্রোডাক্ট পাওয়া যায়নি।</div>';
-        return;
-    }
-
-    filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = `product-card filter-item ${product.category}`;
-        card.tabIndex = 0; // keyboard focus
-        card.setAttribute('role', 'button');
-        card.setAttribute('data-code', product.code);
-        
-        card.onclick = () => {
-            openModal(product.title, product.price, product.code, product.images, product.desc, product.specs, product.types);
-        };
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                card.click();
+            if (!filteredProducts.length) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#64748b;">কোনো প্রোডাক্ট পাওয়া যায়নি।</div>';
+                return;
             }
-        });
 
-        card.innerHTML = `
-            <div class="product-img-wrapper"><img src="${product.images[0]}" alt="Product"></div>
-            <h4>${product.title}</h4>
-            <p class="product-price">${product.price}</p>
-        `;
-        grid.appendChild(card);
-    });
-}
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = `product-card filter-item ${product.category}`;
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('data-code', product.code);
+                
+                card.onclick = () => {
+                    openModal(product.title, product.price, product.code, product.images, product.desc, product.specs, product.types);
+                };
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
 
-// 💡 বোনাস ফাংশন: কোড বা কনসোল থেকে নতুন প্রোডাক্ট লাইভ অ্যাড করার জন্য
-function normalizeSharedProduct(newProd) {
-    return normalizeProduct(newProd, 0);
-}
-
-function broadcastProductSync() {
-    if (window.BroadcastChannel) {
-        const channel = new BroadcastChannel('ideas-shop-products');
-        channel.postMessage({ type: 'product-list-updated' });
-        channel.close();
-    }
-}
-
-function addNewProductLive(newProd) {
-    const normalizedProduct = normalizeSharedProduct(newProd);
-    allProducts.unshift(normalizedProduct);
-    allProducts = persistProducts(allProducts, { broadcast: true });
-    renderProducts();
-    filterSelection('all');
-}
-
+                card.innerHTML = `
+                    <div class="product-img-wrapper"><img src="${product.images[0]}" alt="Product"></div>
+                    <h4>${product.title}</h4>
+                    <p class="product-price">${product.price}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
         // --- ক্যাটাগরি ফিল্টার লজিক ---
         function filterSelection(category) {
@@ -691,7 +663,7 @@ function addNewProductLive(newProd) {
             renderProducts();
         }
 
-        // পেজ লোড হলেই প্রোডাক্ট রেন্ডার হবে এবং "all" ফিল্টার অ্যাপ্লাই হবে
+        // পেজ লোড হলেই প্রোডাক্ট রেন্ডার হবে
         window.addEventListener('DOMContentLoaded', () => {
             allProducts = safeParseProducts(localStorage.getItem('megaProductList'), initialProducts);
             if (!Array.isArray(allProducts) || allProducts.length === 0 || localStorage.getItem('megaProductListVersion') !== DATA_VERSION) {
@@ -719,15 +691,15 @@ function addNewProductLive(newProd) {
             }
         });
 
-        // --- মডাল ও স্লাইডার লজিক (স্পেসিফিকেশন সহ) ---
+        // --- মডাল ও স্লাইডার লজিক ---
         let currentImageIndex = 0;
         let modalImages = [];
         let currentProductData = {}; 
         let currentProductTypes = null;
 
         function convertToEnglishNumber(str) {
-            const bengaliToEnglish = {'০':'0', '১':'1', '২':'2', '৩':'3', '৪':'4', '৫':'5', '৬':'6', '৭':'7', '৮':'8', '৯':'9'};
-            let engStr = str.replace(/[০-৯]/g, m => bengaliToEnglish[m]);
+            const bengaliToEnglish = {'০':'0', '১':'1', '२':'2', '३':'3', '४':'4', '५':'5', '६':'6', '७':'7', '८':'8', '९':'9'};
+            let engStr = str.replace(/[०-९]/g, m => bengaliToEnglish[m]);
             return parseInt(engStr.replace(/[^0-9]/g, '')) || 0;
         }
 
@@ -755,7 +727,6 @@ function addNewProductLive(newProd) {
             let mainImage = (imgArray && imgArray.length > 0) ? imgArray[0] : '';
             currentProductData = { name: title + " (" + code + ")", price: cleanPriceNumber, qty: 1, image: mainImage, code: code };
 
-            // --- প্রোডাক্ট টাইপ কাস্টম ড্রপডাউন রেন্ডার ---
             const typeSection = document.getElementById('typeSelectSection');
             const typeOptionsPanel = document.getElementById('typeOptionsPanel');
             const typeTriggerText = document.getElementById('typeTriggerText');
@@ -816,7 +787,6 @@ function addNewProductLive(newProd) {
             wrapper.classList.toggle('open');
         }
 
-        // ড্রপডাউনের বাইরে ক্লিক করলে প্যানেল বন্ধ হয়ে যাবে
         document.addEventListener('click', (e) => {
             const wrapper = document.getElementById('typeSelectWrapper');
             if (wrapper && !wrapper.contains(e.target)) {
@@ -837,16 +807,6 @@ function addNewProductLive(newProd) {
 
             document.getElementById('typeTooltip').classList.remove('show');
             document.getElementById('typeSelectWrapper').classList.remove('attention', 'open');
-
-            // এই টাইপের নিজস্ব ছবি থাকলে স্লাইডারের প্রথম ছবিটি বদলে দেবে
-            const matchedType = currentProductTypes ? currentProductTypes.find(t => t.name === typeName) : null;
-            if (matchedType && matchedType.image) {
-                modalImages[0] = matchedType.image;
-                currentProductData.image = matchedType.image;
-                const firstImg = document.querySelector('#modalSliderWrapper img');
-                if (firstImg) firstImg.src = matchedType.image;
-                goToSlide(0);
-            }
         }
 
         function moveSlider(direction) {
@@ -875,14 +835,12 @@ function addNewProductLive(newProd) {
             document.body.classList.remove('no-scroll');
         }
 
-        // --- মূল কার্ট-যোগ লজিক (Add to Cart ও Order Now দুটোই এটা ব্যবহার করে) ---
         function addCurrentItemToCart() {
-            // --- Type নির্বাচন ছাড়া কার্টে যোগ করতে দেওয়া হবে না ---
             if (currentProductTypes && !currentProductData.type) {
                 document.getElementById('typeTooltip').classList.add('show');
                 const wrapper = document.getElementById('typeSelectWrapper');
                 wrapper.classList.remove('attention');
-                void wrapper.offsetWidth; // animation reset
+                void wrapper.offsetWidth;
                 wrapper.classList.add('attention');
                 wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return false;
@@ -903,7 +861,6 @@ function addNewProductLive(newProd) {
 
             localStorage.setItem('myCart', JSON.stringify(cart));
 
-            // কার্টে প্রোডাক্ট অ্যাড হওয়ার সাথে সাথে রেড ডট আপডেট করবে
             updateCartBadge();
             return true;
         }
@@ -919,13 +876,11 @@ function addNewProductLive(newProd) {
             setTimeout(forceCloseModal, 1000);
         }
 
-        // --- সরাসরি অর্ডার বাটন: কার্টে যোগ করে সাথে সাথে অর্ডার পেজে নিয়ে যাবে ---
         function buyNow() {
             if (!addCurrentItemToCart()) return;
             window.location.href = 'order.html';
         }
 
-        // --- অর্ডার আইকনে রেড ডট (Badge) দেখানোর ফাংশন ---
         function updateCartBadge() {
             let badge = document.getElementById('orderNavBadge');
             if (!badge) return;
@@ -937,9 +892,7 @@ function addNewProductLive(newProd) {
             }
         }
 
-        // পেজ রিলোড বা ওপেন করার সাথে সাথেই কার্ট চেক করে রেড ডট দেখাবে
         updateCartBadge();
-
 
         function showToast(message) {
             const toast = document.getElementById('toastNotification');
@@ -950,6 +903,21 @@ function addNewProductLive(newProd) {
 
         function handleSearchKeyPress(event) {
             if (event.key === 'Enter') executeSearch();
+        }
+
+        function executeSearch() {
+            const input = document.getElementById('searchInput');
+            const query = (input.value || '').trim();
+            
+            if (!query) {
+                currentSearchQuery = '';
+                document.getElementById('categorySearchSuggestions').classList.remove('show');
+            } else {
+                currentSearchQuery = query;
+            }
+            
+            renderProducts();
+            document.getElementById('categorySearchSuggestions').classList.remove('show');
         }
 
         function renderCategorySearchSuggestions(query) {
@@ -997,35 +965,16 @@ function addNewProductLive(newProd) {
             const box = document.getElementById('searchContainer');
             box.classList.toggle('open');
             if (box.classList.contains('open')) {
-                setTimeout(() => document.getElementById('searchInput').focus(), 150);
+                setTimeout(() => {
+                    const input = document.getElementById('searchInput');
+                    if (input) input.focus();
+                }, 150);
+            } else {
+                document.getElementById('searchInput').value = '';
+                currentSearchQuery = '';
+                renderProducts();
             }
         }
-
-        function executeSearch() {
-            const query = document.getElementById('searchInput').value.trim();
-            currentSearchQuery = query;
-            renderCategorySearchSuggestions(query);
-            renderProducts();
-            if (query) {
-                document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', () => renderCategorySearchSuggestions(searchInput.value));
-                searchInput.addEventListener('focus', () => renderCategorySearchSuggestions(searchInput.value));
-            }
-        });
-
-        document.addEventListener('click', (event) => {
-            const suggestions = document.getElementById('categorySearchSuggestions');
-            if (suggestions && !suggestions.contains(event.target) && !event.target.closest('.search-bar')) {
-                suggestions.classList.remove('show');
-            }
-        });
-
 
     </script>
 </body>

@@ -773,6 +773,10 @@
                 <span>ডেলিভারি চার্জ:</span>
                 <span id="deliveryCharge">০ ৳</span>
             </div>
+            <div id="freeDeliveryNote" style="display:none; align-items:center; gap:8px; background:linear-gradient(90deg,#fff3e0,#ffe8d6); border:1.5px dashed #ff8a00; color:#b34700; font-weight:700; font-size:13px; padding:8px 12px; border-radius:10px; margin:6px 0 10px;">
+                <i class="fas fa-gift" style="font-size:15px;"></i>
+                <span>🎉 সারপ্রাইজ! এই ডিল জোন প্রোডাক্টের জন্য আপনার ডেলিভারি চার্জ একদম ফ্রি!</span>
+            </div>
             <div class="summary-row summary-total">
                 <span>সর্বমোট:</span>
                 <span id="grandTotal" style="color: var(--primary);">০ ৳</span>
@@ -941,6 +945,16 @@
             "কুষ্টিয়া সদর": 75
             // "আপনার উপজেলার নাম": চার্জ,   <-- এভাবে নতুন লাইন যুক্ত করুন
         };
+
+        // --- 🎁 ফ্রি ডেলিভারি কোড লিস্ট (Deal Zone থেকে আসা প্রোডাক্ট কোড) ---
+        // এই ব্র্যাকেটের ভিতরে Deal Zone-এর যে প্রোডাক্টের কোড (deal.id) বসাবেন,
+        // কার্টে সেই কোডের প্রোডাক্ট থাকলে ডেলিভারি চার্জ অটোমেটিক ফ্রি হয়ে যাবে
+        // এবং একটা সারপ্রাইজ নোট দেখাবে।
+        // উদাহরণ: ["D001", "D002"]  ← Deal Zone-এর id ফিল্ড থেকে কপি করুন
+        const FREE_DELIVERY_CODES = [
+            "D001",
+            "D003"
+        ];
 
         // --- 🚌 রোড রিসিভ ডেলিভারি সেটিংস ---
         // এই সুবিধা শুধুমাত্র নিচের জেলার অন্তর্গত উপজেলাগুলোর জন্য চালু থাকবে
@@ -1344,12 +1358,22 @@ const roadReceivePointsByUpazila = {
             let checkboxes = document.querySelectorAll('.item-check');
             let subTotal = 0;
             let selectedItemsCount = 0;
+            let hasFreeDeliveryItem = false;
 
             checkboxes.forEach(box => {
                 if (box.checked) {
                     let index = box.getAttribute('data-index');
                     subTotal += (cart[index].price * cart[index].qty);
                     selectedItemsCount++;
+
+                    // --- 🎁 চেক করা হচ্ছে এই আইটেমের কোড FREE_DELIVERY_CODES লিস্টে আছে কিনা ---
+                    // Deal Zone থেকে আসা কোড হতে পারে "D001" অথবা "D001-Red" (টাইপ সহ),
+                    // তাই দুই ফরম্যাটই মিলিয়ে দেখা হচ্ছে।
+                    let itemCode = cart[index].code || "";
+                    let isFreeCode = FREE_DELIVERY_CODES.some(freeCode =>
+                        itemCode === freeCode || itemCode.startsWith(freeCode + "-")
+                    );
+                    if (isFreeCode) hasFreeDeliveryItem = true;
                 }
             });
 
@@ -1375,6 +1399,15 @@ const roadReceivePointsByUpazila = {
                         deliveryCharge = 0;
                     }
                 }
+            }
+
+            // --- 🎁 ফ্রি ডেলিভারি ওভাররাইড ---
+            let freeNoteEl = document.getElementById("freeDeliveryNote");
+            if (selectedItemsCount > 0 && hasFreeDeliveryItem) {
+                deliveryCharge = 0;
+                if (freeNoteEl) freeNoteEl.style.display = "flex";
+            } else {
+                if (freeNoteEl) freeNoteEl.style.display = "none";
             }
 
             let grandTotal = subTotal + deliveryCharge;

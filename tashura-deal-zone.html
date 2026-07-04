@@ -536,7 +536,7 @@ function fmtTaka(n){ return '৳' + Number(n).toLocaleString('bn-BD'); }
 function badgeMeta(type){
   if(type==='flash') return {cls:'flash', label:'⚡ Flash Sale'};
   if(type==='countdown') return {cls:'countdown', label:'⏰ Countdown Deal'};
-  return {cls:'exclusive', label:'💎 Exclusive'};
+  return {cls:'exclusive', label:'💎 Free Delivery'};
 }
 
 function firstImage(deal){
@@ -569,7 +569,7 @@ function render(){
   container.innerHTML = '';
   const list = DEALS.filter(d => activeFilter==='all' || d.dealType===activeFilter);
 
-  const groups = { flash:'⚡ ফ্ল্যাশ সেল — সীমিত সময়ের জন্য', countdown:'⏰ কাউন্টডাউন ডিল', exclusive:'💎 এক্সক্লুসিভ কালেকশন' };
+  const groups = { flash:'⚡ ফ্ল্যাশ সেল — সীমিত সময়ের জন্য', countdown:'⏰ কাউন্টডাউন ডিল', exclusive:'💎 FREE DELIVERY' };
   const order = ['flash','countdown','exclusive'];
 
   order.forEach(type=>{

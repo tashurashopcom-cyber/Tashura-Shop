@@ -136,7 +136,7 @@
     display:flex; align-items:center; justify-content:center; font-size:16px;
     position:relative;
   }
-  .btn-cart .plus-mark{ position:absolute; top:-2px; right:-2px; font-size:9px; background:var(--red); color:#fff; width:14px; height:14px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800;}
+  .btn-cart .plus-mark{ position:absolute; top:-2px; right:-2px; font-size:9px; background:var(--red); color:#fff; width:14px; height:14px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
   .btn-cart:disabled{ border-color:#c9cdd6; color:#9aa0ad; opacity:.6; }
   .btn-cart:disabled .plus-mark{ background:#9aa0ad; }
   .sold-note{ font-size:10.5px; color:var(--gray); margin-top:6px; }
@@ -524,7 +524,7 @@ const DEALS = [
     types: ["Red", "Black", "white", "Blue", "Yellow"],
     startTime: "2026-07-05T08:00:00",
     endTime: "2026-07-10T08:00:00",
-    description: "আর হাতে ফোন ধরে রাখার ঝামেলা নেই! এই ৩৬০° ঘোরানো যায় এমন আল্ট্রা-লাইট ফ্লেক্সিবল আর্ম হোল্ডারটি আপনার বিছানা, সোফা, ডেস্ক বা টেবিল — যেকোনো জায়গায় সহজেই আটকে নেওয়া যায়। এটি ৩৬০° ফুল রোটেশন সাপোর্ট করে বলে যেকোনো অ্যাঙ্গেল থেকে আরামে ভিডিও দেখা, গেম খেলা কিংবা ভিডিও কল করা যায়। মজবুত মেটাল বডি হলেও এটি অনেক হালকা এবং সহজে বাঁকানো যায়, ফলে ইচ্ছেমতো পজিশনে সেট করা সম্ভব।"
+    description: "আর হাতে ফোন ধরে রাখার ঝামেলা নেই! এই ৩৬০° ঘোরানো যায় এমন আল্ট্রা-লাইটওয়েট ফোন হোল্ডার দিয়ে ডেস্ক, টেবিল, বেড বা যেকোনো জায়গায় স্মার্টফোন স্থাপন করতে পারবেন। এক্সটেনসিবল আর্মস, নন-স্লিপ প্যাড এবং সর্বোচ্চ ৩.৫ ইঞ্চি পর্যন্ত ডিভাইস সাপোর্ট করে। মোবাইল, ট্যাবলেট, ই-রিডার, ড্রোন রিমোট সব কিছুর জন্য পারফেক্ট।"
 },
 {
     id: "D003",
@@ -536,7 +536,7 @@ const DEALS = [
     ],
     price: 899,
     oldPrice: 950,
-    dealType: "'exclusive",
+    dealType: "exclusive",
     startTime: "2026-07-05T08:00:00",
     endTime: "2026-07-10T08:00:00",
     description: "ঘুমানোর আগে হালকা আলোর প্রয়োজন হোক বা বাচ্চার রুমে নিরাপদ লাইটিং — BAOLIANG ব্র্যান্ডের এই স্মল নাইট লাইটটি আপনার প্রতিদিনের প্রয়োজনের জন্য একদম উপযুক্ত একটি সমাধান। এতে রয়েছে ১২টি উচ্চমানের LED মডিউল, যা থেকে পাওয়া যায় নরম অথচ পর্যাপ্ত আলো। এই লাইটে তিনটি ভিন্ন কালার মোড রয়েছে — সলিড হোয়াইট, ওয়ার্ম হোয়াইট এবং ন্যাচারাল হোয়াইট, ফলে মুড ও প্রয়োজন অনুযায়ী আলো পরিবর্তন করা যায়।এর টাচ কন্ট্রোল সিস্টেমটি ব্যবহার করা খুবই সহজ। একবার টাচ করলেই লাইট জ্বলে উঠবে, ডাবল ট্যাপ করলে কালার মোড পরিবর্তন হবে এবং লং-প্রেস করলে স্টেপলেস ডিমিং এর মাধ্যমে ব্রাইটনেস কমানো-বাড়ানো যাবে। ফলে একটি লাইটেই আপনি পাচ্ছেন সম্পূর্ণ নিয়ন্ত্রণের সুবিধা। CE, FCC ও RoHS সার্টিফাইড হওয়ায় এটি নিরাপত্তা ও মান নিয়ে কোনো আপোস করে না। রিমোট সহ Control"
@@ -584,7 +584,7 @@ function render(){
   container.innerHTML = '';
   const list = DEALS.filter(d => activeFilter==='all' || d.dealType===activeFilter);
 
-  const groups = { flash:'⚡ ফ্ল্যাশ সেল — সীমিত সময়ের জন্য', countdown:'⏰ কাউন্টডাউন ডিল', exclusive:'💎 FREE DELIVERY' };
+  const groups = { flash:'⚡ ফ্ল্যাশ সেল — সীমিত সময়ের জন্য', countdown:'⏰ কাউন্টডাউন ডিল', exclusive:'💎 FREE DELIVERY — এক্সক্লুসিভ সুবিধা' };
   const order = ['flash','countdown','exclusive'];
 
   order.forEach(type=>{
@@ -601,7 +601,7 @@ function render(){
   note.innerHTML = `
     <div class="bn-icon">🎁</div>
     <div class="bn-title">উপভোগ করুন <span>এক্সক্লুসিভ সুবিধা</span></div>
-    <div class="bn-text">TashUrA-তে অর্ডার করলে পাচ্ছেন ফ্রি ডেলিভারি ভাউচার, স্পেশাল ডিসকাউন্ট আর ১০০% অথেন্টিক প্রোডাক্টের নিশ্চয়তা — প্রতিটি অর্ডারেই।</div>
+    <div class="bn-text">TashUrA-তে অর্ডার করলে পাচ্ছেন ফ্রি ডেলিভারি ভাউচার, স্পেশাল ডিসকাউন্ট, ইজি রিটার্ন — সবকিছুই এক জায়গায়!<br>প্রতিটি ডিল সীমিত স্টকের, তাই দ্রুত সংগ্রহ করুন আজই।</div>
     <div class="bn-tags">
       <span class="bn-tag">🚚 ফ্রি ডেলিভারি</span>
       <span class="bn-tag">🏷️ স্পেশাল ডিসকাউন্ট</span>

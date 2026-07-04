@@ -65,7 +65,7 @@
         }
         .search-container { position: relative; }
         .search-suggestions {
-            position: absolute; top: calc(100% + 6px); left: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); max-height: 300px; overflow-y: auto; display: none; z-index: 15;
+            position: absolute; top: calc(100% + 6px); left: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); max-height: 200px; overflow-y: auto; z-index: 100; display: none;
         }
         .search-suggestions.show { display: block; }
         .search-suggestion-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
@@ -342,7 +342,7 @@
 
     <div class="search-container" id="searchContainer">
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="প্রোডাক্ট কোড বা নাম দিয়ে খুঁজুন..." onkeypress="handleSearchKeyPress(event)">
+            <input type="text" id="searchInput" placeholder="প্রোডাক্ট কোড বা নাম দিয়ে খুঁজুন..." onkeypress="handleSearchKeyPress(event)" oninput="renderCategorySearchSuggestions(this.value)">
             <button class="search-icon-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
         </div>
         <div class="search-suggestions" id="categorySearchSuggestions"></div>
@@ -482,7 +482,7 @@
                     "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085614/702201607_122111915090809533_5707927258519810940_n_ictbhx.jpg"
                 ],
                 desc: "শুয়ে-বসে বা কাজ করতে করতে হাত দিয়ে ফোন ধরে রাখতে রাখতে ক্লান্ত?",
-                specs: ["নাম: লেজি ফোন হোল্ডার", "মডেল: আপগ্রেডেড ভার্সন", "উপকরণ: প্লাস্টিক", "রঙ: বিভিন্ন অপশন", "ফিচার: ফ্লেক্সিবল ও ঘোরানো যায়"],
+                specs: ["নাম: লেজি ফোন হোল্ডার", "মডেল: আপগ্রেডেড ভার্সন", "উপকরণ: প্লাস্টিক", "ওজন: 150 গ্রাম", "পোর্টেবিলিটি: সহজে বহনযোগ্য"],
                 types: [
                     { name: "blue", hex: "#225593" },
                     { name: "black", hex: "#000000" },
@@ -522,19 +522,19 @@
                 storeId: "store1"
             },
             {
-    code: "N-lig-02", 
-    title: "Night Light স্মল নাইট লাইট (小夜灯", 
-    price: "৳899",
-    images: [
-        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070630/736172584_3589269534572025_1828509163802481255_n_qpqnv7.webp",
-        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070623/737494117_1011520011497734_2985362899172281633_n_qujkzp.webp",
-        "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070519/733605904_1311515267631235_8644506864394382669_n_dnc4hr.jpg"
-    ],
-    desc: "ঘুমানোর আগে হালকা আলোর প্রয়োজন হোক বা বাচ্চার রুমে নিরাপদ লাইটিং — BAOLIANG ব্র্যান্ডের এই স্মল নাইট লাইটটি আপনার প্রতিদিনের প্রয়োজনের জন্য একদম উপযুক্ত একটি সমাধান। এতে রয়েছে ১২টি উচ্চমানের LED মডিউল, যা থেকে পাওয়া যায় নরম অথচ পর্যাপ্ত আলো। এই লাইটে তিনটি ভিন্ন কালার মোড রয়েছে — সলিড হোয়াইট, ওয়ার্ম হোয়াইট এবং ন্যাচারাল হোয়াইট, ফলে মুড ও প্রয়োজন অনুযায়ী আলো পরিবর্তন করা যায়। এর টাচ কন্ট্রোল সিস্টেমটি ব্যবহার করা খুবই সহজ। একবার টাচ করলেই লাইট জ্বলে উঠবে, ডাবল ট্যাপ করলে কালার মোড পরিবর্তন হবে এবং লং-প্রেস করলে স্টেপলেস ডিমিং এর মাধ্যমে ব্রাইটনেস কমানো-বাড়ানো যাবে। ফলে একটি লাইটেই আপনি পাচ্ছেন সম্পূর্ণ নিয়ন্ত্রণের সুবিধা। CE, FCC ও RoHS সার্টিফাইড হওয়ায় এটি নিরাপত্তা ও মান নিয়ে কোনো আপোস করে না।",
-    specs: ["ব্র্যান্ড: BAOLIANG (宝量)", "প্রোডাক্ট: স্মল নাইট লাইট (小夜灯)", "মডেল- 1336 1336A রেটেড ভোল্টেজ- 5V-1A", "রেটেড পাওয়ার: 3.8W", "LED কনফিগারেশন: 12টি LED মডিউল (প্রতিটি 0.2W)", "কালার মোড: 3টি (সলিড হোয়াইট ওয়ার্ম হোয়াইট ন্যাচারাল হোয়াইট)", "সুইচ টাইপ: টাচ কন্ট্রোল রিমোট সহ", "সার্টিফিকেশন- CE FCC RoHS", "উৎপাদনকারী দেশ: মেড ইন চায়না"],
-    category: "electronics", 
-    storeId: "store1"
-},
+                code: "N-lig-02",
+                title: "Night Light স্মল নাইট লাইট (小夜灯)",
+                price: "৳899",
+                images: [
+                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070630/736172584_3589269534572025_1828509163802481255_n_qpqnv7.webp",
+                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070623/737494117_1011520011497734_2985362899172281633_n_qujkzp.webp",
+                    "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070519/733605904_1311515267631235_8644506864394382669_n_dnc4hr.jpg"
+                ],
+                desc: "ঘুমানোর আগে হালকা আলোর প্রয়োজন হোক বা বাচ্চার রুমে নিরাপদ লাইটিং — BAOLIANG ব্র্যান্ডের এই স্মল নাইট লাইটটি আপনার প্রতিদিনের প্রয়োজনের জন্য একদম উপযুক্ত একটি সমাধান।",
+                specs: ["ব্র্যান্ড: BAOLIANG (宝量)", "প্রোডাক্ট: স্মল নাইট লাইট (小夜灯)", "মডেল: 1336/1336A", "রেটেড ভোল্টেজ: 5V-1A", "রেটেড পাওয়ার: 3.8W", "LED কনফিগারেশন: 12টি LED মডিউল", "কালার মোড: 3টি", "সার্টিফিকেশন: CE, FCC, RoHS"],
+                category: "electronics",
+                storeId: "store1"
+            }
         ];
 
         const DATA_VERSION = "v5.0.2";
@@ -618,7 +618,7 @@
             });
 
             if (!filteredProducts.length) {
-                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#64748b;">কোনো প্রোডাক্ট পাওয়া যায়নি।</div>';
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; padding:16px; color:#64748b;">কোনো প্রোডাক্ট পাওয়া যায়নি</div>';
                 return;
             }
 

@@ -29,13 +29,16 @@
 
         /* --- Header --- */
        .header {
-    background: #0A1F44;
+    background: var(--primary);
     color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 9px 16px;
-    box-shadow: 0 4px 12px rgba(13,27,42, 0.25);
+    padding: 12px 18px;
+    box-shadow: 0 4px 16px rgba(13,27,42, 0.25);
+    position: sticky;
+    top: 0;
+    z-index: 220;
 }
 
         .header-left { display: flex; align-items: center; }
@@ -45,13 +48,19 @@
         .header-title .slogan { font-size: 9px; display: block; font-weight: 400; opacity: 0.95; letter-spacing: 0.8px; color: #eef3f8; }
 
         /* --- Banner Slider (Full Bleed, sits right under header) --- */
-        .banner-container { padding: 0; margin: 0; background: var(--gradient-orange); }
-        .banner-slider { width: 100%; position: relative; overflow: hidden; }
-        .mySlides { display: none; width: 100%; height: 190px; object-fit: cover; object-position: top center; animation: fadeEffect 1.5s; }
+        .banner-container { padding: 0; margin: 0; background: #ffe5e8; }
+        .banner-slider { width: 100%; position: relative; overflow: hidden; border-radius: 0 0 24px 24px; margin-top: 0; min-height: 320px; height: auto; }
+        .banner-slider img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .mySlides { display: none; width: 100%; height: 100%; min-height: 320px; object-fit: cover; object-position: top center; animation: fadeEffect 1.5s; }
         @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
 
+        @media (max-width: 860px) {
+            .banner-slider { min-height: 220px; }
+            .mySlides { min-height: 220px; }
+        }
+
         /* --- Search Bar (floats slightly over the banner's bottom edge) --- */
-        .search-container { padding: 0 16px; margin-top: -10px; position: relative; z-index: 20; }
+        .search-container { padding: 0 16px; margin-top: 0; position: relative; z-index: 20; }
         .search-bar {
             background-color: white; border: 1px solid #bcd4ea;
             border-radius: 50px; padding: 9px 8px 9px 20px;
@@ -235,7 +244,7 @@
 
         /* --- Drawer Menu --- */
         .drawer {
-            height: 100%; width: 260px; position: fixed; z-index: 200; top: 0; left: 0;
+            height: 100%; width: 260px; position: fixed; z-index: 320; top: 0; left: 0;
             background-color: white; overflow-x: hidden;
             transform: translateX(-100%);
             transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -260,7 +269,8 @@
             background-color: rgba(0,0,0,0.5); z-index: 150; backdrop-filter: blur(2px);
             opacity: 0; visibility: hidden; transition: opacity 0.35s ease;
         }
-        .overlay.show { opacity: 1; visibility: visible; }
+        .overlay.show,
+        .overlay.open { opacity: 1; visibility: visible; }
 
         /* --- Bottom Navigation --- */
         .bottom-nav {
@@ -304,6 +314,7 @@
   
         * { box-sizing: border-box; }
         body { overflow-x: hidden; width: 100%; }
+        .no-scroll { overflow: hidden; }
 
         /* --- Full-Screen Product Details Modal --- */
         .pdetail-overlay {
@@ -317,6 +328,7 @@
             position: fixed; top: 100%; left: 0; width: 100%; height: 100%;
             background: white; z-index: 301; transition: top 0.35s ease-in-out;
             display: flex; flex-direction: column;
+            max-height: 100vh;
         }
         .pdetail-modal.active { top: 0; }
 
@@ -327,7 +339,8 @@
         .pdetail-header h3 { margin: 0; font-size: 16px; color: #1e293b; }
         .pdetail-close { font-size: 24px; color: #64748b; cursor: pointer; line-height: 1; }
 
-        .pdetail-body { flex-grow: 1; overflow-y: auto; padding: 0 15px 15px 15px; }
+        .pdetail-body { flex-grow: 1; min-height: 0; overflow-y: auto; padding: 0 15px 15px 15px; }
+        .pdetail-left, .pdetail-right { width: 100%; }
 
        .pdetail-slider {
     position: relative;
@@ -511,6 +524,119 @@
     fill: #1da1f2; /* টুইটারের মত ভেরিফাইড ব্লু কালার */
 }
 
+/* Desktop / Windows responsive layout */
+@media (min-width: 860px) {
+    body {
+        padding-bottom: 40px;
+    }
+
+    .header {
+        padding: 16px 32px;
+    }
+
+    .banner-slider {
+        height: 320px;
+    }
+
+    .search-container {
+        padding: 0 32px;
+        margin-top: -18px;
+    }
+
+    .search-bar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .event-chip-section {
+        padding: 18px 32px 6px;
+        gap: 14px;
+    }
+
+    .shortcut-section,
+    .marketing-banner,
+    .trending-section,
+    .all-products-section {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .shortcut-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .product-card {
+        padding: 16px;
+    }
+
+    .marketing-banner {
+        padding: 22px;
+    }
+
+    .pdetail-modal {
+        width: min(1120px, calc(100% - 140px));
+        left: 50%;
+        transform: translateX(-50%);
+        top: 100%;
+        border-radius: 22px;
+        height: calc(100vh - 0px);
+        max-height: 100vh;
+    }
+
+    .pdetail-modal.active {
+        top: 10vh;
+        height: calc(100vh - 10vh);
+    }
+
+    .pdetail-body {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        align-items: start;
+        padding: 24px 24px 18px;
+    }
+
+    .pdetail-slider {
+        height: 420px;
+        border-radius: 22px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .pdetail-title {
+        font-size: 26px;
+    }
+
+    .pdetail-price {
+        font-size: 22px;
+    }
+
+    .pdetail-desc {
+        margin-bottom: 24px;
+    }
+
+    .pdetail-footer {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 18px 24px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .pdetail-footer-btns {
+        justify-content: space-between;
+    }
+
+    .bottom-nav {
+        display: none;
+    }
+}
+
                /* --- Premium Custom Preloader CSS --- */
         .page-loader {
             position: fixed;
@@ -641,7 +767,7 @@
 
      </style>
 </head>
-
+<body>
       <div id="page-loader" class="page-loader">
         <div class="loader-content">
             <i class="fas fa-lightbulb idea-bulb"></i>
@@ -661,9 +787,6 @@
         </div>
     </div>
 
-
-
-<body>
 <header class="header">
     <div class="header-left">
         <button class="icon-btn" onclick="openDrawer()"><i class="fas fa-bars"></i></button>
@@ -786,34 +909,38 @@
         </div>
 
         <div class="pdetail-body">
-            <!-- Image Slider -->
-            <div class="pdetail-slider" id="modalSliderContainer">
-                <button class="pdetail-slide-btn pdetail-prev-btn" onclick="changeModalSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-                <div class="pdetail-slider-wrapper" id="modalSliderWrapper"></div>
-                <button class="pdetail-slide-btn pdetail-next-btn" onclick="changeModalSlide(1)"><i class="fas fa-chevron-right"></i></button>
-                <div class="pdetail-dots" id="modalSliderDots"></div>
-            </div>
-
-            <h2 id="modalTitle" class="pdetail-title"></h2>
-            <div id="modalPrice" class="pdetail-price"></div>
-            <p id="modalDesc" class="pdetail-desc"></p>
-
-            <!-- Product Type Selector -->
-            <div class="pdetail-type-wrap" id="modalTypeWrap" style="display:none;">
-                <div class="pdetail-type-label"><i class="fas fa-tag"></i> Product Type</div>
-                <div class="pdetail-type-trigger" id="modalTypeTrigger">
-                    <i class="fas fa-tag"></i>
-                    <span id="modalTypeTriggerText">Select Type</span>
-                    <i class="fas fa-chevron-down"></i>
+            <div class="pdetail-left">
+                <!-- Image Slider -->
+                <div class="pdetail-slider" id="modalSliderContainer">
+                    <button class="pdetail-slide-btn pdetail-prev-btn" onclick="changeModalSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="pdetail-slider-wrapper" id="modalSliderWrapper"></div>
+                    <button class="pdetail-slide-btn pdetail-next-btn" onclick="changeModalSlide(1)"><i class="fas fa-chevron-right"></i></button>
+                    <div class="pdetail-dots" id="modalSliderDots"></div>
                 </div>
-                <div class="pdetail-type-options" id="modalTypeOptions"></div>
-                <div class="pdetail-type-error" id="modalTypeError">⚠️ আগে Product Type সিলেক্ট করুন</div>
             </div>
+            <div class="pdetail-right">
+                <h2 id="modalTitle" class="pdetail-title"></h2>
+                <div id="modalPrice" class="pdetail-price"></div>
 
-            <!-- Specifications Box (Modified) -->
-            <div class="pdetail-specs-box" id="modalSpecsBox" style="display:none;">
-                <h4><i class="fas fa-list-ul"></i> Product Specifications</h4>
-                <div class="pdetail-specs-list" id="modalSpecsContainer"></div>
+                <!-- Product Type Selector -->
+                <div class="pdetail-type-wrap" id="modalTypeWrap" style="display:none;">
+                    <div class="pdetail-type-label"><i class="fas fa-tag"></i> Product Type</div>
+                    <div class="pdetail-type-trigger" id="modalTypeTrigger">
+                        <i class="fas fa-tag"></i>
+                        <span id="modalTypeTriggerText">Select Type</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="pdetail-type-options" id="modalTypeOptions"></div>
+                    <div class="pdetail-type-error" id="modalTypeError">⚠️ আগে Product Type সিলেক্ট করুন</div>
+                </div>
+
+                <!-- Specifications Box (Modified) -->
+                <div class="pdetail-specs-box" id="modalSpecsBox" style="display:none;">
+                    <h4><i class="fas fa-list-ul"></i> Product Specifications</h4>
+                    <div class="pdetail-specs-list" id="modalSpecsContainer"></div>
+                </div>
+
+                <p id="modalDesc" class="pdetail-desc"></p>
             </div>
         </div>
 
@@ -1309,6 +1436,13 @@
                 });
                 optionsEl.appendChild(opt);
             });
+
+            if (currentProductTypes.length === 1) {
+                const firstOption = optionsEl.querySelector('.pdetail-type-option');
+                if (firstOption) {
+                    firstOption.click();
+                }
+            }
         }
 
         document.getElementById('modalTypeTrigger').addEventListener('click', () => {
@@ -1317,6 +1451,15 @@
 
         function validateModalType() {
             if (currentProductTypes.length && !selectedProductType) {
+                if (currentProductTypes.length === 1) {
+                    selectedProductType = normalizeTypeLabel(currentProductTypes[0]);
+                    const trigger = document.getElementById('modalTypeTrigger');
+                    const triggerText = document.getElementById('modalTypeTriggerText');
+                    const hex = typeSwatchHex(currentProductTypes[0]);
+                    triggerText.innerHTML = (hex ? `<span class="swatch" style="background:${hex}"></span>` : '') + selectedProductType;
+                    trigger.classList.add('filled');
+                    return true;
+                }
                 const trigger = document.getElementById('modalTypeTrigger');
                 const errorEl = document.getElementById('modalTypeError');
                 trigger.classList.remove('invalid');
@@ -1335,7 +1478,15 @@
             document.getElementById("modalPrice").innerText = "Price: ৳" + price;
             document.getElementById("modalDashPrice").innerText = "Price: ৳" + price;
             document.getElementById("modalDashCode").innerText = "Code: " + (code || "Special-Products");
-            document.getElementById("modalDesc").innerText = description;
+
+            const descEl = document.getElementById("modalDesc");
+            if (description && String(description).trim()) {
+                descEl.innerText = description;
+                descEl.style.display = 'block';
+            } else {
+                descEl.innerText = '';
+                descEl.style.display = 'none';
+            }
 
             // Product Type সিলেক্টর তৈরি (ঐচ্ছিক — প্রোডাক্টে types না থাকলে বক্সটাই দেখাবে না)
             buildModalTypeSelector(typesArray);

@@ -24,7 +24,23 @@
             box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2);
         }
 
-        .header-title { font-size: 20px; font-weight: 600; margin-left: 10px; }
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .back-btn i { font-size: 14px; }
+
+        .header-title { font-size: 20px; font-weight: 600; margin-left: 4px; }
 
         /* --- Profile Card --- */
         .profile-card {
@@ -155,6 +171,58 @@
             background-color: white; display: flex; justify-content: space-around;
             padding: 12px 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 100;
             border-top-left-radius: 20px; border-top-right-radius: 20px;
+        }
+
+        @media (min-width: 860px) {
+            body {
+                background-color: #eef1f5;
+            }
+
+            .header {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: 24px 28px;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .profile-card {
+                max-width: 760px;
+                margin: 0 auto 24px;
+                padding: 48px 32px 36px;
+            }
+
+            .profile-img-container {
+                margin-bottom: 22px;
+            }
+
+            .user-name { font-size: 28px; }
+            .user-phone { font-size: 16px; }
+
+            .menu-container {
+                max-width: 1120px;
+                margin: 0 auto 90px;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 22px;
+                padding: 0 28px 90px;
+            }
+
+            .menu-group {
+                border-radius: 24px;
+            }
+
+            .menu-item {
+                padding: 18px 24px;
+            }
+
+            .menu-item-left i { width: 40px; font-size: 19px; }
+
+            .menu-item-left span { font-size: 16px; }
+
+            .bottom-nav {
+                display: none;
+            }
         }
 
         /* --- Premium Custom Preloader CSS --- */
@@ -324,6 +392,9 @@
     </div>
 
     <header class="header">
+        <button type="button" class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
         <div class="header-title">My Account</div>
     </header>
 

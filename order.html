@@ -37,7 +37,23 @@
             box-shadow: 0 4px 12px rgba(232, 135, 14, 0.2);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
+            position: relative;
         }
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .back-btn i { font-size: 14px; }
         .header-title { font-size: 20px; font-weight: 600; margin-left: 10px; }
 
         /* --- Container --- */
@@ -542,6 +558,63 @@
         animation: popUp 0.35s ease;
         max-height: 85vh; overflow-y: auto;
     }
+
+        @media (min-width: 860px) {
+            body {
+                padding-bottom: 40px;
+            }
+
+            .header {
+                padding: 24px 36px;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .order-container {
+                display: grid;
+                grid-template-columns: minmax(0, 1.6fr) minmax(340px, 420px);
+                gap: 24px;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 32px;
+            }
+
+            .order-container > .card {
+                margin-bottom: 0;
+            }
+
+            .order-container > .card:last-of-type {
+                grid-column: 2;
+                align-self: start;
+                position: relative;
+            }
+
+            .cart-item-card {
+                border-radius: 18px;
+            }
+
+            .cart-item-header {
+                padding: 14px 14px;
+            }
+
+            .item-details p {
+                max-width: 320px;
+                white-space: normal;
+            }
+
+            .cart-item-body-inner {
+                gap: 16px;
+            }
+
+            .address-drawer {
+                width: 420px;
+                max-width: 420px;
+            }
+
+            .bottom-nav {
+                display: none;
+            }
+        }
     .confirm-header { text-align: center; margin-bottom: 14px; }
     .confirm-icon {
         font-size: 46px; color: #ff9800; margin-bottom: 8px;
@@ -612,6 +685,9 @@
 <body>
 
     <header class="header">
+        <button type="button" class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
         <i class="fas fa-shopping-cart" style="font-size: 20px; margin-left: 10px;"></i>
         <div class="header-title">চেকআউট</div>
     </header>

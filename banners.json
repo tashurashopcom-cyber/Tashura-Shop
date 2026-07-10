@@ -1,0 +1,23 @@
+[
+  {
+    "id": "b_seed001",
+    "image": "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783183739/received_1022401843586805_zng3ch.jpg",
+    "link": "",
+    "order": 1,
+    "active": true
+  },
+  {
+    "id": "b_seed002",
+    "image": "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783183739/received_4493231894295150_d0aa8y.jpg",
+    "link": "",
+    "order": 2,
+    "active": true
+  },
+  {
+    "id": "b_seed003",
+    "image": "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783185771/file_00000000957071f89a17e263318adca3_djn3vf.png",
+    "link": "",
+    "order": 3,
+    "active": true
+  }
+]

@@ -52,6 +52,7 @@
         .banner-slider { width: 100%; position: relative; overflow: hidden; border-radius: 0 0 24px 24px; margin-top: 0; min-height: 320px; height: auto; }
         .banner-slider img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
         .mySlides { display: none; width: 100%; height: 100%; min-height: 320px; object-fit: cover; object-position: top center; animation: fadeEffect 1.5s; }
+        .banner-slider a { display: block; width: 100%; height: 100%; }
         @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
 
         @media (max-width: 860px) {
@@ -805,11 +806,10 @@
 
     <main>
         <!-- Banner Slider (full width, edge-to-edge, right under header) -->
+        <!-- এই ব্যানারগুলো এখন Admin Panel থেকে কন্ট্রোল হয় (banners.json থেকে dynamic ভাবে লোড হয়) -->
         <div class="banner-container">
-            <div class="banner-slider">
-                <img class="mySlides" src="https://res.cloudinary.com/qzvdcf3q/image/upload/v1783183739/received_1022401843586805_zng3ch.jpg" alt="Banner 1" onerror="this.src='https://placehold.co/600x200?text=Banner+1'">
-                <img class="mySlides" src="https://res.cloudinary.com/qzvdcf3q/image/upload/v1783183739/received_4493231894295150_d0aa8y.jpg" alt="Banner 2" onerror="this.src='https://placehold.co/600x200?text=Banner+2'">
-                <img class="mySlides" src="https://res.cloudinary.com/qzvdcf3q/image/upload/v1783185771/file_00000000957071f89a17e263318adca3_djn3vf.png" alt="Banner 3" onerror="this.src='https://placehold.co/600x200?text=Banner+3'">
+            <div class="banner-slider" id="bannerSlider">
+                <img class="mySlides" src="https://placehold.co/600x260?text=Loading..." alt="Banner">
             </div>
         </div>
 
@@ -1109,6 +1109,31 @@
             return fallbackProducts;
         }
 
+        // --- Admin Panel থেকে করা পরিবর্তন GitHub-এর products.json থেকে সিঙ্ক করা ---
+        const REMOTE_PRODUCTS_URL = "https://raw.githubusercontent.com/Ideas-shop/Ideas-SHOP-/main/products.json";
+
+        async function syncRemoteProducts() {
+            try {
+                const res = await fetch(REMOTE_PRODUCTS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('Remote fetch failed: ' + res.status);
+                const remoteData = await res.json();
+                if (Array.isArray(remoteData) && remoteData.length) {
+                    localStorage.setItem('megaProductList', JSON.stringify(remoteData));
+                    localStorage.setItem('megaProductListVersion', 'remote-sync');
+                    renderHomeTrendingProducts();
+                    renderHomeAllProducts();
+                    if (window.BroadcastChannel) {
+                        const channel = new BroadcastChannel('ideas-shop-products');
+                        channel.postMessage({ type: 'product-list-updated' });
+                        channel.close();
+                    }
+                }
+            } catch (err) {
+                // ইন্টারনেট না থাকলে বা GitHub থেকে আনতে সমস্যা হলে, লোকাল কপি থেকেই কাজ চলবে
+                console.warn('Remote product sync failed, using cached data.', err);
+            }
+        }
+
         function normalizePriceValue(value) {
             if (typeof value === 'number') return value;
             if (!value) return 0;
@@ -1338,6 +1363,7 @@
             getSharedProducts();
             renderHomeTrendingProducts();
             renderHomeAllProducts();
+            syncRemoteProducts();
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', () => renderHomeSearchSuggestions(searchInput.value));
@@ -1362,21 +1388,60 @@
             }
         });
 
-        // Banner Slider Logic
+        // ============ Banner Slider — Admin Panel থেকে banners.json এর মাধ্যমে dynamic ============
+        const REMOTE_BANNERS_URL = "https://raw.githubusercontent.com/Ideas-shop/Ideas-SHOP-/main/banners.json";
+
         let slideIndex = 0;
-        showSlides();
+        let slideTimer = null;
+
+        async function loadRemoteBanners() {
+            const slider = document.getElementById('bannerSlider');
+            try {
+                const res = await fetch(REMOTE_BANNERS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('Remote banners fetch failed: ' + res.status);
+                const remoteBanners = await res.json();
+
+                const activeBanners = (Array.isArray(remoteBanners) ? remoteBanners : [])
+                    .filter(b => b.active !== false)
+                    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+                if (!activeBanners.length) return; // কোনো active ব্যানার না থাকলে লোডিং প্লেসহোল্ডারই থাকবে
+
+                slider.innerHTML = activeBanners.map((b, i) => {
+                    const imgTag = `<img class="mySlides" src="${b.image}" alt="Banner ${i + 1}" onerror="this.src='https://placehold.co/600x260?text=Banner+${i + 1}'">`;
+                    return b.link
+                        ? `<a href="${b.link}" style="display:block;">${imgTag}</a>`
+                        : imgTag;
+                }).join('');
+
+                startSlideshow();
+            } catch (err) {
+                // ইন্টারনেট/GitHub সমস্যা হলে placeholder-ই থেকে যাবে, সাইট ভাঙবে না
+                console.warn('Remote banner sync failed.', err);
+            }
+        }
+
+        function startSlideshow() {
+            if (slideTimer) clearTimeout(slideTimer);
+            slideIndex = 0;
+            showSlides();
+        }
+
         function showSlides() {
             let slides = document.getElementsByClassName("mySlides");
+            if (!slides.length) return;
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
             slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}
-            if(slides[slideIndex-1]){
-                slides[slideIndex-1].style.display = "block";
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            if (slides[slideIndex - 1]) {
+                slides[slideIndex - 1].style.display = "block";
             }
-            setTimeout(showSlides, 3000); 
+            slideTimer = setTimeout(showSlides, 3000);
         }
+
+        loadRemoteBanners();
 
                    // --- Dynamic Product Modal & Notification System ---
         let modalImages = [];

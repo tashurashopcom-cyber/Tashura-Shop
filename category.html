@@ -832,6 +832,24 @@
             allProducts = persistProducts(allProducts, { broadcast: false });
         }
 
+        // --- Admin Panel থেকে করা পরিবর্তন GitHub-এর products.json থেকে সিঙ্ক করা ---
+        const REMOTE_PRODUCTS_URL = "https://raw.githubusercontent.com/Ideas-shop/Ideas-SHOP-/main/products.json";
+
+        async function syncRemoteProducts() {
+            try {
+                const res = await fetch(REMOTE_PRODUCTS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('Remote fetch failed: ' + res.status);
+                const remoteData = await res.json();
+                if (Array.isArray(remoteData) && remoteData.length) {
+                    allProducts = persistProducts(remoteData, { broadcast: true });
+                    renderProducts();
+                }
+            } catch (err) {
+                // ইন্টারনেট না থাকলে বা GitHub থেকে আনতে সমস্যা হলে, লোকাল কপি থেকেই কাজ চলবে
+                console.warn('Remote product sync failed, using cached data.', err);
+            }
+        }
+
         // --- ডায়নামিক রেন্ডারিং ---
         function renderProducts() {
             const grid = document.getElementById('productGrid');
@@ -885,7 +903,7 @@
             for (let i = 0; i < btns.length; i++) {
                 btns[i].classList.remove("active");
             }
-            if(event && event.currentTarget) {
+            if (typeof event !== 'undefined' && event && event.currentTarget && event.currentTarget.classList) {
                 event.currentTarget.classList.add("active");
             }
 
@@ -901,6 +919,7 @@
                 allProducts = persistProducts(allProducts, { broadcast: false });
             }
             renderProducts();
+            syncRemoteProducts();
             filterSelection('all');
             if (window.BroadcastChannel) {
                 const syncChannel = new BroadcastChannel('ideas-shop-products');

@@ -1,0 +1,205 @@
+[
+  {
+    "code": "F-tur-01",
+    "title": "Turbo Fan high speed Fan with display",
+    "price": "৳580",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979203/663407015_4255202391359747_2618512546202096813_n_b2k02s.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979196/730160459_986593790673045_3397122681190972685_n_qqwruf.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1782979111/732409010_1349973370051323_2765516149630823865_n_bkijkw.jpg"
+    ],
+    "desc": "স্টাইল আর স্বস্তি একসাথে—এই গরমে স্মার্টলি কুল থাকুন!",
+    "specs": [
+      "Brand: Turbo Fan",
+      "Colour: Gray 4000mah",
+      "Design: Wearable Fan",
+      "Power source: Battery Powered",
+      "Style: Modern"
+    ],
+    "types": [
+      {
+        "name": "white",
+        "hex": "#f5f5f5"
+      },
+      {
+        "name": "Black",
+        "hex": "#000000"
+      },
+      {
+        "name": "Green",
+        "hex": "#d0e1d1"
+      }
+    ],
+    "category": "electronics",
+    "storeId": "store1"
+  },
+  {
+    "code": "H-PHN-01",
+    "title": "Mobile Holder Flexible Lazy Pod Mobile Holder",
+    "price": "৳275",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085611/702240807_122111915042809533_6736886265913551707_n_b8x4gy.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085616/703092400_122111915138809533_6987167337063282043_n_porbsl.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085614/702201607_122111915090809533_5707927258519810940_n_ictbhx.jpg"
+    ],
+    "desc": "শুয়ে-বসে বা কাজ করতে করতে হাত দিয়ে ফোন ধরে রাখতে রাখতে ক্লান্ত?",
+    "specs": [
+      "নাম: লেজি ফোন হোল্ডার",
+      "মডেল: আপগ্রেডেড ভার্সন",
+      "উপকরণ: প্লাস্টিক",
+      "ওজন: 150 গ্রাম",
+      "পোর্টেবিলিটি: সহজে বহনযোগ্য"
+    ],
+    "types": [
+      {
+        "name": "blue",
+        "hex": "#225593"
+      },
+      {
+        "name": "black",
+        "hex": "#000000"
+      },
+      {
+        "name": "yellow",
+        "hex": "#ffbe0a"
+      },
+      {
+        "name": "red",
+        "hex": "#a9333c"
+      },
+      {
+        "name": "White",
+        "hex": "#efe6ef"
+      }
+    ],
+    "category": "electronics",
+    "storeId": "store1"
+  },
+  {
+    "code": "C-Spk-01",
+    "title": "Speaker Lamp Smart G-Shape Wireless Charging Speaker Lamp",
+    "price": "৳790",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068899/734298297_1498318775506585_1153167715410375572_n_eoe11i.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068903/737998826_5539123899604721_6226999306279050857_n_qizx4r.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783068896/736943022_27778183808537417_2537638222869692364_n_vsd6j1.webp"
+    ],
+    "desc": "Bluetooth Speaker, Wireless Charging, RGB Night Light",
+    "specs": [
+      "G-Lamp 3-in-1 Smart Gadget",
+      "Bluetooth Speaker",
+      "Wireless Charging",
+      "RGB Night Light",
+      "Bluetooth 5.0"
+    ],
+    "types": [],
+    "category": "electronics",
+    "storeId": "store1"
+  },
+  {
+    "code": "D-lam-01",
+    "title": "Desk Lamp T5 Ultra ইন্টেলিজেন্ট LED ডেস্ক ল্যাম্প",
+    "price": "৳650",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783069540/732544531_1025062596557562_7272066373391174009_n_hstrwr.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783069546/733692495_1656473346083258_4392074946541726918_n_m7ruc0.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783069512/734664000_1043801131411906_1167913235158352991_n_ztlyiu.webp"
+    ],
+    "desc": "স্মার্ট ডেস্ক ল্যাম্প সহ ওয়ান-টাচ কন্ট্রোল",
+    "specs": [
+      "ব্র্যান্ড: DARUI STAR",
+      "মডেল: T5 Ultra",
+      "শক্তি: 15W",
+      "রঙ: সাদা/কালো"
+    ],
+    "types": [],
+    "category": "electronics",
+    "storeId": "store1"
+  },
+  {
+    "code": "N-lig-02",
+    "title": "Night Light স্মল নাইট লাইট (小夜灯)",
+    "price": "৳899",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070630/736172584_3589269534572025_1828509163802481255_n_qpqnv7.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070623/737494117_1011520011497734_2985362899172281633_n_qujkzp.webp",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070519/733605904_1311515267631235_8644506864394382669_n_dnc4hr.jpg"
+    ],
+    "desc": "ঘুমানোর আগে হালকা আলোর প্রয়োজন হোক বা বাচ্চার রুমে নিরাপদ লাইটিং — BAOLIANG ব্র্যান্ডের এই স্মল নাইট লাইটটি আপনার প্রতিদিনের প্রয়োজনের জন্য একদম উপযুক্ত একটি সমাধান।",
+    "specs": [
+      "ব্র্যান্ড: BAOLIANG (宝量)",
+      "প্রোডাক্ট: স্মল নাইট লাইট (小夜灯)",
+      "মডেল: 1336/1336A",
+      "রেটেড ভোল্টেজ: 5V-1A",
+      "রেটেড পাওয়ার: 3.8W",
+      "LED কনফিগারেশন: 12টি LED মডিউল",
+      "কালার মোড: 3টি",
+      "সার্টিফিকেশন: CE, FCC, RoHS"
+    ],
+    "types": [],
+    "category": "electronics",
+    "storeId": "store1"
+  },
+  {
+    "code": "E-eg-01",
+    "title": "Egg Tray Premium Quality",
+    "price": "৳250",
+    "stock": 10,
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783176248/484998226_1307739413848434_4898369410259056135_n_dyizfx.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783176250/550887083_649898278170017_6224706018700320192_n_uq1kng.jpg"
+    ],
+    "desc": "ফ্রিজে ডিম গাদাগাদি করে রাখা কিংবা ভেঙে যাওয়ার দিন এবার শেষ! আপনার রান্নাঘর এবং ফ্রিজকে আরও আধুনিক ও গোছানো করে তুলতে নিয়ে এলাম থ্রি-লেয়ার অটো-রোলিং এগ হোল্ডার। এ দেখতে পাচ্ছেন, এর বিশেষ ঢালু (Sloped) ডিজাইনের কারণে নিচ থেকে একটি ডিম বের করার সাথে সাথেই ওপরের ডিমগুলো নিজে থেকেই গড়িয়ে (Auto-Roll) সামনে চলে আসে। ফলে ডিম বের করা হয় একদম সহজ এবং ভেতরের ডিম হাত দিয়ে টেনে বের করার কোনো ঝামেলাই থাকে না। এটি মূলত তিন স্তরের (3-Tier) একটি কমপ্যাক্ট ডিজাইনে তৈরি, যা ফ্রিজের সাইড ডোরে বা যেকোনো তাকে খুব সামান্য জায়গা নেয়, অথচ একসাথে প্রায় ২৪ থেকে ৩০টি ডিম নিরাপদে ধারণ করতে পারে। মজবুত ও ফুড-গ্রেড প্লাস্টিক দিয়ে তৈরি এই অর্গানাইজারটি যেমন দীর্ঘস্থায়ী, তেমনই এটি পরিষ্কার করাও খুব সহজ। আপনার ফ্রিজের স্পেস বাঁচাতে এবং ডিমগুলোকে সুরক্ষিত ও ফ্রেশ রাখতে এই স্মার্ট গ্যাজেটটি হতে পারে আপনার রান্নাঘরের সেরা একটি সংযোজন।",
+    "specs": [
+      "Brand; NO",
+      "Quality : 100%Premium"
+    ],
+    "types": [],
+    "category": "decor",
+    "storeId": "store1"
+  },
+  {
+    "code": "M-mou-01",
+    "title": "RGB Mouse",
+    "price": "358",
+    "stock": 10,
+    "category": "electronics",
+    "storeId": "store1",
+    "desc": "আপনি যদি নিজের ওয়েবসাইটে ব্যবহার করার জন্য ফ্রি এবং কপিরাইট-মুক্ত (Copyright-free) ছবি চান, তবে সবচেয়ে ভালো মাধ্যম হলো Unsplash বা Pexels-এর মতো ফ্রি স্টক ইমেজ ওয়েবসাইট। এসব ছবির জন্য আপনাকে কোনো টাকা দিতে হবে না এবং নিজের ওয়েবসাইট বা প্রজেক্টে নিশ্চিন্তে ব্যবহার করতে পারবেন।নিচে ওয়েবসাইটে ব্যবহার করার উপযোগী একটি চমৎকার হাই-কোয়ালিটি ল্যাপটপ এবং কাজের পরিবেশের (Workplace) ছবির সোর্স দেওয়া হলো:",
+    "specs": [
+      "Brand: Thailand",
+      "Model:E42",
+      "LIGHT:RGB"
+    ],
+    "types": [
+      {
+        "name": "jdbd",
+        "hex": "#c8102e"
+      },
+      {
+        "name": "dfsbfgdn",
+        "hex": "#c8102e"
+      },
+      {
+        "name": "ghmndxty",
+        "hex": "#c8102e"
+      },
+      {
+        "name": "sdfhbgf",
+        "hex": "#c8102e"
+      },
+      {
+        "name": "fgb fg",
+        "hex": "#c8102e"
+      }
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+    ]
+  }
+]

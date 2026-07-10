@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideas SHOP Admin Panel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  :root{
+    --red:#c8102e; --navy:#0b1d3a; --blue:#1e4d8b;
+    --bg:#f4f6f9; --card:#ffffff; --border:#e2e6ec; --text:#1a2230; --muted:#6b7688;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--bg);color:var(--text);}
+  header{background:var(--navy);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+  header h1{font-size:18px;margin:0;}
+  header h1 span{color:#ff5f6d;}
+  #logoutBtn{background:var(--red);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;}
+
+  .wrap{max-width:900px;margin:0 auto;padding:16px;}
+
+  /* Login */
+  #loginScreen{max-width:360px;margin:80px auto;background:var(--card);padding:28px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;}
+  #loginScreen i{font-size:34px;color:var(--red);margin-bottom:10px;}
+  #loginScreen input{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin:12px 0;}
+  #loginScreen button{width:100%;background:var(--red);color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;}
+  #loginError{color:var(--red);font-size:13px;min-height:18px;}
+
+  .tabs{display:flex;gap:8px;margin:16px 0;}
+  .tab-btn{flex:1;padding:12px;border-radius:8px;border:2px solid var(--border);background:#fff;font-weight:700;cursor:pointer;color:var(--muted);}
+  .tab-btn.active{border-color:var(--red);color:var(--red);background:#fdecee;}
+
+  .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:16px;}
+  .card h3{margin-top:0;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:8px;}
+
+  label{display:block;font-weight:600;font-size:13px;color:#555;margin:10px 0 4px;}
+  input,textarea,select{width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-size:14px;}
+  textarea{min-height:70px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+  .btn{background:var(--red);color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:14px;font-size:15px;}
+  .btn.secondary{background:var(--blue);}
+  .btn.small{width:auto;padding:6px 12px;font-size:12px;margin:0;}
+
+  .img-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .img-list .thumb{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+  .img-list img{width:100%;height:100%;object-fit:cover;}
+  .img-list .rm{position:absolute;top:0;right:0;background:rgba(200,16,46,.9);color:#fff;border:none;width:18px;height:18px;font-size:10px;cursor:pointer;}
+
+  .type-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
+  .type-row input[type=text]{flex:1;}
+  .type-row input[type=color]{width:40px;height:38px;padding:2px;flex-shrink:0;}
+  .type-row button{background:none;border:none;color:var(--red);cursor:pointer;font-size:15px;}
+
+  /* Product list */
+  .plist{display:flex;flex-direction:column;gap:10px;}
+  .pitem{display:flex;gap:12px;padding:10px;border:1px solid var(--border);border-radius:10px;align-items:center;background:#fff;}
+  .pitem img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#eee;}
+  .pinfo{flex:1;min-width:0;}
+  .pinfo .ptitle{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pinfo .pmeta{font-size:12px;color:var(--muted);}
+  .pinfo .pmeta b{color:var(--red);}
+  .pactions{display:flex;gap:6px;flex-shrink:0;}
+  .pactions button{border:none;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:13px;}
+  .btn-edit{background:#eef0fb;color:var(--blue);}
+  .btn-del{background:#fdecee;color:var(--red);}
+
+  .quick-edit{display:flex;gap:6px;margin-top:6px;}
+  .quick-edit input{padding:6px;font-size:12px;}
+  .quick-edit button{background:var(--navy);color:#fff;border:none;border-radius:6px;padding:6px 10px;font-size:11px;cursor:pointer;}
+
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:100;max-width:90%;text-align:center;}
+  #toast.show{opacity:1;}
+  #toast.error{background:var(--red);}
+  #toast.success{background:#2e7d32;}
+
+  .empty{text-align:center;color:var(--muted);padding:30px;}
+  .loading{text-align:center;color:var(--muted);padding:20px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <i class="fas fa-lock"></i>
+  <h2 style="margin:0 0 4px;color:var(--navy);">Ideas SHOP Admin</h2>
+  <p style="color:var(--muted);font-size:13px;margin:0;">পাসওয়ার্ড দিয়ে লগইন করুন</p>
+  <input type="password" id="passInput" placeholder="পাসওয়ার্ড">
+  <button onclick="login()">লগইন করুন</button>
+  <div id="loginError"></div>
+</div>
+
+<div id="appScreen" style="display:none;">
+  <header>
+    <h1>Ideas SHOP</h1>
+    <button id="logoutBtn" onclick="logout()">লগআউট</button>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabAdd" onclick="switchTab('add')"><i class="fas fa-plus"></i> Add</button>
+      <button class="tab-btn" id="tabList" onclick="switchTab('list')"><i class="fas fa-list"></i> Products</button>
+    </div>
+
+    <!-- ADD / EDIT FORM -->
+    <div class="card" id="formPanel">
+      <h3 id="formTitle"><i class="fas fa-box"></i> নতুন প্রোডাক্ট যোগ করুন</h3>
+      <form id="productForm">
+        <label>প্রোডাক্ট কোড <span style="color:red;">*</span> (এডিট করার সময় বদলাবেন না)</label>
+        <input type="text" id="fCode" required placeholder="যেমন: F-fan-03">
+
+        <label>প্রোডাক্ট নাম <span style="color:red;">*</span></label>
+        <input type="text" id="fTitle" required>
+
+        <div class="row2">
+          <div>
+            <label>দাম <span style="color:red;">*</span></label>
+            <input type="text" id="fPrice" required placeholder="৳৪৯৯">
+          </div>
+          <div>
+            <label>স্টক (সংখ্যা)</label>
+            <input type="number" id="fStock" value="100">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div>
+            <label>ক্যাটাগরি</label>
+            <input type="text" id="fCategory" placeholder="electronics / decor">
+          </div>
+          <div>
+            <label>Store ID</label>
+            <input type="text" id="fStoreId" value="store1">
+          </div>
+        </div>
+
+        <label>বিবরণ</label>
+        <textarea id="fDesc"></textarea>
+
+        <label>স্পেসিফিকেশন (কমা দিয়ে আলাদা করুন)</label>
+        <textarea id="fSpecs" placeholder="Brand: XX, Power: 5W, ..."></textarea>
+
+        <label>ছবির লিংক যোগ করুন</label>
+        <input type="text" id="imgUrlInput" placeholder="https://...">
+        <button type="button" class="btn secondary" style="margin-top:6px;" onclick="addImage()"><i class="fas fa-plus"></i> ছবি যোগ করুন</button>
+        <div class="img-list" id="imgList"></div>
+
+        <label style="margin-top:14px;">প্রোডাক্ট টাইপ / রঙ (ঐচ্ছিক)</label>
+        <div id="typeContainer"></div>
+        <button type="button" class="btn secondary" style="margin-top:2px;" onclick="addTypeRow()"><i class="fas fa-plus"></i> টাইপ যোগ করুন</button>
+
+        <button type="submit" class="btn" id="submitBtn"><i class="fas fa-check"></i> প্রোডাক্ট সেভ করুন</button>
+        <button type="button" class="btn secondary" id="cancelEditBtn" style="display:none;" onclick="cancelEdit()">এডিট বাতিল করুন</button>
+      </form>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="card" id="listPanel" style="display:none;">
+      <h3><i class="fas fa-boxes"></i> সব প্রোডাক্ট <span id="countBadge" style="color:var(--muted);font-size:13px;"></span></h3>
+      <div id="plist" class="plist"><div class="loading">লোড হচ্ছে...</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ============ কনফিগ ============
+const WORKER_URL = "https://tashurashop-worker.tashurashop-com.workers.dev/"; // যেমন: https://tashura-admin.yourname.workers.dev
+
+// ============ লগইন ============
+function login() {
+  const pass = document.getElementById('passInput').value.trim();
+  if (!pass) return;
+  sessionStorage.setItem('tashura_admin_pass', pass);
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
+  loadProducts();
+}
+function logout() {
+  sessionStorage.removeItem('tashura_admin_pass');
+  location.reload();
+}
+window.onload = () => {
+  if (sessionStorage.getItem('tashura_admin_pass')) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    loadProducts();
+  }
+};
+function getPass() { return sessionStorage.getItem('tashura_admin_pass') || ''; }
+
+// ============ টোস্ট ============
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  setTimeout(() => { t.className = ''; }, 3000);
+}
+
+// ============ ট্যাব ============
+function switchTab(tab) {
+  document.getElementById('tabAdd').classList.toggle('active', tab === 'add');
+  document.getElementById('tabList').classList.toggle('active', tab === 'list');
+  document.getElementById('formPanel').style.display = tab === 'add' ? 'block' : 'none';
+  document.getElementById('listPanel').style.display = tab === 'list' ? 'block' : 'none';
+  if (tab === 'list') loadProducts();
+}
+
+// ============ ইমেজ হ্যান্ডলিং ============
+let currentImages = [];
+function addImage() {
+  const input = document.getElementById('imgUrlInput');
+  const url = input.value.trim();
+  if (!url) return;
+  currentImages.push(url);
+  input.value = '';
+  renderImgList();
+}
+function removeImage(i) { currentImages.splice(i, 1); renderImgList(); }
+function renderImgList() {
+  const box = document.getElementById('imgList');
+  box.innerHTML = currentImages.map((u, i) => `
+    <div class="thumb"><img src="${u}" onerror="this.style.opacity=.2"><button class="rm" onclick="removeImage(${i})">×</button></div>
+  `).join('');
+}
+
+// ============ টাইপ/রঙ হ্যান্ডলিং ============
+function addTypeRow(name = '', hex = '#c8102e') {
+  const box = document.getElementById('typeContainer');
+  const row = document.createElement('div');
+  row.className = 'type-row';
+  row.innerHTML = `
+    <input type="text" class="type-name" value="${name}" placeholder="যেমন: কালো">
+    <input type="color" class="type-hex" value="${hex}">
+    <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>
+  `;
+  box.appendChild(row);
+}
+
+// ============ ফর্ম রিসেট ============
+let editingCode = null;
+function resetForm() {
+  document.getElementById('productForm').reset();
+  document.getElementById('fStock').value = 100;
+  document.getElementById('fStoreId').value = 'store1';
+  currentImages = [];
+  renderImgList();
+  document.getElementById('typeContainer').innerHTML = '';
+  editingCode = null;
+  document.getElementById('fCode').disabled = false;
+  document.getElementById('formTitle').innerHTML = '<i class="fas fa-box"></i> নতুন প্রোডাক্ট যোগ করুন';
+  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> প্রোডাক্ট সেভ করুন';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+function cancelEdit() { resetForm(); switchTab('list'); }
+
+// ============ ফর্ম সাবমিট (Add / Edit দুটোই) ============
+document.getElementById('productForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (currentImages.length === 0) { showToast('অন্তত একটি ছবি যোগ করুন', 'error'); return; }
+
+  const specs = document.getElementById('fSpecs').value.split(',').map(s => s.trim()).filter(Boolean);
+  const types = Array.from(document.querySelectorAll('.type-row')).map(row => ({
+    name: row.querySelector('.type-name').value.trim(),
+    hex: row.querySelector('.type-hex').value
+  })).filter(t => t.name);
+
+  const product = {
+    code: document.getElementById('fCode').value.trim(),
+    title: document.getElementById('fTitle').value.trim(),
+    price: document.getElementById('fPrice').value.trim(),
+    stock: parseInt(document.getElementById('fStock').value) || 0,
+    category: document.getElementById('fCategory').value.trim(),
+    storeId: document.getElementById('fStoreId').value.trim(),
+    desc: document.getElementById('fDesc').value.trim(),
+    specs, types, images: currentImages
+  };
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'সেভ হচ্ছে...';
+
+  try {
+    let res;
+    if (editingCode) {
+      res = await fetch(`${WORKER_URL}/api/products/${encodeURIComponent(editingCode)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Password': getPass() },
+        body: JSON.stringify(product)
+      });
+    } else {
+      res = await fetch(`${WORKER_URL}/api/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Password': getPass() },
+        body: JSON.stringify(product)
+      });
+    }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'অজানা সমস্যা');
+
+    showToast(editingCode ? '✅ প্রোডাক্ট আপডেট হয়েছে' : '✅ প্রোডাক্ট যোগ হয়েছে', 'success');
+    resetForm();
+    switchTab('list');
+  } catch (err) {
+    showToast('❌ ' + err.message, 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-check"></i> প্রোডাক্ট সেভ করুন';
+  }
+});
+
+// ============ প্রোডাক্ট লিস্ট লোড ============
+let allProducts = [];
+async function loadProducts() {
+  const box = document.getElementById('plist');
+  box.innerHTML = '<div class="loading">লোড হচ্ছে...</div>';
+  try {
+    const res = await fetch(`${WORKER_URL}/api/products`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'লোড ব্যর্থ হয়েছে');
+    allProducts = data.products;
+    renderList();
+  } catch (err) {
+    box.innerHTML = `<div class="empty">❌ লোড করা যায়নি: ${err.message}</div>`;
+  }
+}
+function renderList() {
+  const box = document.getElementById('plist');
+  document.getElementById('countBadge').textContent = `(${allProducts.length}টি)`;
+  if (!allProducts.length) { box.innerHTML = '<div class="empty">কোনো প্রোডাক্ট নেই</div>'; return; }
+
+  box.innerHTML = allProducts.map(p => `
+    <div class="pitem">
+      <img src="${(p.images && p.images[0]) || ''}" onerror="this.style.opacity=.2">
+      <div class="pinfo">
+        <div class="ptitle">${p.title}</div>
+        <div class="pmeta">কোড: ${p.code} &nbsp;|&nbsp; দাম: <b>${p.price}</b> &nbsp;|&nbsp; স্টক: ${p.stock ?? '-'}</div>
+        <div class="quick-edit">
+          <input type="text" id="qp-${cssSafe(p.code)}" value="${p.price}" style="width:70px;">
+          <input type="number" id="qs-${cssSafe(p.code)}" value="${p.stock ?? 0}" style="width:60px;">
+          <button onclick="quickUpdate('${escAttr(p.code)}')">আপডেট</button>
+        </div>
+      </div>
+      <div class="pactions">
+        <button class="btn-edit" onclick="editProduct('${escAttr(p.code)}')"><i class="fas fa-pen"></i></button>
+        <button class="btn-del" onclick="deleteProduct('${escAttr(p.code)}')"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+function cssSafe(s) { return s.replace(/[^a-zA-Z0-9]/g, '_'); }
+function escAttr(s) { return s.replace(/'/g, "\\'"); }
+
+// ============ কুইক প্রাইস/স্টক আপডেট ============
+async function quickUpdate(code) {
+  const price = document.getElementById(`qp-${cssSafe(code)}`).value.trim();
+  const stock = parseInt(document.getElementById(`qs-${cssSafe(code)}`).value) || 0;
+  try {
+    const res = await fetch(`${WORKER_URL}/api/products/${encodeURIComponent(code)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Password': getPass() },
+      body: JSON.stringify({ price, stock })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'আপডেট ব্যর্থ');
+    showToast('✅ দাম/স্টক আপডেট হয়েছে', 'success');
+    allProducts = data.products;
+    renderList();
+  } catch (err) {
+    showToast('❌ ' + err.message, 'error');
+  }
+}
+
+// ============ এডিট (ফর্মে লোড করা) ============
+function editProduct(code) {
+  const p = allProducts.find(x => x.code === code);
+  if (!p) return;
+  editingCode = code;
+  document.getElementById('fCode').value = p.code;
+  document.getElementById('fCode').disabled = true;
+  document.getElementById('fTitle').value = p.title || '';
+  document.getElementById('fPrice').value = p.price || '';
+  document.getElementById('fStock').value = p.stock ?? 100;
+  document.getElementById('fCategory').value = p.category || '';
+  document.getElementById('fStoreId').value = p.storeId || 'store1';
+  document.getElementById('fDesc').value = p.desc || '';
+  document.getElementById('fSpecs').value = (p.specs || []).join(', ');
+  currentImages = [...(p.images || [])];
+  renderImgList();
+  document.getElementById('typeContainer').innerHTML = '';
+  (p.types || []).forEach(t => addTypeRow(t.name, t.hex));
+
+  document.getElementById('formTitle').innerHTML = `<i class="fas fa-pen"></i> এডিট করুন: ${p.title}`;
+  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> আপডেট সেভ করুন';
+  document.getElementById('cancelEditBtn').style.display = 'block';
+  switchTab('add');
+}
+
+// ============ ডিলিট ============
+async function deleteProduct(code) {
+  if (!confirm(`আপনি কি "${code}" প্রোডাক্টটি ডিলিট করতে চান?`)) return;
+  try {
+    const res = await fetch(`${WORKER_URL}/api/products/${encodeURIComponent(code)}`, {
+      method: 'DELETE',
+      headers: { 'X-Admin-Password': getPass() }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'ডিলিট ব্যর্থ');
+    showToast('🗑️ প্রোডাক্ট ডিলিট হয়েছে', 'success');
+    allProducts = data.products;
+    renderList();
+  } catch (err) {
+    showToast('❌ ' + err.message, 'error');
+  }
+}
+</script>
+</body>
+</html>

@@ -39,57 +39,225 @@
             font-weight: 700;
         }
 
-        .search-box {
+        /* --- সাম্প্রতিক অর্ডার Mini Preview Card (সার্চ বার এর পরিবর্তে) --- */
+        .mini-preview-card {
             display: flex;
-            flex-wrap: nowrap;
+            flex-direction: column;
             gap: 10px;
-            margin-bottom: 32px;
-            align-items: center;
-            width: 100%;
+            background: linear-gradient(145deg, #ffffff, #f5f9f6);
+            border: 1px solid #e2ede6;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 22px;
+            text-align: left;
+            box-shadow: 0 4px 14px rgba(40, 167, 69, 0.08);
         }
-
-        .search-box input {
+        .mini-preview-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mini-preview-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .mini-preview-actions:has(.mini-cancel-btn[style*="display: none"]),
+        .mini-preview-actions:has(.mini-cancel-btn[style*="display:none"]) {
+            display: none;
+        }
+        .mini-preview-actions .mini-cancel-btn {
+            margin-top: 8px;
+        }
+        .mini-preview-img {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #eef3f0;
+        }
+        .mini-preview-text {
             flex: 1 1 auto;
             min-width: 0;
-            height: 48px;
-            padding: 10px 14px;
-            border: 1.5px solid #dadfe2;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.25s;
         }
-
-        .search-box input:focus {
-            border-color: #28a745;
-            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.12);
+        .mini-preview-id {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #232b27;
         }
-
-        .search-box button {
-            flex: 0 0 auto;
-            height: 48px;
-            padding: 0 18px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 700;
-            transition: background 0.25s, transform 0.15s;
+        .mini-preview-sub {
+            font-size: 12px;
+            color: #7c8a80;
+            margin-top: 2px;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mini-preview-badge {
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #eaf7ee;
+            color: #28a745;
+            white-space: nowrap;
+        }
+        .mini-preview-badge.canceled {
+            background: #fff1f1;
+            color: #c92a2a;
+        }
+
+        .no-order-state {
+            text-align: center;
+            padding: 34px 16px;
+            color: #8a9590;
+            margin-bottom: 10px;
+        }
+        .no-order-state i {
+            font-size: 40px;
+            color: #d7e4dd;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .no-order-state p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .no-order-state a {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+        }
+
+        /* --- Cancel Order বাটন ও মডাল --- */
+        .mini-cancel-btn {
+            flex-shrink: 0;
+            background: #e03131;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(224, 49, 49, 0.28);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+        }
+        .mini-cancel-btn:hover { background: #c92a2a; }
+        .mini-cancel-btn:active { transform: scale(0.96); }
+        .mini-cancel-btn.disabled {
+            background: #f1f3f5;
+            color: #9aa1a8;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .mini-cancel-btn.disabled:hover { background: #f1f3f5; }
+        .mini-cancel-btn.disabled:active { transform: none; }
+
+        .cancel-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 25, 22, 0.45);
+            z-index: 500;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .cancel-modal-overlay.show {
+            display: flex;
+            animation: fadeInOverlay 0.25s ease;
+        }
+        @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+        .cancel-modal {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            padding: 24px 20px 26px;
+            text-align: left;
+            animation: modalSlideUp 0.3s ease;
+        }
+        @keyframes modalSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .cancel-modal h3 {
+            font-size: 17px;
+            color: #c92a2a;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.25);
+            gap: 8px;
         }
-
-        .search-box button:hover {
-            background: #218838;
+        .cancel-modal-sub {
+            font-size: 13px;
+            color: #8a9590;
+            margin-bottom: 16px;
         }
-        .search-box button:active {
-            transform: scale(0.97);
+        .cancel-reason-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .cancel-reason-item {
+            border: 1.5px solid #e2e6e4;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 13.5px;
+            color: #444;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .cancel-reason-item.selected {
+            border-color: #c92a2a;
+            background: #fff5f5;
+            color: #c92a2a;
+            font-weight: 700;
+        }
+        .cancel-custom-reason {
+            width: 100%;
+            border: 1.5px solid #dadfe2;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13.5px;
+            font-family: inherit;
+            resize: none;
+            min-height: 60px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        .cancel-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .cancel-modal-btn {
+            flex: 1;
+            height: 46px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+        .cancel-modal-btn.secondary {
+            background: #f1f3f2;
+            color: #555;
+        }
+        .cancel-modal-btn.primary {
+            background: #c92a2a;
+            color: #fff;
+        }
+        .cancel-modal-btn.primary:disabled {
+            background: #eec2c2;
+            cursor: not-allowed;
         }
 
         .progress-track {
@@ -460,15 +628,32 @@
 <body>
 
 <div class="tracking-container">
-    <h2>আপনার অর্ডার ট্র্যাক করুন</h2>
+    <h2>আপনার সাম্প্রতিক অর্ডার</h2>
 
 
-    <div class="search-box">
-        <input type="text" id="orderInput" placeholder="অর্ডার আইডি (যেমন: KST1001)">
-        <button onclick="trackOrder()">Track</button>
+    <div id="miniPreviewCard" class="mini-preview-card" style="display:none;">
+        <div class="mini-preview-top">
+            <img id="miniPreviewImg" class="mini-preview-img" src="" alt="product">
+            <div class="mini-preview-text">
+                <span class="mini-preview-id" id="miniPreviewId">-</span>
+                <div class="mini-preview-sub" id="miniPreviewSub">-</div>
+            </div>
+            <span class="mini-preview-badge" id="miniPreviewBadge">-</span>
+        </div>
+        <div class="mini-preview-actions">
+            <button id="cancelOrderBtn" class="mini-cancel-btn" style="display:none;" onclick="handleCancelClick()">
+                <i class="fas fa-times-circle"></i> Cancel
+            </button>
+        </div>
     </div>
 
-    <p id="loadingMsg" class="loading-text">খোঁজা হচ্ছে, অপেক্ষা করুন...</p>
+    <div id="noOrderState" class="no-order-state" style="display:none;">
+        <i class="fas fa-box-open"></i>
+        <p>এখনো কোনো অর্ডার করা হয়নি।</p>
+        <a href="home.html">কেনাকাটা শুরু করুন</a>
+    </div>
+
+    <p id="loadingMsg" class="loading-text">সর্বশেষ অর্ডার লোড হচ্ছে, অপেক্ষা করুন...</p>
 
     <div id="orderInfoCard" class="order-info-card">
         <h4><i class="fas fa-receipt"></i> অর্ডার তথ্য</h4>
@@ -497,6 +682,19 @@
 <div id="toastNotification" class="toast">
     <span class="toast-icon" id="toastIcon">✓</span>
     <span id="toastMessage"></span>
+</div>
+
+<div id="cancelModalOverlay" class="cancel-modal-overlay">
+    <div class="cancel-modal">
+        <h3><i class="fas fa-exclamation-triangle"></i> অর্ডার ক্যানসেল করবেন?</h3>
+        <p class="cancel-modal-sub">নিচে থেকে একটি কারণ সিলেক্ট করুন</p>
+        <div id="cancelReasonList" class="cancel-reason-list"></div>
+        <textarea id="cancelCustomReason" class="cancel-custom-reason" placeholder="বিস্তারিত লিখুন..." style="display:none;"></textarea>
+        <div class="cancel-modal-actions">
+            <button class="cancel-modal-btn secondary" onclick="closeCancelModal()">বাতিল</button>
+            <button class="cancel-modal-btn primary" id="confirmCancelBtn" disabled onclick="confirmCancelOrder()">ক্যানসেল কনফার্ম করুন</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -549,15 +747,141 @@
         });
     }
 
-    function trackOrder() {
-        const orderId = document.getElementById('orderInput').value.trim();
-        
-        if (orderId === "") {
-            showToast("দয়া করে আপনার অর্ডার আইডি দিন!", "error");
+    // ⚠️ গুরুত্বপূর্ণ: এখানে SheetDB API ID বসান, নাহলে ট্র্যাকিং কাজ করবে না
+    const SHEETDB_API_ID = 'g5k93bim98aob';
+    let CURRENT_ORDER_ID = null;      // এই মুহূর্তে যেটা ট্র্যাক করা হচ্ছে
+    let CURRENT_ORDER_DATA = null;    // শেষবার SheetDB থেকে পাওয়া অর্ডার অবজেক্ট
+    let CANCEL_ALLOWED = true;        // Shipped বা তার পরে ক্যানসেল বাটন দেখাবে কিন্তু কাজ করবে না
+
+    // ক্যানসেল বাটনে ক্লিক করলে এটাই কল হয় — অবস্থা অনুযায়ী মডাল খুলবে বা নোট দেখাবে
+    function handleCancelClick() {
+        if (!CANCEL_ALLOWED) {
+            showToast("দুঃখিত! অর্ডারটি ইতিমধ্যে শিপমেন্টে চলে গেছে, তাই এখন আর ক্যানসেল করা সম্ভব নয়।", "error");
             return;
         }
+        openCancelModal();
+    }
 
-        // UI রিসেট করা (প্রগ্রেস বার সবসময় দেখানো থাকে, শুধু একটিভ স্টেট রিসেট হয়)
+    // ক্যানসেল হওয়া অর্ডার ক্যানসেলের পর ঠিক কত সময় ট্র্যাক অপশনে দেখা যাবে
+    const CANCEL_VISIBLE_MS = 24 * 60 * 60 * 1000; // ২৪ ঘন্টা
+
+    // orderHistory (localStorage) থেকে সর্বশেষ (সবচেয়ে নতুন) "দেখানোর মতো" অর্ডারটি বের করা
+    // ⚠️ অ্যাক্টিভ অর্ডার সবসময় দেখাবে। ক্যানসেল অর্ডার শুধু ক্যানসেল হওয়ার ২৪ ঘন্টার মধ্যেই দেখাবে,
+    // তারপর ট্র্যাক অপশন থেকে একদম বাদ পড়ে যাবে (তবে History পেজে ঠিকই থেকে যাবে)।
+    // ক্যানসেল অর্ডার localStorage থেকেই রেন্ডার হয়, তাই এর জন্য কোনো এক্সট্রা API রিকোয়েস্ট যায় না।
+    function getLatestOrderFromHistory() {
+        let history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        const now = Date.now();
+
+        let trackable = history.filter(entry => {
+            const s = (entry.status || '').trim().toLowerCase();
+            const isCanceled = (s === 'canceled' || s === 'cancelled');
+            if (!isCanceled) return true;
+            if (!entry.canceledAt) return false; // পুরনো ডেটা, টাইমস্ট্যাম্প নেই -> সরাসরি বাদ
+            return (now - entry.canceledAt) < CANCEL_VISIBLE_MS;
+        });
+        if (trackable.length === 0) return null;
+
+        // তারিখ দিয়ে সর্ট করার চেষ্টা, না পারলে অ্যারের শেষেরটাই নতুন ধরে নেওয়া হয়
+        let sorted = trackable.slice().sort((a, b) => {
+            const ta = new Date(a.date).getTime();
+            const tb = new Date(b.date).getTime();
+            if (!isNaN(ta) && !isNaN(tb)) return ta - tb;
+            return 0;
+        });
+        return sorted[sorted.length - 1];
+    }
+
+    // history entry থেকে প্রথম প্রোডাক্টের ছবি/নাম বের করা (ছবি না থাকলে ডিফল্ট আইকন)
+    function getHistoryPreviewInfo(entry) {
+        const firstItem = (entry.items && entry.items[0]) || {};
+        const image = firstItem.image || firstItem.img || '';
+        const name = firstItem.name || 'প্রোডাক্ট';
+        const extraCount = (entry.items ? entry.items.length - 1 : 0);
+        return { image, name, extraCount };
+    }
+
+    // মিনি প্রিভিউ কার্ড রেন্ডার করা (অর্ডার আইডি + হালকা ইনফো + ছবি)
+    function renderMiniPreview(entry) {
+        const card = document.getElementById('miniPreviewCard');
+        const info = getHistoryPreviewInfo(entry);
+        const img = document.getElementById('miniPreviewImg');
+
+        if (info.image) {
+            img.src = info.image;
+            img.style.display = 'block';
+        } else {
+            img.style.display = 'none';
+        }
+
+        document.getElementById('miniPreviewId').innerText = entry.orderId;
+        document.getElementById('miniPreviewSub').innerText =
+            info.name + (info.extraCount > 0 ? ` + আরও ${info.extraCount}টি` : '');
+
+        const badge = document.getElementById('miniPreviewBadge');
+        const status = (entry.status || 'Pending');
+        const normalized = status.trim().toLowerCase();
+        if (normalized === 'canceled' || normalized === 'cancelled') {
+            badge.innerText = 'বাতিল';
+            badge.classList.add('canceled');
+        } else {
+            badge.innerText = status;
+            badge.classList.remove('canceled');
+        }
+
+        card.style.display = 'flex';
+    }
+
+    // পেজ লোড হওয়ার সাথে সাথে সর্বশেষ অ্যাক্টিভ অর্ডারটি অটোমেটিক ট্র্যাক করা (কোনো সার্চ বার ছাড়াই)
+    // ক্যানসেল হওয়া অর্ডারের জন্য এখানে আর কোনো API রিকোয়েস্ট যাবে না
+    function autoLoadLatestOrder() {
+        const latest = getLatestOrderFromHistory();
+
+        if (!latest || !latest.orderId) {
+            const totalHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const noteEl = document.getElementById('noOrderState');
+            if (totalHistory.length > 0) {
+                // সব অর্ডারই ক্যানসেল হয়ে গেছে — এখানে আর দেখানোর কিছু নেই, তবে History পেজে ঠিকই আছে
+                noteEl.innerHTML = `
+                    <i class="fas fa-box-open"></i>
+                    <p>ট্র্যাক করার মতো কোনো সক্রিয় অর্ডার নেই।</p>
+                    <a href="historyorder.html">অর্ডার হিস্ট্রি দেখুন</a>`;
+            } else {
+                noteEl.innerHTML = `
+                    <i class="fas fa-box-open"></i>
+                    <p>এখনো কোনো অর্ডার করা হয়নি।</p>
+                    <a href="home.html">কেনাকাটা শুরু করুন</a>`;
+            }
+            noteEl.style.display = 'block';
+            document.getElementById('miniPreviewCard').style.display = 'none';
+            document.getElementById('regularTracking').style.display = 'none';
+            document.getElementById('cancelTracking').style.display = 'none';
+            document.getElementById('loadingMsg').style.display = 'none';
+            return; // ⚠️ এখানে ইচ্ছাকৃতভাবে কোনো fetch হচ্ছে না
+        }
+
+        document.getElementById('noOrderState').style.display = 'none';
+        renderMiniPreview(latest);
+
+        const normalizedStatus = (latest.status || '').trim().toLowerCase();
+        if (normalizedStatus === 'canceled' || normalizedStatus === 'cancelled') {
+            // ⚠️ ক্যানসেল অর্ডার — সরাসরি localStorage ক্যাশ থেকে দেখানো হচ্ছে, কোনো API রিকোয়েস্ট ছাড়াই
+            CURRENT_ORDER_ID = latest.orderId;
+            document.getElementById('loadingMsg').style.display = 'none';
+            document.getElementById('regularTracking').style.display = 'none';
+            document.getElementById('cancelTracking').style.display = 'block';
+            document.getElementById('cancelReasonText').innerText = latest.cancelReason || "কোনো কারণ উল্লেখ করা হয়নি।";
+            hideStatusMeta();
+            document.getElementById('cancelOrderBtn').style.display = 'none';
+        } else {
+            fetchAndRenderOrder(latest.orderId);
+        }
+    }
+
+    // SheetDB থেকে নির্দিষ্ট অর্ডার আইডির লাইভ স্ট্যাটাস আনা ও দেখানো
+    function fetchAndRenderOrder(orderId) {
+        CURRENT_ORDER_ID = orderId;
+
         document.getElementById('cancelTracking').style.display = 'none';
         document.getElementById('regularTracking').style.display = 'block';
         buildProgressSteps(HOME_STEPS);
@@ -565,9 +889,9 @@
         document.getElementById('loadingMsg').style.display = 'block';
         hideOrderInfo();
         hideStatusMeta();
+        document.getElementById('cancelOrderBtn').style.display = 'none';
 
-        // ⚠️ গুরুত্বপূর্ণ: এখানে "আপনার_API_ID_এখানে" এর জায়গায় আপনার আসল SheetDB API ID/URL বসান, নাহলে ট্র্যাকিং কাজ করবে না
-        const sheetdbUrl = `https://sheetdb.io/api/v1/93y9euunx4nv7/search?${new URLSearchParams({'Order ID': orderId})}`;
+        const sheetdbUrl = `https://sheetdb.io/api/v1/${SHEETDB_API_ID}/search?${new URLSearchParams({'Order ID': orderId})}`;
 
         fetch(sheetdbUrl)
             .then(response => {
@@ -578,12 +902,13 @@
                 document.getElementById('loadingMsg').style.display = 'none';
 
                 if (data.length > 0) {
-                    const order = data[0]; 
-                    const status = order.Status; 
+                    const order = data[0];
+                    CURRENT_ORDER_DATA = order;
+                    const status = order.Status;
                     const cancelReason = order.CancelReason;
 
-                    // ⚠️ এক্সট্রা API রিকোয়েস্ট ছাড়াই, একই রেসপন্স থেকে কাস্টমারের তথ্য বসানো হলো
                     fillOrderInfo(order);
+                    syncStatusToHistory(orderId, status, cancelReason);
 
                     const normalizedStatus = (status || "").trim().toLowerCase();
                     if (normalizedStatus === "canceled" || normalizedStatus === "cancelled") {
@@ -591,6 +916,10 @@
                         document.getElementById('cancelTracking').style.display = 'block';
                         document.getElementById('cancelReasonText').innerText = cancelReason || "কোনো কারণ উল্লেখ করা হয়নি।";
                         hideStatusMeta();
+                        document.getElementById('cancelOrderBtn').style.display = 'none';
+                        const badge = document.getElementById('miniPreviewBadge');
+                        badge.innerText = 'বাতিল';
+                        badge.classList.add('canceled');
                     } else {
                         document.getElementById('regularTracking').style.display = 'block';
                         const isRoad = isRoadReceiveAddress(order.Address);
@@ -598,24 +927,180 @@
                         buildProgressSteps(activeSteps);
                         updateProgressBar(status, activeSteps);
                         showStatusMeta(order);
+
+                        const btn = document.getElementById('cancelOrderBtn');
+                        if (normalizedStatus === 'delivered') {
+                            // Delivered হয়ে গেলে বাটনটাই আর দেখানোর দরকার নেই
+                            btn.style.display = 'none';
+                        } else {
+                            btn.style.display = 'inline-flex';
+                            // Shipped বা তার পরের যেকোনো স্টেজে বাটন দেখা যাবে কিন্তু কাজ করবে না
+                            const NON_CANCELLABLE = ['shipped', 'in division', 'in district', 'with rider'];
+                            CANCEL_ALLOWED = !NON_CANCELLABLE.includes(normalizedStatus);
+                            btn.classList.toggle('disabled', !CANCEL_ALLOWED);
+                        }
                     }
                 } else {
-                    buildProgressSteps(HOME_STEPS);
-                    resetSteps("আপনার অর্ডার আইডি লিখে Track বাটনে চাপুন", HOME_STEPS);
+                    resetSteps("এই অর্ডারের তথ্য এখনো সার্ভারে পাওয়া যায়নি।", HOME_STEPS);
                     hideOrderInfo();
                     hideStatusMeta();
-                    showToast("দুঃখিত! এই আইডি দিয়ে কোনো অর্ডার পাওয়া যায়নি।", "error");
+                    showToast("দুঃখিত! এই অর্ডারের তথ্য পাওয়া যায়নি।", "error");
                 }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
                 document.getElementById('loadingMsg').style.display = 'none';
-                buildProgressSteps(HOME_STEPS);
-                resetSteps("আপনার অর্ডার আইডি লিখে Track বাটনে চাপুন", HOME_STEPS);
+                resetSteps("সার্ভার এরর! আবার চেষ্টা করুন।", HOME_STEPS);
                 hideOrderInfo();
                 hideStatusMeta();
                 showToast("সার্ভার এরর! দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।", "error");
             });
+    }
+
+    // SheetDB থেকে আসা লাইভ স্ট্যাটাস, localStorage-এর orderHistory-তেও সিঙ্ক করে রাখা
+    // (যাতে History পেজে সবসময় সবচেয়ে আপ-টু-ডেট স্ট্যাটাস দেখা যায়)
+    // ক্যানসেল হয়ে থাকলে canceledAt টাইমস্ট্যাম্পও সেভ করা হয় — এটা দিয়েই ২৪ ঘন্টার হিসাব হয়
+    function syncStatusToHistory(orderId, status, cancelReason) {
+        let history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        let changed = false;
+        const normalized = (status || '').trim().toLowerCase();
+        const isCanceled = (normalized === 'canceled' || normalized === 'cancelled');
+
+        history = history.map(entry => {
+            if (entry.orderId === orderId) {
+                if (entry.status !== status) {
+                    entry.status = status;
+                    changed = true;
+                }
+                if (isCanceled && !entry.canceledAt) {
+                    entry.canceledAt = Date.now();
+                    entry.cancelReason = cancelReason || entry.cancelReason || '';
+                    changed = true;
+                }
+            }
+            return entry;
+        });
+        if (changed) {
+            localStorage.setItem('orderHistory', JSON.stringify(history));
+        }
+    }
+
+    // ================= Cancel Order ফ্লো =================
+    const CANCEL_REASONS = [
+        "মন পরিবর্তন করেছি, অর্ডার লাগবে না",
+        "ভুল প্রোডাক্ট/সাইজ অর্ডার হয়ে গেছে",
+        "ডেলিভারি সময় বেশি লাগছে",
+        "ডেলিভারি চার্জ/প্রাইস বেশি মনে হচ্ছে",
+        "অন্য জায়গা থেকে কম দামে পেয়েছি",
+        "ভুলবশত ডাবল অর্ডার হয়ে গেছে",
+        "অন্য কারণ (নিচে লিখুন)"
+    ];
+    let SELECTED_CANCEL_REASON = null;
+
+    function renderCancelReasons() {
+        const list = document.getElementById('cancelReasonList');
+        list.innerHTML = '';
+        CANCEL_REASONS.forEach((reason, idx) => {
+            const div = document.createElement('div');
+            div.className = 'cancel-reason-item';
+            div.innerText = reason;
+            div.onclick = () => selectCancelReason(idx, div);
+            list.appendChild(div);
+        });
+    }
+
+    function selectCancelReason(idx, el) {
+        document.querySelectorAll('.cancel-reason-item').forEach(item => item.classList.remove('selected'));
+        el.classList.add('selected');
+        SELECTED_CANCEL_REASON = CANCEL_REASONS[idx];
+
+        const customBox = document.getElementById('cancelCustomReason');
+        const isOther = idx === CANCEL_REASONS.length - 1;
+        customBox.style.display = isOther ? 'block' : 'none';
+        if (isOther) customBox.focus();
+
+        document.getElementById('confirmCancelBtn').disabled = false;
+    }
+
+    function openCancelModal() {
+        if (!CURRENT_ORDER_ID) return;
+        SELECTED_CANCEL_REASON = null;
+        document.getElementById('cancelCustomReason').value = '';
+        document.getElementById('cancelCustomReason').style.display = 'none';
+        document.getElementById('confirmCancelBtn').disabled = true;
+        renderCancelReasons();
+        document.getElementById('cancelModalOverlay').classList.add('show');
+    }
+
+    function closeCancelModal() {
+        document.getElementById('cancelModalOverlay').classList.remove('show');
+    }
+
+    function confirmCancelOrder() {
+        if (!CURRENT_ORDER_ID || !SELECTED_CANCEL_REASON) return;
+
+        const isOther = SELECTED_CANCEL_REASON === CANCEL_REASONS[CANCEL_REASONS.length - 1];
+        const customText = document.getElementById('cancelCustomReason').value.trim();
+        const finalReason = isOther && customText ? customText : SELECTED_CANCEL_REASON;
+
+        const confirmBtn = document.getElementById('confirmCancelBtn');
+        confirmBtn.disabled = true;
+        confirmBtn.innerText = 'ক্যানসেল হচ্ছে...';
+
+        const patchUrl = `https://sheetdb.io/api/v1/${SHEETDB_API_ID}/Order%20ID/${encodeURIComponent(CURRENT_ORDER_ID)}`;
+
+        fetch(patchUrl, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                data: {
+                    'Status': 'Canceled',
+                    'CancelReason': finalReason,
+                    'Status Updated At': new Date().toLocaleString('bn-BD')
+                }
+            })
+        })
+        .then(response => {
+            if (!response.ok) { throw new Error('HTTP ' + response.status); }
+            return response.json();
+        })
+        .then(() => {
+            // localStorage-এর orderHistory-তেও ক্যানসেল আপডেট করা, যাতে History পেজে দেখা যায়
+            let history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            history = history.map(entry => {
+                if (entry.orderId === CURRENT_ORDER_ID) {
+                    entry.status = 'Canceled';
+                    entry.cancelReason = finalReason;
+                    entry.canceledAt = Date.now(); // এই সময় থেকে ২৪ ঘন্টা ট্র্যাক অপশনে দেখাবে
+                }
+                return entry;
+            });
+            localStorage.setItem('orderHistory', JSON.stringify(history));
+
+            closeCancelModal();
+            showToast("আপনার অর্ডারটি ক্যানসেল করা হয়েছে।", "success");
+
+            // UI-তে সাথে সাথে ক্যানসেল বক্স দেখানো (এই সেশনে এখনো এই অর্ডারটাই দেখানো হচ্ছে)
+            document.getElementById('regularTracking').style.display = 'none';
+            document.getElementById('cancelTracking').style.display = 'block';
+            document.getElementById('cancelReasonText').innerText = finalReason;
+            hideStatusMeta();
+            document.getElementById('cancelOrderBtn').style.display = 'none';
+
+            // মিনি প্রিভিউ badge-টা "বাতিল" দেখানো হলো, কিন্তু পেজ থেকে সরানো হচ্ছে না —
+            // পরেরবার পেজে ঢুকলে (getLatestOrderFromHistory) এটা আর দেখাবে না এবং API-ও কল হবে না
+            const badge = document.getElementById('miniPreviewBadge');
+            badge.innerText = 'বাতিল';
+            badge.classList.add('canceled');
+        })
+        .catch(error => {
+            console.error('Cancel error:', error);
+            showToast("ক্যানসেল করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।", "error");
+        })
+        .finally(() => {
+            confirmBtn.disabled = false;
+            confirmBtn.innerText = 'ক্যানসেল কনফার্ম করুন';
+        });
     }
 
     // স্ট্যাটাস কখন আপডেট হলো (Status Updated At) এবং এডমিনের ছোট নোট (Status Note) দেখানো —
@@ -758,13 +1243,14 @@
         }
     }
     updateCartBadge();
-    buildProgressSteps(HOME_STEPS);
+    autoLoadLatestOrder();
 </script>
    
    <footer class="bottom-nav">
         <a href="home.html" class="nav-item"><i class="fas fa-home"></i> <p>Home</p></a>
         <a href="category.html" class="nav-item"><i class="fas fa-th-large"></i> <p>Category</p></a>
         <a href="order.html" class="nav-item"><span class="nav-icon-wrap"><i class="fas fa-shopping-bag"></i><span class="nav-badge-dot" id="orderNavBadge"></span></span> <p>Cart</p></a>
+        <a href="store.html" class="nav-item"><i class="fas fa-store"></i><p>Store</p></a>
         <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i> <p>Profile</p></a>
     </footer>
 

@@ -162,44 +162,5 @@
     "types": [],
     "category": "decor",
     "storeId": "store1"
-  },
-  {
-    "code": "M-mou-01",
-    "title": "RGB Mouse",
-    "price": "358",
-    "stock": 10,
-    "category": "electronics",
-    "storeId": "store1",
-    "desc": "আপনি যদি নিজের ওয়েবসাইটে ব্যবহার করার জন্য ফ্রি এবং কপিরাইট-মুক্ত (Copyright-free) ছবি চান, তবে সবচেয়ে ভালো মাধ্যম হলো Unsplash বা Pexels-এর মতো ফ্রি স্টক ইমেজ ওয়েবসাইট। এসব ছবির জন্য আপনাকে কোনো টাকা দিতে হবে না এবং নিজের ওয়েবসাইট বা প্রজেক্টে নিশ্চিন্তে ব্যবহার করতে পারবেন।নিচে ওয়েবসাইটে ব্যবহার করার উপযোগী একটি চমৎকার হাই-কোয়ালিটি ল্যাপটপ এবং কাজের পরিবেশের (Workplace) ছবির সোর্স দেওয়া হলো:",
-    "specs": [
-      "Brand: Thailand",
-      "Model:E42",
-      "LIGHT:RGB"
-    ],
-    "types": [
-      {
-        "name": "jdbd",
-        "hex": "#c8102e"
-      },
-      {
-        "name": "dfsbfgdn",
-        "hex": "#c8102e"
-      },
-      {
-        "name": "ghmndxty",
-        "hex": "#c8102e"
-      },
-      {
-        "name": "sdfhbgf",
-        "hex": "#c8102e"
-      },
-      {
-        "name": "fgb fg",
-        "hex": "#c8102e"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
-    ]
   }
 ]

@@ -163,5 +163,30 @@
     "types": [],
     "category": "decor",
     "storeId": "store1"
+  },
+  {
+    "code": "P-PB-01",
+    "title": "Power Bank Ven-Dens VD-PB046 20,000 mAh Built-in Cable Fast Charge Power Bank",
+    "price": "৳১,৬৫০",
+    "stock": 10,
+    "category": "electronics",
+    "storeId": "store1",
+    "desc": "Ven-Dens VD-PB046 হলো ভ্রমণপিপাসু ও গ্যাজেটপ্রেমীদের জন্য একটি আইডিয়াল অল-ইন-ওয়ান পাওয়ার ব্যাংক সমাধান। এর ২০,০০০ mAh বিশাল ব্যাটারি ক্যাপাসিটি আপনাকে বারবার ফোন বা অন্যান্য গ্যাজেট চার্জ করার দারুণ ব্যাকআপ দেয়, যা দীর্ঘ ভ্রমণ, আউটডোর কাজ বা জরুরি সময়ের জন্য অত্যন্ত নিখুঁত।\n\nএই পাওয়ার ব্যাংকের সবচেয়ে বড় সুবিধা হলো এর বিল্ট-ইন ক্যাবল (টাইপ-সি ও আইফোন সাপোর্ট)। ফলে আলাদা করে ক্যাবল সাথে বহন করা কিংবা বাড়িতে ফেলে আসার দুশ্চিন্তা সম্পূর্ণ দূর হয়। দ্রুত ও নিরাপদ চার্জিং নিশ্চিত করতে এতে রয়েছে ফাস্ট চার্জিং টেকনোলজি এবং অতিরিক্ত গরম হওয়া থেকে রক্ষা করার জন্য অ্যাডভান্সড ওভার-হিটিং প্রোটেকশন। এর স্মার্ট ডিজিটাল ডিসপ্লেতে রিয়েল-টাইমে ব্যাটারির চার্জের পরিমাণ দেখা যায়। একইসাথে ফ্লাইট-ফ্রেন্ডলি ডিজাইন হওয়ায় বিমানে ভ্রমণের সময়ও এটি সাথে রাখা সম্পূর্ণ নিরাপদ।",
+    "specs": [
+      "Model: Ven-Dens VD-PB046",
+      "Battery Capacity: 20000 mAh",
+      "Charging Cables: Integrated / Built-in Cables (Type-C & Lightning/iPhone compatible)",
+      "Fast Charging Support: Yes (High-speed output)",
+      "Display: Smart Digital LED Battery Percentage Indicator",
+      "Safety Features: Advanced Over-Heating Protection & Over-Charge/Short-Circuit Safety",
+      "Flight Compatibility: Flight-friendly (Safe for airplane travel)"
+    ],
+    "types": [],
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031786/rwar7nnlh8ghbcnowt9u.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031794/xgicniomfwagqacouej5.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031799/pekzoxlkaytuvxrfim3g.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031804/fbhlu0iltiaqbtyuehnk.jpg"
+    ]
   }
 ]

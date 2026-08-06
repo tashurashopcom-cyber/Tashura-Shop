@@ -213,5 +213,41 @@
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032143/v5weoqvvvzcvk3hul8o8.jpg",
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032148/xtcut55uljoi5jdsahc0.jpg"
     ]
+  },
+  {
+    "code": "S-Sp-01",
+    "title": "Magic Draining Soap Box for Smart Bathroom",
+    "price": "৳245",
+    "stock": 10,
+    "category": "decor",
+    "storeId": "store1",
+    "desc": "বাথরুমে সাবান গলে অপচয় হওয়া এবং আঠালো নোংরা পরিবেশের সমস্যার একদম সহজ ও আধুনিক সমাধান এই \"ম্যাজিক ড্রেনিং সোপ বক্স\"। এর ইউনিক ওয়াটার ড্রেন ডিজাইনের কারণে অতিরিক্ত পানি সাথে সাথে নিচে ঝরে পড়ে, ফলে সাবান সবসময় থাকে একদম শুকনো, শক্ত ও জীবাণুমুক্ত।\n\nএই সোপ বক্সটি ইন্সটল করতে দেয়ালে কোনো ড্রিল বা স্ক্রু ব্যবহারের প্রয়োজন হয় না; স্ট্রং গ্লু প্যাড দিয়ে এটি খুব সহজেই যেকোনো মসৃণ দেয়ালে শক্তভাবে আটকে যায়। এর প্রিমিয়াম ও টেকসই বিল্ড কোয়ালিটি বাথরুম বা রান্নাঘরের সৌন্দর্য বহুগুণ বাড়িয়ে দেয়। বাথরুমের পাশাপাশি রান্নাঘরের বেসিনে ডিশওয়াশ স্পঞ্জ রাখার কাজেও এটি দারুণ উপযোগী।",
+    "specs": [
+      "Design Type: Wall-Mounted Magic Draining Soap Holder",
+      "Installation Method: Drill-Free / Screw-Free (Strong Adhesive Pad Mount)",
+      "Drainage System: Self-Draining Water Channel (Keeps Soap Dry)",
+      "Material: High-Grade Premium Durable Material",
+      "Usage / Versatility: Multipurpose (Bathroom Walls & Kitchen Sinks)",
+      "Maintenance: Easy to Clean & Hygienic Anti-Melting Structure"
+    ],
+    "types": [
+      {
+        "name": "white",
+        "hex": "#c4bfbc"
+      },
+      {
+        "name": "past",
+        "hex": "#6f837e"
+      },
+      {
+        "name": "dark green",
+        "hex": "#122721"
+      }
+    ],
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032701/ssahh7nukd1khwk7jvep.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032704/azn43wqfquaqjet2klat.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032707/y72ckpgjltl7mksshhw8.jpg"
+    ]
   }
 ]

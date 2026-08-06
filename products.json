@@ -37,8 +37,8 @@
   {
     "code": "H-PHN-01",
     "title": "Mobile Holder Flexible Lazy Pod Mobile Holder",
-    "price": "৳275",
-    "stock": 10,
+    "price": "৳250",
+    "stock": 30,
     "images": [
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085611/702240807_122111915042809533_6736886265913551707_n_b8x4gy.jpg",
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783085616/703092400_122111915138809533_6987167337063282043_n_porbsl.jpg",
@@ -71,7 +71,7 @@
       },
       {
         "name": "White",
-        "hex": "#efe6ef"
+        "hex": "#ffffff"
       }
     ],
     "category": "electronics",

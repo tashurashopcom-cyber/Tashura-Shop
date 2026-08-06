@@ -280,5 +280,32 @@
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786033443/ie3fpzppedbj4blndufy.jpg",
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786033446/vct927rurzccmwb5shdu.jpg"
     ]
+  },
+  {
+    "code": "E-Er-02",
+    "title": "Earbuds HOCO EQ34 Plus True Wireless ANC+ENC Earbuds",
+    "price": "৳880",
+    "stock": 10,
+    "category": "electronics",
+    "storeId": "store1",
+    "desc": "বাজেটের মধ্যে প্রিমিয়াম সাউন্ড এক্সপেরিয়েন্স দিতে HOCO EQ34 Plus একটি অসাধারণ ট্রু ওয়ারলেস ইয়ারবাড। এতে থাকা অ্যাডভান্সড ANC (অ্যাক্টিভ নয়েজ ক্যানসেলেশন) এবং ENC (এনভায়রনমেন্ট নয়েজ ক্যানসেলেশন) প্রযুক্তি বাইরের কোলাহল কমিয়ে আনে, যার ফলে ভিড় বা ট্রাফিকের মধ্যেও ক্লিয়ার কলিং এবং নিখুঁত গান শোনার অনুভূতি পাওয়া যায়।\n\nইয়ারবাডটিতে রয়েছে আধুনিক ব্লুটুথ ৫.৪ টেকনোলজি, যা অতি দ্রুত কানেক্টিভিটি এবং কম লেটেন্সি নিশ্চিত করে গেমিং ও ভিডিও দেখার অভিজ্ঞতাকে করে তোলে মসৃণ। ৪০০ mAh চার্জিং কেস এবং ৪০ mAh বার্ড ব্যাটারির কল্যাণে কেসসহ মোট ২৮ ঘণ্টা এবং একক চার্জে টানা ৭ ঘণ্টা ব্যাকআপ পাওয়া যায়। ডিজিটাল ব্যাটারি ডিসপ্লে সমৃদ্ধ এই ইয়ারবাডটি দারুণ বেস ও Hi-Fi সাউন্ড কোয়ালিটির কারণে গানপ্রেমী ও গেমারদের জন্য একটি পারফেক্ট চয়েস।",
+    "specs": [
+      "Model: HOCO EQ34 Plus",
+      "Audio Technologies: ANC (Active Noise Cancellation) & ENC (Environmental Noise Cancellation)",
+      "Bluetooth Version: Bluetooth 5.4",
+      "Case Battery Capacity: 400 mAh",
+      "Earbud Battery Capacity: 40 mAh (Each)",
+      "Playtime: Up to 7 hours (Single charge) | Total 28 hours (With charging case)",
+      "Display: Smart Digital Battery Percentage Display",
+      "Color Variant: Premium Black"
+    ],
+    "types": [],
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786034304/s7rd99vojllmrlmzjtx4.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786034308/ckgmkggtqtcayj7fdaba.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786034313/zvufpukspw9pza5ktnqs.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786034321/nsryew9xdevijxgyeapo.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786034333/elxnw2mltgbdsoah29dl.jpg"
+    ]
   }
 ]

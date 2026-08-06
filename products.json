@@ -188,5 +188,30 @@
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031799/pekzoxlkaytuvxrfim3g.jpg",
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786031804/fbhlu0iltiaqbtyuehnk.jpg"
     ]
+  },
+  {
+    "code": "E-Er-01",
+    "title": "Earbuds Official Exclusive Edition Non-In-Ear Comfort True Wireless Earbuds",
+    "price": "৳580",
+    "stock": 10,
+    "category": "electronics",
+    "storeId": "store1",
+    "desc": "দীর্ঘক্ষণ ইয়ারফোন ব্যবহারে কান ব্যথা বা অস্বস্তির অভিজ্ঞতার সমাপ্তি ঘটাতে এসেছে Future of Audio-এর Official Exclusive Edition ইয়ারবাডস। এর উদ্ভাবনী Non-In-Ear ডিজাইন কানে না ঢুকিয়েও চমৎকার গ্রিপ এবং প্রিমিয়াম লুক প্রদান করে, যা সারাদিন স্বাচ্ছন্দ্যে গান শোনা বা কথা বলার জন্য অত্যন্ত আরামদায়ক।\n\nবাডসটিতে ব্যবহৃত হয়েছে আধুনিক ব্লুটুথ ৫.৪ প্রযুক্তি, যা দ্রুত ও ল্যাগ-ফ্রি কানেক্টিভিটি নিশ্চিত করে। এতে থাকা ৩৬০° প্যানোরামিক সাউন্ড এবং হাই-ফাই সাউন্ড ইফেক্ট আপনাকে দেবে সিনেমাটিক থিয়েটার কোয়ালিটি অডিও অভিজ্ঞতা। ক্রিস্টাল ক্লিয়ার কলের জন্য যুক্ত করা হয়েছে অ্যাডভান্সড নয়েজ রিডাকশন সমৃদ্ধ এইচডি মাইক্রোফোন। এছাড়া এর ডিজিটাল ডিসপ্লে কেস এবং লং ব্যাটারি লাইফের কারণে চার্জের ঝামেলা ছাড়াই এটি যেকোনো গ্যাজেট লাভারের দৈনন্দিন সঙ্গী হওয়ার জন্য সেরা পছন্দ।",
+    "specs": [
+      "Design Type: Non-In-Ear / Open-Ear Ergonomic Comfort Design",
+      "Audio Technology: 360° Panoramic Sound & Hi-Fi Pure Bass Audio",
+      "Bluetooth Version: Bluetooth 5.4",
+      "Microphone & Calls: HD Voice Calling with Advanced Noise Reduction",
+      "Display Case: Charging Case with Digital Power LED Display",
+      "Charging & Battery: Long Battery Life with Fast Charging Support",
+      "Latency: Ultra-Low Latency (Lag-Free Connectivity)"
+    ],
+    "types": [],
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032133/iab4lnqxfuue5xslxzna.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032137/ulo6141tlbrwiaxxwzdq.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032143/v5weoqvvvzcvk3hul8o8.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032148/xtcut55uljoi5jdsahc0.jpg"
+    ]
   }
 ]

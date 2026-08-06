@@ -122,8 +122,8 @@
   },
   {
     "code": "N-lig-02",
-    "title": "Night Light স্মল নাইট লাইট (小夜灯)",
-    "price": "৳899",
+    "title": "Night Light স্মল নাইট লাইট (小夜灯)without remote",
+    "price": "৳790",
     "stock": 10,
     "images": [
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1783070630/736172584_3589269534572025_1828509163802481255_n_qpqnv7.webp",
@@ -139,7 +139,9 @@
       "রেটেড পাওয়ার: 3.8W",
       "LED কনফিগারেশন: 12টি LED মডিউল",
       "কালার মোড: 3টি",
-      "সার্টিফিকেশন: CE, FCC, RoHS"
+      "সার্টিফিকেশন: CE",
+      "FCC",
+      "RoHS"
     ],
     "types": [],
     "category": "electronics",

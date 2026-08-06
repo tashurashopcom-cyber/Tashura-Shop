@@ -249,5 +249,36 @@
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032704/azn43wqfquaqjet2klat.jpg",
       "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786032707/y72ckpgjltl7mksshhw8.jpg"
     ]
+  },
+  {
+    "code": "F-fan-01",
+    "title": "Portable Mini Fan with Integrated Power Bank & LED Display",
+    "price": "৳580",
+    "stock": 10,
+    "category": "electronics",
+    "storeId": "store1",
+    "desc": "গ্রীষ্মের প্রচণ্ড তাপে স্বস্তি পেতে এবং নিজেকে সবসময় সতেজ রাখতে এই পোর্টেবল ফ্যানটি একটি অত্যন্ত কার্যকরী গ্যাজেট। এর ছোট ও হালকা ডিজাইন খুব সহজেই ব্যাগ বা পকেটে বহন করার সুযোগ দেয়, যা ভ্রমণ, অফিস বা বাইরের যেকোনো কাজের সময় ব্যবহার করার জন্য একদম উপযুক্ত।\n\nফ্যানটি শুধুমাত্র আরামদায়ক শীতল বাতাসই দেয় না, বরং বিপদের সময়ে জরুরি ফোন চার্জের জন্য এতে রয়েছে ইন-বিল্ট পাওয়ার ব্যাংক ফিচার। চার্জের বর্তমান অবস্থা রিয়েল-টাইমে ট্র্যাক করার জন্য এতে যুক্ত করা হয়েছে স্পষ্ট LED ডিসপ্লে। সুবিধা অনুযায়ী বাতাসের দিক পরিবর্তনের জন্য রয়েছে অ্যাডজাস্টেবল ডিজাইন এবং দীর্ঘসময় ব্যবহারের জন্য থাকছে শক্তিশালী রিচার্জেবল ব্যাটারি ব্যাকআপ।",
+    "specs": [
+      "Type: Portable Multi-Function Mini Fan",
+      "Dual Function: Cooling Fan + Emergency Power Bank",
+      "Display: Smart Digital LED Battery Indicator",
+      "Adjustability: Multi-Angle Adjustable Airflow Direction",
+      "Portability: Ultra-Compact & Lightweight (Pocket/Bag Friendly)",
+      "Battery & Power: High-Capacity Rechargeable Battery with Long Backup"
+    ],
+    "types": [
+      {
+        "name": "blue",
+        "hex": "#28263b"
+      },
+      {
+        "name": "green",
+        "hex": "#124631"
+      }
+    ],
+    "images": [
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786033443/ie3fpzppedbj4blndufy.jpg",
+      "https://res.cloudinary.com/qzvdcf3q/image/upload/v1786033446/vct927rurzccmwb5shdu.jpg"
+    ]
   }
 ]
